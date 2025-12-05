@@ -3,210 +3,112 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>INVESTCOIN Calculator — Glass iPhone Style</title>
+  <title>INVESTCOIN Calculator — refined</title>
   <style>
-    :root {
-      --bg: #060616;
-      --glass-1: rgba(255,255,255,0.04);
-      --glass-2: rgba(255,255,255,0.02);
-      --muted: rgba(255,255,255,0.55);
-      --muted-2: rgba(168,178,209,0.35);
-      --accent: rgba(255,255,255,0.06);
-      --accent-strong: rgba(255,255,255,0.09);
+    :root{
+      /* Simple palette: dark gray background, light gray UI, single dark-blue accent */
+      --bg-1: #1e1e20; /* page background */
+      --bg-2: #151516; /* subtle gradient end */
+      --surface: #252527; /* surface panels */
+      --muted: #d7d9db; /* light gray text / controls */
+      --muted-2: #bfc4c9; /* secondary text */
+      --accent: #0b3d91; /* dark blue accent */
       --success: #10B981;
       --danger: #EF4444;
-      --border: rgba(255,255,255,0.06);
-      --radius: 20px;
-      --glass-blur: 10px;
-      font-synthesis: none;
+      --radius-lg: 28px;
+      --radius-md: 14px;
+      --glass-blur: 6px;
+      --text-strong: #e8eaec; /* primary text */
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(180deg, #050513 0%, #0a0e1a 100%);
-      color: white;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      min-height:100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: linear-gradient(180deg,var(--bg-1) 0%, var(--bg-2) 100%);
+      color:var(--text-strong);
+      -webkit-font-smoothing:antialiased;
+      display:flex;align-items:center;justify-content:center;padding:28px;
     }
 
-    /* Container: emulate centered iPhone app card */
-    .container {
-      width: 100%;
-      max-width: 940px;
-      border-radius: 34px;
-      padding: 28px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 10px 40px rgba(2,6,23,0.65);
-      backdrop-filter: blur(var(--glass-blur));
-      -webkit-backdrop-filter: blur(var(--glass-blur));
-      overflow: hidden;
+    /* App area — no visible border per request. subtle elevated surface only */
+    .container{
+      width:100%;max-width:980px;padding:22px 28px;background:transparent;/* removed framed background */
+      backdrop-filter:none; -webkit-backdrop-filter:none;
+      box-shadow:none; /* no shadow, free layout */
+      overflow:visible;
+      border: none; /* explicitly removed */
+      border-radius: 0; /* no rounding */
     }
 
-    header.header {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      padding-bottom: 18px;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+    header.header{display:flex;align-items:center;gap:16px;padding-bottom:12px}
+    .logo-icon{width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--surface);}
+    .logo-icon img{width:78%;height:78%;object-fit:contain;border-radius:8px}
+    .header-text h1{font-size:1.4rem;font-weight:800;letter-spacing:-0.02em;color:var(--text-strong)}
+    .header-text p{color:var(--muted-2);margin-top:4px;font-size:0.88rem}
+
+    nav.main-nav{display:flex;gap:10px;margin:18px 0}
+    .nav-btn{flex:1;padding:10px 14px;border-radius:12px;background:transparent;border:0;color:var(--muted);font-weight:700;font-size:0.94rem;cursor:pointer;transition:background 120ms ease, color 120ms ease}
+    .nav-btn.active{color:var(--text-strong);background:transparent;border-bottom:3px solid var(--accent);padding-bottom:8px;}
+
+    main.main-content{padding-bottom:6px}
+    .section{display:none}
+    .section.active{display:block}
+
+    .grid{display:grid;gap:12px}
+    .grid-2{grid-template-columns:1fr 1fr}
+
+    input, select{
+      width:100%;padding:12px;border-radius:10px;background:var(--surface);border:0;color:var(--muted);font-size:0.96rem;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,0.02)
     }
+    input:focus,select:focus{box-shadow: 0 8px 20px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.02)}
+    ::placeholder{color:rgba(255,255,255,0.32)}
 
-    .logo-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid var(--border);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+    /* Primary actions — single dark-blue accent */
+    .btn{
+      padding:12px 16px;border-radius:10px;background:var(--muted);color:var(--bg-1);font-weight:800;border:1px solid rgba(11,61,145,0.06);cursor:pointer;box-shadow:none;transition:opacity 120ms ease, transform 120ms ease
     }
-    .logo-icon img { width: 86%; height: 86%; object-fit: contain; border-radius: 10px; }
+    .btn:hover{opacity:0.92;transform:translateY(-1px)}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+    .btn:hover{opacity:0.95;transform:translateY(-2px)}
+    .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
 
-    .header-text h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      color: white;
-    }
-    .header-text p { color: var(--muted-2); font-size: 0.88rem; margin-top: 4px; }
+    /* Results — light gray text on dark surface */
+    .results{margin-top:14px;padding:14px;border-radius:10px;background:var(--surface);color:var(--muted-2)}
+    .results .title{color:var(--text-strong);font-weight:700;margin-bottom:8px}
+    .results .line{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.02)}
+    .results .line:first-of-type{border-top:0}
+    .results .value{font-weight:700;color:var(--text-strong)}
 
-    nav.main-nav {
-      display: flex;
-      gap: 10px;
-      margin: 20px 0;
-      background: transparent;
-    }
+    .actions{margin-top:18px;display:grid;gap:10px}
+    .btn-block{display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:var(--surface);cursor:pointer;border:0}
+    .btn-block img,.btn-block svg{width:40px;height:40px;border-radius:8px;padding:6px;background:transparent}
+    .btn-content span{font-weight:700;color:var(--muted)}
+    .btn-desc{color:var(--muted-2);font-size:0.88rem}
 
-    .nav-btn {
-      flex: 1;
-      padding: 10px 14px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
-    }
+    .entry-item{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:center;margin-top:10px}
 
-    .nav-btn.active {
-      color: white;
-      background: linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.01));
-      border-color: rgba(255,255,255,0.04);
-    }
+    /* Modal — simple and consistent */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:999}
+    .modal.active{display:flex}
+    .modal::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.55)}
+    .modal-content{position:relative;z-index:2;width:100%;max-width:520px;border-radius:12px;padding:18px;background:var(--surface);box-shadow:0 20px 50px rgba(0,0,0,0.6)}
+    .modal-content h3{margin-bottom:8px;color:var(--text-strong)}
+    .modal-content p, .modal-content ul{color:var(--muted-2)}
+    .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:12px}
 
-    main.main-content { padding-bottom: 8px; }
-    .section { display: none; }
-    .section.active { display: block; }
+    footer.footer{text-align:center;color:var(--muted-2);font-size:0.86rem;margin-top:12px}
 
-    .grid { display: grid; gap: 12px; }
-    .grid-2 { grid-template-columns: 1fr 1fr; }
-
-    input, select {
-      width: 100%;
-      padding: 14px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, var(--glass-2), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.03);
-      color: white;
-      font-size: 0.98rem;
-      outline: none;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
-      transition: box-shadow 100ms ease, border-color 100ms ease;
-      -webkit-appearance: none;
-    }
-    input:focus, select:focus {
-      border-color: rgba(255,255,255,0.06);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 6px 18px rgba(2,6,23,0.45);
-    }
-    ::placeholder { color: rgba(255,255,255,0.35); }
-
-    /* Buttons: flatter, glassy */
-    .btn {
-      padding: 12px 18px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.04);
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 120ms ease, opacity 120ms ease;
-      box-shadow: none;
-    }
-    .btn:hover { opacity: 0.95; }
-    .btn:active { opacity: 0.92; }
-
-    .results {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008));
-      border: 1px solid rgba(255,255,255,0.03);
-      color: var(--muted);
-    }
-    .results div { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
-    .results div:last-child { border-bottom: none; }
-
-    .actions { margin-top: 22px; display: grid; gap: 12px; }
-    .btn-block {
-      display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 14px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
-      border: 1px solid rgba(255,255,255,0.03);
-      cursor: pointer;
-      transition: opacity 120ms ease;
-    }
-    .btn-block:hover { opacity: 0.98; }
-    .btn-block img, .btn-block svg { width: 44px; height: 44px; border-radius: 10px; padding: 6px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-
-    .brand-logo { background: none; padding: 0; }
-    .btn-content span { font-weight: 700; display: block; color: white; }
-    .btn-desc { color: var(--muted-2); font-size: 0.9rem; }
-
-    .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: center; margin-top: 10px; }
-
-    /* Modal: glass */
-    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 999; }
-    .modal.active { display: flex; }
-    .modal::before { content: ''; position: absolute; inset: 0; background: rgba(2,6,23,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-    .modal-content {
-      position: relative; z-index: 2; width: 100%; max-width: 520px; border-radius: 18px; padding: 22px; color: white;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.03);
-      box-shadow: 0 30px 60px rgba(2,6,23,0.6);
-      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    }
-    .modal-content h3 { color: white; margin-bottom: 12px; }
-    .modal-content p, .modal-content ul { color: var(--muted-2); margin-bottom: 10px; }
-    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
-
-    footer.footer { text-align: center; color: var(--muted-2); font-size: 0.88rem; margin-top: 16px; }
-
-    /* Responsive small screens */
-    @media (max-width: 600px) {
-      .grid-2 { grid-template-columns: 1fr; }
-      .logo-icon { width: 56px; height: 56px; }
-      .container { padding: 18px; border-radius: 22px; }
-    }
+    /* responsive */
+    @media (max-width:720px){.grid-2{grid-template-columns:1fr}.logo-icon{width:56px;height:56px}.container{padding:16px;border-radius:14px}}
 
   </style>
 </head>
 <body>
   <div class="container" role="application">
     <header class="header">
-      <div class="logo-icon">
-        <img src="logo.png" alt="INVESTCOIN Logo" />
-      </div>
+      <div class="logo-icon"><img src="logo.png" alt="INVESTCOIN Logo"></div>
       <div class="header-text">
         <h1>INVESTCOIN Calculator</h1>
         <p>Профессиональный расчёт позиций для трейдинга</p>
@@ -215,7 +117,7 @@
 
     <nav class="main-nav" aria-label="Главная навигация">
       <button class="nav-btn active" onclick="showSection('avg', event)">Средняя точка</button>
-      <button class="nav-btn" onclick="showSection('risk', event)">Риск/Объём</button>
+      <button class="nav-btn" onclick="showSection('risk', event)">Риск / Объём</button>
     </nav>
 
     <main class="main-content">
@@ -229,17 +131,19 @@
             <button class="btn" onclick="addEntry()">+ Добавить точку</button>
             <button class="btn" onclick="calculateAvg()">Рассчитать среднюю</button>
           </div>
+
           <div id="entries"></div>
         </div>
-        <div id="avgResult" class="results" aria-live="polite"></div>
+
+        <div id="avgResult" class="results" aria-live="polite" hidden>
+          <div class="title">Результат</div>
+          <div class="line"><div>Средняя точка входа</div><div class="value" id="avgValue"></div></div>
+        </div>
       </section>
 
       <section id="risk" class="section" aria-labelledby="risk-heading">
         <div class="grid">
-          <select id="positionType">
-            <option value="long">Long</option>
-            <option value="short">Short</option>
-          </select>
+          <select id="positionType"><option value="long">Long</option><option value="short">Short</option></select>
           <input type="number" id="deposit" placeholder="Депозит ($)" min="0.01" step="0.01" />
           <input type="number" id="riskPercent" placeholder="Риск (%)" step="0.1" min="0.1" max="100" />
           <input type="number" id="entryPrice" placeholder="Цена входа" step="0.0001" min="0.0001" />
@@ -247,7 +151,13 @@
           <input type="number" id="takeProfit" placeholder="Тейк-профит (необязательно)" step="0.0001" min="0.0001" />
           <button class="btn" onclick="calculateRisk()">Рассчитать риск</button>
         </div>
-        <div id="riskResult" class="results" aria-live="polite"></div>
+
+        <div id="riskResult" class="results" aria-live="polite" hidden>
+          <div class="title">Риск / Результат</div>
+          <div class="line"><div>Размер позиции</div><div class="value" id="posSize"></div></div>
+          <div class="line"><div>Максимальный риск</div><div class="value" id="riskAmount"></div></div>
+          <div class="line" id="profitLine" style="display:none"><div>Потенциальный профит</div><div class="value" id="profitAmount"></div></div>
+        </div>
       </section>
     </main>
 
@@ -259,51 +169,37 @@
 
       <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link" aria-label="Bybit">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit логотип" />
-        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Регистрация по партнёрской ссылке (код: 23588)</div></div>
+        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Партнёрская ссылка</div></div>
       </div>
 
       <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link" aria-label="BingX">
         <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="BingX логотип">
           <title>BingX</title>
-          <defs>
-            <linearGradient id="bingxGrad" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#1A2F4A"/>
-              <stop offset="0.55" stop-color="#24436B"/>
-              <stop offset="1" stop-color="#2B4F7D"/>
-            </linearGradient>
-          </defs>
-          <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#bingxGrad)"></rect>
-          <g transform="translate(18,12) scale(0.7)" fill="#FFFFFF" fill-opacity="0.98">
-            <path d="M12 36 L32 12 L54 36 L32 60 Z"></path>
-            <path d="M64 24 L76 24 L76 40 L64 40 Z"></path>
-          </g>
+          <rect x="0" y="0" width="100" height="100" rx="20" fill="var(--accent)"></rect>
+          <g transform="translate(18,12) scale(0.7)" fill="#FFFFFF" fill-opacity="0.98"><path d="M12 36 L32 12 L54 36 L32 60 Z"></path><path d="M64 24 L76 24 L76 40 L64 40 Z"></path></g>
         </svg>
-        <div class="btn-content">
-          <span>BingX</span>
-          <div class="btn-desc">Регистрация по партнёрской ссылке (код: INVESTCOIN)</div>
-        </div>
+        <div class="btn-content"><span>BingX</span><div class="btn-desc">Партнёрская ссылка</div></div>
       </div>
 
       <div class="btn-block" onclick="showModal('clubModal')">
         <img src="https://unpkg.com/heroicons@2.0.13/24/outline/users.svg" alt="Клуб логотип" />
-        <div class="btn-content"><span>Закрытый торговый клуб</span><div class="btn-desc">Аналитика и торговые сигналы</div></div>
+        <div class="btn-content"><span>Закрытый торговый клуб</span><div class="btn-desc">Аналитика и сигналы</div></div>
       </div>
     </div>
 
     <div class="modal" id="clubModal">
       <div class="modal-content">
         <h3>Как попасть в закрытый клуб?</h3>
-        <p>Доступ в закрытый клуб возможен по подписке ИЛИ для моих активных рефералов абсолютно бесплатно.</p>
+        <p>Доступ в закрытый клуб возможен по подписке ИЛИ для моих активных рефералов совершенно бесплатно.</p>
         <ul>
           <li>По подписке: 50 $/мес.</li>
-          <li>Рефералам: регистрация на бирже Bybit или BingX по моей партнёрской ссылке, депозит от 300 $ и активность.</li>
+          <li>Рефералам: регистрация на Bybit или BingX по ссылке, депозит от 300 $ и активность.</li>
         </ul>
-        <p>Если у вас уже есть аккаунт Bybit или BingX, вы можете перенести его под мою ссылку. Напишите мне в личные сообщения, и я расскажу, как это сделать.</p>
-        <p><strong>Для вступления в клуб:</strong> <a href="https://t.me/csklad_bot" target="_blank" rel="noopener">@csklad_bot</a></p>
+        <p><strong>Для вступления:</strong> <a href="https://t.me/csklad_bot" target="_blank" rel="noopener">@csklad_bot</a></p>
         <div class="modal-actions">
           <button class="btn" onclick="window.open('https://partner.bybit.com/b/23588','_blank')">Регистрация Bybit</button>
           <button class="btn" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')">Регистрация BingX</button>
-          <button class="btn" onclick="hideModal('clubModal')">Закрыть</button>
+          <button class="btn ghost" onclick="hideModal('clubModal')">Закрыть</button>
         </div>
       </div>
     </div>
@@ -312,123 +208,77 @@
   </div>
 
   <script>
-    /* --- JS оставлен почти без изменений. Убраны визуальные анимации в CSS, поэтому JS остаётся работоспособным --- */
     let entries = [];
 
     function addEntry() {
       const price = parseFloat(document.getElementById('newEntryPrice').value);
       const amount = parseFloat(document.getElementById('newEntryAmount').value);
-      if (isNaN(price) || price <= 0 || isNaN(amount) || amount <= 0) {
-        alert('Введите корректные положительные значения для цены и объёма');
-        return;
-      }
+      if (isNaN(price) || price <= 0 || isNaN(amount) || amount <= 0) { alert('Введите корректные положительные значения для цены и объёма'); return; }
       if (entries.length >= 5) { alert('Максимум 5 точек входа'); return; }
-      entries.push({ price, amount });
-      document.getElementById('newEntryPrice').value = '';
-      document.getElementById('newEntryAmount').value = '';
-      renderEntries();
+      entries.push({ price, amount }); document.getElementById('newEntryPrice').value = ''; document.getElementById('newEntryAmount').value = ''; renderEntries();
     }
 
     function renderEntries() {
       const container = document.getElementById('entries'); container.innerHTML = '';
-      entries.forEach((e, i) => {
-        const div = document.createElement('div'); div.className = 'entry-item';
-        div.innerHTML = `\n          <input type="number" value="${e.price}" step="0.0001" readonly />\n          <input type="number" value="${e.amount}" step="0.0001" readonly />\n          <button class="btn" onclick="removeEntry(${i})">Удалить</button>\n        `;
+      entries.forEach((e,i)=>{
+        const div = document.createElement('div'); div.className='entry-item';
+        div.innerHTML = `
+          <input type="number" value="${e.price}" step="0.0001" readonly />
+          <input type="number" value="${e.amount}" step="0.0001" readonly />
+          <button class="btn ghost" onclick="removeEntry(${i})">Удалить</button>
+        `;
         container.appendChild(div);
-      });
+      })
     }
 
-    function removeEntry(idx) { entries.splice(idx, 1); renderEntries(); }
+    function removeEntry(idx){ entries.splice(idx,1); renderEntries(); }
 
-    function calculateAvg() {
-      if (entries.length === 0) { alert('Добавьте хотя бы одну точку входа'); return; }
-      const totalValue = entries.reduce((sum, e) => sum + e.price * e.amount, 0);
-      const totalAmount = entries.reduce((sum, e) => sum + e.amount, 0);
-      const avg = totalValue / totalAmount;
-      const avgRes = document.getElementById('avgResult');
-      avgRes.textContent = `Средняя точка входа: ${avg.toFixed(4)} (${entries.length} позиций)`;
-      avgRes.style.display = 'block';
+    function calculateAvg(){
+      if(entries.length===0){ alert('Добавьте хотя бы одну точку входа'); return; }
+      const totalValue = entries.reduce((s,e)=>s+e.price*e.amount,0);
+      const totalAmount = entries.reduce((s,e)=>s+e.amount,0);
+      const avg = totalValue/totalAmount;
+      document.getElementById('avgValue').textContent = `${avg.toFixed(4)} (${entries.length} позиций)`;
+      const box = document.getElementById('avgResult'); box.hidden=false;
     }
 
-    function calculateRisk() {
+    function calculateRisk(){
       const positionType = document.getElementById('positionType').value;
       let deposit = parseFloat(document.getElementById('deposit').value);
       let riskPercent = parseFloat(document.getElementById('riskPercent').value);
       let entryPrice = parseFloat(document.getElementById('entryPrice').value);
       let stopLoss = parseFloat(document.getElementById('stopLoss').value);
-      const tpInput = document.getElementById('takeProfit').value;
-      let takeProfit = tpInput ? parseFloat(tpInput) : null;
+      const tpInput = document.getElementById('takeProfit').value; let takeProfit = tpInput?parseFloat(tpInput):null;
 
-      if (isNaN(deposit) || deposit <= 0) { alert('Введите корректный депозит (> 0)'); return; }
-      if (isNaN(riskPercent) || riskPercent <= 0 || riskPercent > 100) { alert('Введите корректный риск в % (0 < % ≤ 100)'); return; }
-      if (isNaN(entryPrice) || entryPrice <= 0) { alert('Введите корректную цену входа (> 0)'); return; }
-      if (isNaN(stopLoss) || stopLoss <= 0) { alert('Введите корректный стоп-лосс (> 0)'); return; }
+      if(isNaN(deposit)||deposit<=0){alert('Введите корректный депозит (> 0)');return}
+      if(isNaN(riskPercent)||riskPercent<=0||riskPercent>100){alert('Введите корректный риск в % (0 < % ≤ 100)');return}
+      if(isNaN(entryPrice)||entryPrice<=0){alert('Введите корректную цену входа (> 0)');return}
+      if(isNaN(stopLoss)||stopLoss<=0){alert('Введите корректный стоп-лосс (> 0)');return}
 
-      if (takeProfit !== null) {
-        if (positionType === 'long' && stopLoss > entryPrice && takeProfit < entryPrice) {
-          [stopLoss, takeProfit] = [takeProfit, stopLoss];
-          alert('Стоп-лосс и тейк-профит были переставлены местами.');
-        }
-        if (positionType === 'short' && stopLoss < entryPrice && takeProfit > entryPrice) {
-          [stopLoss, takeProfit] = [takeProfit, stopLoss];
-          alert('Стоп-лосс и тейк-профит были переставлены местами.');
-        }
+      if(takeProfit!==null){
+        if(positionType==='long'&&stopLoss>entryPrice&&takeProfit<entryPrice){[stopLoss,takeProfit]=[takeProfit,stopLoss]; alert('Стоп-лосс и тейк-профит были переставлены местами.');}
+        if(positionType==='short'&&stopLoss<entryPrice&&takeProfit>entryPrice){[stopLoss,takeProfit]=[takeProfit,stopLoss]; alert('Стоп-лосс и тейк-профит были переставлены местами.');}
       }
 
-      if (positionType === 'long' && stopLoss >= entryPrice) { alert('Для Long стоп-лосс должен быть ниже цены входа'); return; }
-      if (positionType === 'short' && stopLoss <= entryPrice) { alert('Для Short стоп-лосс должен быть выше цены входа'); return; }
+      if(positionType==='long'&&stopLoss>=entryPrice){alert('Для Long стоп-лосс должен быть ниже цены входа');return}
+      if(positionType==='short'&&stopLoss<=entryPrice){alert('Для Short стоп-лосс должен быть выше цены входа');return}
 
-      if (takeProfit !== null) {
-        if (isNaN(takeProfit) || takeProfit <= 0) { alert('Введите корректный тейк-профит (> 0) или оставьте поле пустым'); return; }
-        if (positionType === 'long' && takeProfit <= entryPrice) { alert('Для Long тейк-профит должен быть выше цены входа'); return; }
-        if (positionType === 'short' && takeProfit >= entryPrice) { alert('Для Short тейк-профит должен быть ниже цены входа'); return; }
-      }
+      if(takeProfit!==null){ if(isNaN(takeProfit)||takeProfit<=0){alert('Введите корректный тейк-профит (> 0) или оставьте поле пустым');return} if(positionType==='long'&&takeProfit<=entryPrice){alert('Для Long тейк-профит должен быть выше цены входа');return} if(positionType==='short'&&takeProfit>=entryPrice){alert('Для Short тейк-профит должен быть ниже цены входа');return} }
 
-      const riskAmount = deposit * (riskPercent / 100);
-      const stopDiff = Math.abs(entryPrice - stopLoss);
-      const contractSize = riskAmount / stopDiff;
-      let profitAmount = null;
-      if (takeProfit !== null) {
-        profitAmount = contractSize * Math.abs(takeProfit - entryPrice);
-      }
+      const riskAmount = deposit*(riskPercent/100);
+      const stopDiff = Math.abs(entryPrice-stopLoss);
+      const contractSize = riskAmount/stopDiff;
+      let profitAmount = null; if(takeProfit!==null) profitAmount = contractSize*Math.abs(takeProfit-entryPrice);
 
-      const riskRes = document.getElementById('riskResult');
-      let html = `\n        <div>Размер позиции: ${contractSize.toFixed(4)} монет</div>\n        <div style=\"color: ${'var(--danger)'}\">Максимальный риск: ${riskAmount.toFixed(2)} $</div>\n      `;
-      if (profitAmount !== null) html += `<div style=\"color: ${'var(--success)'}\">Потенциальный профит: ${profitAmount.toFixed(2)} $</div>`;
-      riskRes.innerHTML = html; riskRes.style.display = 'block';
+      document.getElementById('posSize').textContent = `${contractSize.toFixed(4)} монет`;
+      document.getElementById('riskAmount').textContent = `${riskAmount.toFixed(2)} $`;
+      if(profitAmount!==null){ document.getElementById('profitAmount').textContent = `${profitAmount.toFixed(2)} $`; document.getElementById('profitLine').style.display='flex'; } else { document.getElementById('profitLine').style.display='none'; }
+      document.getElementById('riskResult').hidden=false;
     }
 
-    function showSection(id, e) {
-      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
-      if (e && e.target) e.target.classList.add('active');
-      document.getElementById('avgResult').style.display = 'none';
-      document.getElementById('riskResult').style.display = 'none';
-    }
-
-    function showModal(id) { document.getElementById(id).classList.add('active'); }
-    function hideModal(id) { document.getElementById(id).classList.remove('active'); }
-
-    (function(){
-      const container = document.getElementById('bingxContainer');
-      if (!container) return;
-      const imgUrl = 'bingx.jpg';
-      const testImg = new Image();
-      testImg.onload = function() {
-        testImg.width = 44;
-        testImg.height = 44;
-        testImg.alt = 'BingX логотип';
-        testImg.id = 'bingxImg';
-        testImg.style.borderRadius = '12px';
-        testImg.style.padding = '8px';
-        testImg.style.objectFit = 'contain';
-        testImg.className = '';
-        container.replaceWith(testImg);
-      };
-      testImg.onerror = function() {};
-      testImg.src = imgUrl;
-    })();
+    function showSection(id,e){ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); document.getElementById(id).classList.add('active'); if(e&&e.target) e.target.classList.add('active');}
+    function showModal(id){document.getElementById(id).classList.add('active')}
+    function hideModal(id){document.getElementById(id).classList.remove('active')}
   </script>
 </body>
 </html>
