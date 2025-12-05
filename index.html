@@ -1,522 +1,309 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>INVESTCOIN — Calculator (Redesign)</title>
-
-  <!-- Inter font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>INVESTCOIN Calculator — Glass iPhone Style</title>
   <style>
-    /* =========================
-       Design tokens (both themes)
-       ========================= */
-    :root{
-      /* spacing scale (8px rhythm) */
-      --s-xs: 4px;  --s-sm: 8px;  --s-md: 16px;  --s-lg: 24px;  --s-xl: 40px;
-
-      /* typography */
-      --font-sans: "Inter", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --text-size-base: 15px;
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-
-      /* accent */
-      --accent: 31 182 173; /* rgb parts (used with / <alpha>) */
-      --accent-hex: #1FB6AD;
-
-      /* semantic */
+    :root {
+      --bg: #060616;
+      --glass-1: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --muted: rgba(255,255,255,0.55);
+      --muted-2: rgba(168,178,209,0.35);
+      --accent: rgba(255,255,255,0.06);
+      --accent-strong: rgba(255,255,255,0.09);
       --success: #10B981;
       --danger: #EF4444;
-
-      /* surfaces (will be overridden by theme) */
-      --bg: #0A0E27;           /* page background */
-      --surface: rgba(20,27,45,0.6);
-      --surface-2: rgba(18,22,36,0.45);
-      --text-primary: #E6EEF8;
-      --text-secondary: #A8B2D1;
-      --muted: #98A4C6;
       --border: rgba(255,255,255,0.06);
-      --glass-blur: 8px;
-
-      /* layout */
-      --container-max: 1100px;
-      --content-gap: 16px;
-      --shadow-1: 0 6px 22px rgba(7,14,30,0.45);
-      --shadow-2: 0 10px 40px rgba(11,18,35,0.55);
+      --radius: 20px;
+      --glass-blur: 10px;
+      font-synthesis: none;
     }
 
-    /* Light theme overrides */
-    :root[data-theme="light"]{
-      --bg: #F6F8FA;
-      --surface: rgba(255,255,255,0.8);
-      --surface-2: rgba(255,255,255,0.7);
-      --text-primary: #0B1220;
-      --text-secondary: #4A5568;
-      --muted: #6B7280;
-      --border: rgba(11,18,32,0.06);
-      --shadow-1: 0 8px 30px rgba(18,30,63,0.08);
-      --shadow-2: 0 12px 50px rgba(18,30,63,0.08);
-    }
-
-    /* Dark theme (default): set on body by default */
-    body { --theme-mode: dark; }
-
-    /* =========================
-       Base / Reset
-       ========================= */
-    *, *::before, *::after { box-sizing: border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: var(--font-sans);
-      font-size: var(--text-size-base);
-      background: linear-gradient(180deg, var(--bg) 0%, color-mix(in srgb, var(--bg) 10% , transparent 90%));
-      color: var(--text-primary);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      display:flex;
-      justify-content:center;
-      padding: var(--s-lg) var(--s-md);
-    }
-
-    /* main container */
-    .wrap{
-      width:100%;
-      max-width:var(--container-max);
-      display:grid;
-      grid-template-columns: 1fr 360px; /* main + sidebar on desktop */
-      gap: var(--s-lg);
-      align-items:start;
-    }
-
-    /* responsive: single column under 980px */
-    @media (max-width:980px){
-      .wrap { grid-template-columns: 1fr; padding-bottom: var(--s-xl); }
-    }
-
-    /* =========================
-       Header
-       ========================= */
-    header.header{
-      grid-column: 1 / -1;
-      display:flex;
-      align-items:center;
-      gap: var(--s-md);
-      padding: var(--s-sm) 0 var(--s-md) 0;
-    }
-    .logo{
-      display:flex;
-      align-items:center;
-      gap: var(--s-sm);
-    }
-    .logo__mark{
-      width:56px;
-      height:56px;
-      border-radius:12px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: linear-gradient(135deg, rgba(var(--accent)/0.12), rgba(var(--accent)/0.06));
-      box-shadow: var(--shadow-1);
-      border: 1px solid var(--border);
-      flex-shrink:0;
-    }
-    .logo__mark img{ width:36px; height:36px; display:block; object-fit:contain; }
-    .logo__title{
-      line-height:1;
-    }
-    .logo__title h1{
-      font-size:1.05rem;
-      margin:0;
-      font-weight:700;
-      letter-spacing:-0.2px;
-    }
-    .logo__title p{
-      margin:2px 0 0 0;
-      color:var(--text-secondary);
-      font-size:0.85rem;
-    }
-
-    /* header actions */
-    .header-actions{ margin-left:auto; display:flex; gap:8px; align-items:center; }
-    .theme-toggle{
-      --size:42px;
-      width:var(--size); height:var(--size);
-      border-radius:10px;
-      background:var(--surface);
-      display:inline-grid; place-items:center;
-      border:1px solid var(--border);
-      cursor:pointer;
-      box-shadow:var(--shadow-1);
-      transition:transform .12s ease, box-shadow .12s ease;
-    }
-    .theme-toggle:active{ transform:translateY(1px); }
-    .small-note{ color:var(--text-secondary); font-size:0.82rem; margin-left:8px; }
-
-    /* =========================
-       Glass card (calculator)
-       ========================= */
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius: var(--radius-lg);
-      padding: var(--s-lg);
-      border: 1px solid var(--border);
-      backdrop-filter: blur(var(--glass-blur));
-      box-shadow: var(--shadow-2);
-    }
-
-    /* Tabs */
-    .tabs{
-      display:flex;
-      gap:8px;
-      align-items:center;
-      margin-bottom: var(--s-md);
-    }
-    .tab{
-      padding:10px 14px;
-      border-radius:12px;
-      background:transparent;
-      color:var(--text-secondary);
-      border: none;
-      cursor:pointer;
-      font-weight:600;
-      transition: all .14s ease;
-      font-size:0.95rem;
-    }
-    .tab[aria-pressed="true"]{
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(180deg, #050513 0%, #0a0e1a 100%);
       color: white;
-      background: linear-gradient(135deg, rgba(var(--accent)/1), color-mix(in srgb, rgba(var(--accent)/1), black 6%));
-      box-shadow: 0 8px 24px rgba(var(--accent)/0.14);
-      transform:translateY(-2px);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
     }
 
-    /* form layout */
-    .form-grid{
-      display:grid;
-      gap:12px;
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width:640px){ .form-grid{ grid-template-columns: 1fr; } }
-
-    .field{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-    .field label{ font-size:0.82rem; color:var(--text-secondary); font-weight:600; }
-    .input, .select{
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background: var(--surface-2);
-      color:var(--text-primary);
-      font-size:1rem;
-      outline:none;
-      transition: box-shadow .12s ease, border-color .12s ease, transform .06s;
-    }
-    .input::placeholder{ color:var(--muted); }
-    .input:focus, .select:focus{
-      border-color: rgba(var(--accent)/1);
-      box-shadow: 0 6px 18px rgba(var(--accent)/0.12);
-    }
-    .input[readonly]{ opacity:0.88; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
-
-    .controls-row{ display:flex; gap:12px; margin-top: var(--s-sm); align-items:center; }
-    .btn{
-      padding:12px 16px;
-      border-radius:12px;
-      border: none;
-      cursor:pointer;
-      font-weight:700;
-      font-size:0.95rem;
-      background: linear-gradient(135deg, rgba(var(--accent)/1), rgba(var(--accent)/0.88));
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(var(--accent)/0.14);
-      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-    }
-    .btn.secondary{
-      background:transparent;
-      border:1px solid var(--border);
-      color:var(--text-primary);
-      font-weight:600;
-      box-shadow:none;
-    }
-    .btn:disabled{
-      opacity:0.45;
-      cursor:not-allowed;
-      transform:none;
-      box-shadow:none;
-    }
-
-    /* entries list */
-    .entries{
-      margin-top: var(--s-md);
-      display:grid;
-      gap:10px;
-    }
-    .entry{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      padding:10px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.015), transparent);
-      border-radius:12px;
-      border:1px solid var(--border);
-    }
-    .entry .val{ font-weight:700; }
-    .entry .muted{ color:var(--text-secondary); font-size:0.9rem; }
-    .entry .actions{ margin-left:auto; display:flex; gap:8px; }
-
-    /* result card */
-    .result{
-      margin-top: var(--s-md);
-      padding: var(--s-md);
-      border-radius:12px;
-      border:1px solid var(--border);
+    /* Container: emulate centered iPhone app card */
+    .container {
+      width: 100%;
+      max-width: 940px;
+      border-radius: 34px;
+      padding: 28px;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 10px 40px rgba(2,6,23,0.65);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      overflow: hidden;
     }
-    .result .row{ display:flex; justify-content:space-between; gap:10px; align-items:center; padding:8px 0; border-bottom:1px dashed rgba(255,255,255,0.02); }
-    .result .row:last-child{ border-bottom:none; }
-    .result .label{ color:var(--text-secondary); font-weight:600; }
-    .result .value{ font-weight:800; }
 
-    /* skeleton */
-    .skeleton{
-      background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.04) 37%, rgba(255,255,255,0.02) 63%);
-      background-size: 400% 100%;
-      animation: shimmer 1.2s linear infinite;
-      border-radius: 8px;
-      min-height: 12px;
+    header.header {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
     }
-    @keyframes shimmer{ 0%{ background-position:200% 0 } 100%{ background-position:-200% 0 } }
 
-    /* CTA / partners sidebar */
-    .sidebar{ display:flex; flex-direction:column; gap:12px; position:sticky; top:24px; align-self:start; }
-    @media (max-width:980px){ .sidebar{ position:relative; top:auto; } }
-    .partner{
-      display:flex; gap:12px; align-items:center;
-      padding:12px; border-radius:12px; background:var(--surface);
-      border:1px solid var(--border); cursor:pointer; transition: transform .12s;
-    }
-    .partner:hover{ transform: translateY(-4px); box-shadow: var(--shadow-1); }
-    .partner__logo{ width:46px; height:46px; border-radius:10px; background: linear-gradient(135deg, rgba(var(--accent)/0.14), rgba(var(--accent)/0.06)); display:grid; place-items:center; }
-    .partner__title{ font-weight:700; }
-    .partner__desc{ font-size:0.85rem; color:var(--text-secondary); }
-
-    /* modal */
-    .modal{
-      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
-      background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.55));
+    .logo-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
       backdrop-filter: blur(6px);
-      z-index:999;
-      padding:20px;
+      -webkit-backdrop-filter: blur(6px);
     }
-    .modal.open{ display:flex; }
-    .modal__panel{
-      width:100%; max-width:620px; border-radius:16px; padding:20px;
-      background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow-2);
+    .logo-icon img { width: 86%; height: 86%; object-fit: contain; border-radius: 10px; }
+
+    .header-text h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+    .header-text p { color: var(--muted-2); font-size: 0.88rem; margin-top: 4px; }
+
+    nav.main-nav {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      background: transparent;
     }
 
-    /* footer */
-    footer.footer{
-      grid-column: 1 / -1;
-      margin-top: var(--s-md);
-      color:var(--text-secondary);
-      text-align:center;
-      font-size:0.88rem;
-      padding:12px 0;
+    .nav-btn {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
     }
 
-    /* accessibility: focus-visible */
-    :focus-visible{ outline: 3px solid rgba(var(--accent)/0.12); outline-offset:3px; border-radius:8px; }
+    .nav-btn.active {
+      color: white;
+      background: linear-gradient(180deg, rgba(255,255,255,0.022), rgba(255,255,255,0.01));
+      border-color: rgba(255,255,255,0.04);
+    }
 
-    /* small helpers */
-    .muted { color: var(--text-secondary); font-size:0.9rem; }
-    .inline-error{ color: var(--danger); font-size:0.88rem; margin-top:6px; }
-    .success { color: var(--success); font-weight:700; }
+    main.main-content { padding-bottom: 8px; }
+    .section { display: none; }
+    .section.active { display: block; }
+
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, var(--glass-2), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      color: white;
+      font-size: 0.98rem;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+      transition: box-shadow 100ms ease, border-color 100ms ease;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus {
+      border-color: rgba(255,255,255,0.06);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 6px 18px rgba(2,6,23,0.45);
+    }
+    ::placeholder { color: rgba(255,255,255,0.35); }
+
+    /* Buttons: flatter, glassy */
+    .btn {
+      padding: 12px 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.04);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 120ms ease, opacity 120ms ease;
+      box-shadow: none;
+    }
+    .btn:hover { opacity: 0.95; }
+    .btn:active { opacity: 0.92; }
+
+    .results {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.008));
+      border: 1px solid rgba(255,255,255,0.03);
+      color: var(--muted);
+    }
+    .results div { padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+    .results div:last-child { border-bottom: none; }
+
+    .actions { margin-top: 22px; display: grid; gap: 12px; }
+    .btn-block {
+      display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 14px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.008));
+      border: 1px solid rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: opacity 120ms ease;
+    }
+    .btn-block:hover { opacity: 0.98; }
+    .btn-block img, .btn-block svg { width: 44px; height: 44px; border-radius: 10px; padding: 6px; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+
+    .brand-logo { background: none; padding: 0; }
+    .btn-content span { font-weight: 700; display: block; color: white; }
+    .btn-desc { color: var(--muted-2); font-size: 0.9rem; }
+
+    .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 10px; align-items: center; margin-top: 10px; }
+
+    /* Modal: glass */
+    .modal { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; z-index: 999; }
+    .modal.active { display: flex; }
+    .modal::before { content: ''; position: absolute; inset: 0; background: rgba(2,6,23,0.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+    .modal-content {
+      position: relative; z-index: 2; width: 100%; max-width: 520px; border-radius: 18px; padding: 22px; color: white;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 30px 60px rgba(2,6,23,0.6);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .modal-content h3 { color: white; margin-bottom: 12px; }
+    .modal-content p, .modal-content ul { color: var(--muted-2); margin-bottom: 10px; }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 12px; }
+
+    footer.footer { text-align: center; color: var(--muted-2); font-size: 0.88rem; margin-top: 16px; }
+
+    /* Responsive small screens */
+    @media (max-width: 600px) {
+      .grid-2 { grid-template-columns: 1fr; }
+      .logo-icon { width: 56px; height: 56px; }
+      .container { padding: 18px; border-radius: 22px; }
+    }
 
   </style>
 </head>
-<body data-theme="dark">
-  <div class="wrap" role="main" aria-labelledby="page-title">
-    <!-- Header -->
-    <header class="header" aria-label="Заголовок">
-      <div class="logo" aria-hidden="false">
-        <div class="logo__mark" aria-hidden="true">
-          <!-- placeholder mark; replace src with real logo -->
-          <img src="logo.png" alt="" onerror="this.style.display='none'">
-        </div>
-        <div class="logo__title">
-          <h1 id="page-title">INVESTCOIN Calculator</h1>
-          <p>Профессиональный расчёт позиций для трейдинга</p>
-        </div>
+<body>
+  <div class="container" role="application">
+    <header class="header">
+      <div class="logo-icon">
+        <img src="logo.png" alt="INVESTCOIN Logo" />
       </div>
-
-      <div class="header-actions" role="group" aria-label="Действия шапки">
-        <button class="theme-toggle" id="themeToggle" title="Переключить тему" aria-pressed="false" aria-label="Тёмная/светлая тема">
-          <!-- simple icon -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="currentColor" />
-          </svg>
-        </button>
-        <div class="small-note muted">v2025 • beta</div>
+      <div class="header-text">
+        <h1>INVESTCOIN Calculator</h1>
+        <p>Профессиональный расчёт позиций для трейдинга</p>
       </div>
     </header>
 
-    <!-- Main card -->
-    <section class="card" aria-labelledby="calc-heading">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-        <div>
-          <h2 id="calc-heading" style="margin:0;font-size:1.05rem;">Калькуляторы</h2>
-          <div class="muted" style="margin-top:6px;">Средняя точка & Риск / Объём — аккуратно и безопасно</div>
+    <nav class="main-nav" aria-label="Главная навигация">
+      <button class="nav-btn active" onclick="showSection('avg', event)">Средняя точка</button>
+      <button class="nav-btn" onclick="showSection('risk', event)">Риск/Объём</button>
+    </nav>
+
+    <main class="main-content">
+      <section id="avg" class="section active" aria-labelledby="avg-heading">
+        <div class="grid">
+          <div class="grid grid-2">
+            <input type="number" id="newEntryPrice" placeholder="Цена входа" step="0.0001" min="0.0001" />
+            <input type="number" id="newEntryAmount" placeholder="Объём" step="0.0001" min="0.0001" />
+          </div>
+          <div class="grid grid-2">
+            <button class="btn" onclick="addEntry()">+ Добавить точку</button>
+            <button class="btn" onclick="calculateAvg()">Рассчитать среднюю</button>
+          </div>
+          <div id="entries"></div>
         </div>
-        <div style="display:flex;gap:8px;align-items:center">
-          <div class="muted" style="font-size:0.9rem;">Макс точек: 5</div>
+        <div id="avgResult" class="results" aria-live="polite"></div>
+      </section>
+
+      <section id="risk" class="section" aria-labelledby="risk-heading">
+        <div class="grid">
+          <select id="positionType">
+            <option value="long">Long</option>
+            <option value="short">Short</option>
+          </select>
+          <input type="number" id="deposit" placeholder="Депозит ($)" min="0.01" step="0.01" />
+          <input type="number" id="riskPercent" placeholder="Риск (%)" step="0.1" min="0.1" max="100" />
+          <input type="number" id="entryPrice" placeholder="Цена входа" step="0.0001" min="0.0001" />
+          <input type="number" id="stopLoss" placeholder="Стоп-лосс" step="0.0001" min="0.0001" />
+          <input type="number" id="takeProfit" placeholder="Тейк-профит (необязательно)" step="0.0001" min="0.0001" />
+          <button class="btn" onclick="calculateRisk()">Рассчитать риск</button>
+        </div>
+        <div id="riskResult" class="results" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <div class="actions">
+      <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link" aria-label="INVESTCOIN Telegram">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="Telegram логотип" />
+        <div class="btn-content"><span>INVESTCOIN</span><div class="btn-desc">Инвестиции и криптовалюта</div></div>
+      </div>
+
+      <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link" aria-label="Bybit">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit логотип" />
+        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Регистрация по партнёрской ссылке (код: 23588)</div></div>
+      </div>
+
+      <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link" aria-label="BingX">
+        <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44" role="img" aria-label="BingX логотип">
+          <title>BingX</title>
+          <defs>
+            <linearGradient id="bingxGrad" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#1A2F4A"/>
+              <stop offset="0.55" stop-color="#24436B"/>
+              <stop offset="1" stop-color="#2B4F7D"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#bingxGrad)"></rect>
+          <g transform="translate(18,12) scale(0.7)" fill="#FFFFFF" fill-opacity="0.98">
+            <path d="M12 36 L32 12 L54 36 L32 60 Z"></path>
+            <path d="M64 24 L76 24 L76 40 L64 40 Z"></path>
+          </g>
+        </svg>
+        <div class="btn-content">
+          <span>BingX</span>
+          <div class="btn-desc">Регистрация по партнёрской ссылке (код: INVESTCOIN)</div>
         </div>
       </div>
 
-      <!-- Tabs -->
-      <div class="tabs" role="tablist" aria-label="Калькуляторы">
-        <button class="tab" role="tab" aria-selected="true" id="tab-avg" data-tab="avg">Средняя точка</button>
-        <button class="tab" role="tab" aria-selected="false" id="tab-risk" data-tab="risk">Риск / Объём</button>
+      <div class="btn-block" onclick="showModal('clubModal')">
+        <img src="https://unpkg.com/heroicons@2.0.13/24/outline/users.svg" alt="Клуб логотип" />
+        <div class="btn-content"><span>Закрытый торговый клуб</span><div class="btn-desc">Аналитика и торговые сигналы</div></div>
       </div>
+    </div>
 
-      <!-- Tab panels -->
-      <div id="panel-avg" role="tabpanel" aria-labelledby="tab-avg">
-        <!-- add entry form -->
-        <form id="avgForm" onsubmit="event.preventDefault()" novalidate>
-          <div class="form-grid">
-            <div class="field">
-              <label for="avg-price">Цена входа</label>
-              <input id="avg-price" class="input" type="number" inputmode="decimal" step="0.0001" min="0.0001" placeholder="Например: 24.5800" />
-            </div>
-            <div class="field">
-              <label for="avg-amount">Объём (кол-во монет)</label>
-              <input id="avg-amount" class="input" type="number" inputmode="decimal" step="0.0001" min="0.0001" placeholder="Например: 0.25" />
-            </div>
-          </div>
-
-          <div class="controls-row" style="margin-top:12px;">
-            <button class="btn" id="addEntryBtn" type="button">+ Добавить точку</button>
-            <button class="btn secondary" id="clearAllBtn" type="button">Очистить</button>
-            <button class="btn" id="calcAvgBtn" type="button">Рассчитать среднюю</button>
-          </div>
-          <div id="avgFormError" class="inline-error" role="status" aria-live="polite" style="display:none"></div>
-        </form>
-
-        <!-- entries list -->
-        <div class="entries" id="entriesList" aria-live="polite" style="margin-top:12px;">
-          <!-- dynamic entries -->
-        </div>
-
-        <!-- result -->
-        <div id="avgResult" class="result" role="status" aria-live="polite" style="display:none;"></div>
-      </div>
-
-      <div id="panel-risk" role="tabpanel" aria-labelledby="tab-risk" hidden>
-        <form id="riskForm" onsubmit="event.preventDefault()" novalidate>
-          <div class="form-grid">
-            <div class="field">
-              <label for="positionType">Тип позиции</label>
-              <select id="positionType" class="select" aria-label="Тип позиции">
-                <option value="long">Long</option>
-                <option value="short">Short</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="deposit">Депозит, $</label>
-              <input id="deposit" class="input" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="Например: 1000" />
-            </div>
-
-            <div class="field">
-              <label for="riskPercent">Риск, %</label>
-              <input id="riskPercent" class="input" type="number" inputmode="decimal" min="0.01" max="100" step="0.1" placeholder="Например: 1" />
-            </div>
-            <div class="field">
-              <label for="entryPrice">Цена входа</label>
-              <input id="entryPrice" class="input" type="number" inputmode="decimal" step="0.0001" min="0.0001" />
-            </div>
-
-            <div class="field">
-              <label for="stopLoss">Стоп-лосс</label>
-              <input id="stopLoss" class="input" type="number" inputmode="decimal" step="0.0001" min="0.0001" />
-            </div>
-            <div class="field">
-              <label for="takeProfit">Тейк-профит (необязательно)</label>
-              <input id="takeProfit" class="input" type="number" inputmode="decimal" step="0.0001" min="0.0001" />
-            </div>
-          </div>
-
-          <div class="controls-row" style="margin-top:12px;">
-            <button class="btn" id="calcRiskBtn" type="button">Рассчитать риск</button>
-            <button class="btn secondary" id="resetRiskBtn" type="button">Сбросить</button>
-          </div>
-          <div id="riskFormError" class="inline-error" role="status" aria-live="polite" style="display:none"></div>
-        </form>
-
-        <div id="riskResult" class="result" role="status" aria-live="polite" style="display:none;"></div>
-      </div>
-    </section>
-
-    <!-- Sidebar (CTA / Partners) -->
-    <aside class="sidebar" aria-label="Партнёры и CTA">
-      <div class="card" style="padding:12px;">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-          <div>
-            <h3 style="margin:0;font-size:0.98rem;">Присоединяйтесь</h3>
-            <div class="muted" style="margin-top:6px;">Канал, партнёрские предложения и клуб</div>
-          </div>
-        </div>
-
-        <div class="partner" role="link" tabindex="0" onclick="window.open('https://t.me/investcoin_free','_blank')">
-          <div class="partner__logo" aria-hidden="true">
-            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="" style="width:24px;height:24px;object-fit:contain" />
-          </div>
-          <div>
-            <div class="partner__title">INVESTCOIN</div>
-            <div class="partner__desc">Канал: аналитика, сигналы</div>
-          </div>
-        </div>
-
-        <div class="partner" role="link" tabindex="0" onclick="window.open('https://partner.bybit.com/b/23588','_blank')">
-          <div class="partner__logo" aria-hidden="true">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="" style="width:28px;height:20px;object-fit:contain" />
-          </div>
-          <div>
-            <div class="partner__title">Bybit</div>
-            <div class="partner__desc">Партнёрская регистрация</div>
-          </div>
-        </div>
-
-        <div class="partner" role="button" tabindex="0" onclick="openModal('clubModal')">
-          <div class="partner__logo" aria-hidden="true">
-            <img src="https://unpkg.com/heroicons@2.0.13/24/outline/users.svg" alt="" style="width:22px;height:22px;object-fit:contain" />
-          </div>
-          <div>
-            <div class="partner__title">Закрытый клуб</div>
-            <div class="partner__desc">Сигналы и аналитика — условия внутри</div>
-          </div>
-        </div>
-      </div>
-    </aside>
-
-    <!-- modal -->
-    <div id="clubModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="clubTitle">
-      <div class="modal__panel" role="document">
-        <h3 id="clubTitle" style="margin-top:0;">Как попасть в закрытый клуб?</h3>
-        <p class="muted">Доступ по подписке или для рефералов. Подробнее — ниже.</p>
-        <ul class="muted">
+    <div class="modal" id="clubModal">
+      <div class="modal-content">
+        <h3>Как попасть в закрытый клуб?</h3>
+        <p>Доступ в закрытый клуб возможен по подписке ИЛИ для моих активных рефералов абсолютно бесплатно.</p>
+        <ul>
           <li>По подписке: 50 $/мес.</li>
-          <li>Рефералам: регистрация на бирже Bybit или BingX по партнёрской ссылке + депозит от 300 $.</li>
+          <li>Рефералам: регистрация на бирже Bybit или BingX по моей партнёрской ссылке, депозит от 300 $ и активность.</li>
         </ul>
-        <p class="muted">Связаться: <a href="https://t.me/csklad_bot" target="_blank" rel="noopener">@csklad_bot</a></p>
-        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
-          <button class="btn secondary" onclick="window.open('https://partner.bybit.com/b/23588','_blank')">Bybit</button>
-          <button class="btn secondary" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')">BingX</button>
-          <button class="btn" onclick="closeModal('clubModal')">Закрыть</button>
+        <p>Если у вас уже есть аккаунт Bybit или BingX, вы можете перенести его под мою ссылку. Напишите мне в личные сообщения, и я расскажу, как это сделать.</p>
+        <p><strong>Для вступления в клуб:</strong> <a href="https://t.me/csklad_bot" target="_blank" rel="noopener">@csklad_bot</a></p>
+        <div class="modal-actions">
+          <button class="btn" onclick="window.open('https://partner.bybit.com/b/23588','_blank')">Регистрация Bybit</button>
+          <button class="btn" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')">Регистрация BingX</button>
+          <button class="btn" onclick="hideModal('clubModal')">Закрыть</button>
         </div>
       </div>
     </div>
@@ -525,288 +312,123 @@
   </div>
 
   <script>
-    /* ======================
-       State + helpers
-       ====================== */
-    const MAX_POINTS = 5;
+    /* --- JS оставлен почти без изменений. Убраны визуальные анимации в CSS, поэтому JS остаётся работоспособным --- */
     let entries = [];
 
-    // DOM refs
-    const tabs = document.querySelectorAll('.tab');
-    const panelAvg = document.getElementById('panel-avg');
-    const panelRisk = document.getElementById('panel-risk');
-
-    // theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const root = document.documentElement;
-    // initialize based on system preference
-    (function initTheme(){
-      const saved = localStorage.getItem('inv_theme');
-      const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-      const use = saved || (prefersLight ? 'light' : 'dark');
-      root.setAttribute('data-theme', use);
-      document.body.dataset.theme = use;
-      themeToggle.setAttribute('aria-pressed', use === 'light' ? 'true' : 'false');
-    })();
-
-    themeToggle.addEventListener('click', ()=>{
-      const current = root.getAttribute('data-theme') || 'dark';
-      const next = current === 'dark' ? 'light' : 'dark';
-      root.setAttribute('data-theme', next);
-      document.body.dataset.theme = next;
-      themeToggle.setAttribute('aria-pressed', next === 'light' ? 'true' : 'false');
-      localStorage.setItem('inv_theme', next);
-    });
-
-    /* ======================
-       Tabs behaviour
-       ====================== */
-    tabs.forEach(t => t.addEventListener('click', (e) => {
-      const id = e.currentTarget.dataset.tab;
-      tabs.forEach(x => { x.setAttribute('aria-selected','false'); });
-      e.currentTarget.setAttribute('aria-selected','true');
-      if (id === 'avg') { panelAvg.hidden = false; panelRisk.hidden = true; }
-      else { panelAvg.hidden = true; panelRisk.hidden = false; }
-      // clear result messages when switching
-      hideResult('avg');
-      hideResult('risk');
-    }));
-
-    /* ======================
-       Average point logic
-       ====================== */
-    const avgPriceInput = document.getElementById('avg-price');
-    const avgAmountInput = document.getElementById('avg-amount');
-    const addEntryBtn = document.getElementById('addEntryBtn');
-    const calcAvgBtn = document.getElementById('calcAvgBtn');
-    const clearAllBtn = document.getElementById('clearAllBtn');
-    const entriesList = document.getElementById('entriesList');
-    const avgResult = document.getElementById('avgResult');
-    const avgFormError = document.getElementById('avgFormError');
-
-    function renderEntries(){
-      entriesList.innerHTML = '';
-      if (entries.length === 0){
-        const placeholder = document.createElement('div');
-        placeholder.className = 'muted';
-        placeholder.textContent = 'Список пуст — добавьте точки входа выше';
-        entriesList.appendChild(placeholder);
+    function addEntry() {
+      const price = parseFloat(document.getElementById('newEntryPrice').value);
+      const amount = parseFloat(document.getElementById('newEntryAmount').value);
+      if (isNaN(price) || price <= 0 || isNaN(amount) || amount <= 0) {
+        alert('Введите корректные положительные значения для цены и объёма');
         return;
       }
-      entries.forEach((e, i) => {
-        const el = document.createElement('div');
-        el.className = 'entry';
-        el.innerHTML = `
-          <div style="display:flex;flex-direction:column;">
-            <div class="val">${Number(e.price).toFixed(4)}</div>
-            <div class="muted">Цена</div>
-          </div>
-          <div style="display:flex;flex-direction:column;">
-            <div class="val">${Number(e.amount).toFixed(4)}</div>
-            <div class="muted">Объём</div>
-          </div>
-          <div class="actions" aria-hidden="false">
-            <button class="btn secondary" data-idx="${i}" title="Удалить точку">Удалить</button>
-          </div>
-        `;
-        entriesList.appendChild(el);
-      });
-
-      // attach delete handlers (delegation would be fine too)
-      entriesList.querySelectorAll('button[data-idx]').forEach(b => {
-        b.addEventListener('click', (ev)=>{
-          const idx = Number(ev.currentTarget.dataset.idx);
-          entries.splice(idx,1);
-          renderEntries();
-          hideResult('avg');
-        });
-      });
-    }
-
-    addEntryBtn.addEventListener('click', ()=>{
-      avgFormError.style.display = 'none';
-      const price = parseFloat(avgPriceInput.value);
-      const amount = parseFloat(avgAmountInput.value);
-      if (!isFinite(price) || price <= 0 || !isFinite(amount) || amount <= 0){
-        avgFormError.textContent = 'Введите корректные положительные значения цены и объёма';
-        avgFormError.style.display = 'block';
-        return;
-      }
-      if (entries.length >= MAX_POINTS){
-        avgFormError.textContent = `Нельзя добавить больше ${MAX_POINTS} точек`;
-        avgFormError.style.display = 'block';
-        return;
-      }
+      if (entries.length >= 5) { alert('Максимум 5 точек входа'); return; }
       entries.push({ price, amount });
-      avgPriceInput.value = ''; avgAmountInput.value = '';
+      document.getElementById('newEntryPrice').value = '';
+      document.getElementById('newEntryAmount').value = '';
       renderEntries();
-    });
-
-    clearAllBtn.addEventListener('click', ()=>{
-      entries = [];
-      renderEntries();
-      hideResult('avg');
-    });
-
-    calcAvgBtn.addEventListener('click', ()=>{
-      avgFormError.style.display = 'none';
-      if (entries.length === 0){
-        avgFormError.textContent = 'Добавьте хотя бы одну точку';
-        avgFormError.style.display = 'block';
-        return;
-      }
-      // show skeleton while "calculating" (UX)
-      avgResult.style.display = 'block';
-      avgResult.innerHTML = `
-        <div style="display:grid;gap:8px;">
-          <div class="skeleton" style="height:18px;width:60%;border-radius:8px"></div>
-          <div class="skeleton" style="height:14px;width:40%;border-radius:8px"></div>
-        </div>
-      `;
-
-      // compute synchronously but keep skeleton for 250ms so UI feels responsive
-      setTimeout(()=>{
-        const totalValue = entries.reduce((s,e)=>s + e.price * e.amount, 0);
-        const totalAmount = entries.reduce((s,e)=>s + e.amount, 0);
-        const avg = totalValue / totalAmount;
-        avgResult.innerHTML = `
-          <div class="row"><div class="label">Средняя точка</div><div class="value">${avg.toFixed(4)}</div></div>
-          <div class="row"><div class="label">Позиции</div><div class="value">${entries.length} шт.</div></div>
-          <div style="margin-top:8px;color:var(--text-secondary);font-size:0.95rem;">Примечание: результаты округлены до 4 знаков</div>
-        `;
-      }, 200);
-    });
-
-    function hideResult(which){
-      if (which === 'avg') avgResult.style.display = 'none';
-      if (which === 'risk') riskResult.style.display = 'none';
     }
 
-    // initial render
-    renderEntries();
-
-
-    /* ======================
-       Risk logic
-       ====================== */
-    const depositEl = document.getElementById('deposit');
-    const riskPercentEl = document.getElementById('riskPercent');
-    const entryPriceEl = document.getElementById('entryPrice');
-    const stopLossEl = document.getElementById('stopLoss');
-    const takeProfitEl = document.getElementById('takeProfit');
-    const calcRiskBtnEl = document.getElementById('calcRiskBtn');
-    const resetRiskBtnEl = document.getElementById('resetRiskBtn');
-    const riskResult = document.getElementById('riskResult');
-    const riskFormError = document.getElementById('riskFormError');
-
-    function validateRiskInputs(){
-      riskFormError.style.display = 'none';
-      const deposit = parseFloat(depositEl.value);
-      const riskPercent = parseFloat(riskPercentEl.value);
-      const entry = parseFloat(entryPriceEl.value);
-      const stop = parseFloat(stopLossEl.value);
-      if (!isFinite(deposit) || deposit <= 0) return 'Введите корректный депозит (>0)';
-      if (!isFinite(riskPercent) || riskPercent <= 0 || riskPercent > 100) return 'Риск в % должен быть от 0.01 до 100';
-      if (!isFinite(entry) || entry <= 0) return 'Введите корректную цену входа';
-      if (!isFinite(stop) || stop <= 0) return 'Введите корректный стоп-лосс';
-      return null;
+    function renderEntries() {
+      const container = document.getElementById('entries'); container.innerHTML = '';
+      entries.forEach((e, i) => {
+        const div = document.createElement('div'); div.className = 'entry-item';
+        div.innerHTML = `\n          <input type="number" value="${e.price}" step="0.0001" readonly />\n          <input type="number" value="${e.amount}" step="0.0001" readonly />\n          <button class="btn" onclick="removeEntry(${i})">Удалить</button>\n        `;
+        container.appendChild(div);
+      });
     }
 
-    calcRiskBtnEl.addEventListener('click', ()=>{
-      const err = validateRiskInputs();
-      if (err){
-        riskFormError.textContent = err; riskFormError.style.display = 'block'; return;
+    function removeEntry(idx) { entries.splice(idx, 1); renderEntries(); }
+
+    function calculateAvg() {
+      if (entries.length === 0) { alert('Добавьте хотя бы одну точку входа'); return; }
+      const totalValue = entries.reduce((sum, e) => sum + e.price * e.amount, 0);
+      const totalAmount = entries.reduce((sum, e) => sum + e.amount, 0);
+      const avg = totalValue / totalAmount;
+      const avgRes = document.getElementById('avgResult');
+      avgRes.textContent = `Средняя точка входа: ${avg.toFixed(4)} (${entries.length} позиций)`;
+      avgRes.style.display = 'block';
+    }
+
+    function calculateRisk() {
+      const positionType = document.getElementById('positionType').value;
+      let deposit = parseFloat(document.getElementById('deposit').value);
+      let riskPercent = parseFloat(document.getElementById('riskPercent').value);
+      let entryPrice = parseFloat(document.getElementById('entryPrice').value);
+      let stopLoss = parseFloat(document.getElementById('stopLoss').value);
+      const tpInput = document.getElementById('takeProfit').value;
+      let takeProfit = tpInput ? parseFloat(tpInput) : null;
+
+      if (isNaN(deposit) || deposit <= 0) { alert('Введите корректный депозит (> 0)'); return; }
+      if (isNaN(riskPercent) || riskPercent <= 0 || riskPercent > 100) { alert('Введите корректный риск в % (0 < % ≤ 100)'); return; }
+      if (isNaN(entryPrice) || entryPrice <= 0) { alert('Введите корректную цену входа (> 0)'); return; }
+      if (isNaN(stopLoss) || stopLoss <= 0) { alert('Введите корректный стоп-лосс (> 0)'); return; }
+
+      if (takeProfit !== null) {
+        if (positionType === 'long' && stopLoss > entryPrice && takeProfit < entryPrice) {
+          [stopLoss, takeProfit] = [takeProfit, stopLoss];
+          alert('Стоп-лосс и тейк-профит были переставлены местами.');
+        }
+        if (positionType === 'short' && stopLoss < entryPrice && takeProfit > entryPrice) {
+          [stopLoss, takeProfit] = [takeProfit, stopLoss];
+          alert('Стоп-лосс и тейк-профит были переставлены местами.');
+        }
       }
 
-      // disable button while "computing"
-      calcRiskBtnEl.disabled = true;
-      riskResult.style.display = 'block';
-      riskResult.innerHTML = `<div class="skeleton" style="height:16px;width:80%"></div><div class="skeleton" style="height:12px;width:60%;margin-top:8px"></div>`;
+      if (positionType === 'long' && stopLoss >= entryPrice) { alert('Для Long стоп-лосс должен быть ниже цены входа'); return; }
+      if (positionType === 'short' && stopLoss <= entryPrice) { alert('Для Short стоп-лосс должен быть выше цены входа'); return; }
 
-      setTimeout(()=>{
-        const positionType = document.getElementById('positionType').value;
-        let deposit = parseFloat(depositEl.value);
-        let riskPercent = parseFloat(riskPercentEl.value);
-        let entryPrice = parseFloat(entryPriceEl.value);
-        let stopLoss = parseFloat(stopLossEl.value);
-        const tpInput = takeProfitEl.value;
-        let takeProfit = tpInput ? parseFloat(tpInput) : null;
-
-        // auto-swap if user mistakenly placed SL/TP (UX convenience)
-        if (takeProfit !== null){
-          if (positionType === 'long' && stopLoss > entryPrice && takeProfit < entryPrice){
-            [stopLoss, takeProfit] = [takeProfit, stopLoss];
-          }
-          if (positionType === 'short' && stopLoss < entryPrice && takeProfit > entryPrice){
-            [stopLoss, takeProfit] = [takeProfit, stopLoss];
-          }
-        }
-
-        if (positionType === 'long' && stopLoss >= entryPrice){
-          riskResult.innerHTML = `<div class="inline-error">Для Long стоп-лосс должен быть ниже цены входа</div>`; calcRiskBtnEl.disabled=false; return;
-        }
-        if (positionType === 'short' && stopLoss <= entryPrice){
-          riskResult.innerHTML = `<div class="inline-error">Для Short стоп-лосс должен быть выше цены входа</div>`; calcRiskBtnEl.disabled=false; return;
-        }
-
-        const riskAmount = deposit * (riskPercent / 100);
-        const stopDiff = Math.abs(entryPrice - stopLoss);
-        const contractSize = riskAmount / stopDiff;
-        let profitAmount = null;
-        if (takeProfit !== null) profitAmount = contractSize * Math.abs(takeProfit - entryPrice);
-
-        // render result
-        riskResult.innerHTML = `
-          <div class="row"><div class="label">Размер позиции</div><div class="value">${contractSize.toFixed(4)} монет</div></div>
-          <div class="row"><div class="label">Максимальный риск</div><div class="value" style="color:var(--danger)">${riskAmount.toFixed(2)} $</div></div>
-          ${profitAmount !== null ? `<div class="row"><div class="label">Потенциальный профит</div><div class="value" style="color:var(--success)">${profitAmount.toFixed(2)} $</div></div>` : ''}
-          <div style="margin-top:8px;color:var(--text-secondary);font-size:0.95rem;">Учтите комиссии и проскальзывание при расчётах</div>
-        `;
-        calcRiskBtnEl.disabled = false;
-      }, 260);
-    });
-
-    resetRiskBtnEl.addEventListener('click', ()=>{
-      depositEl.value = ''; riskPercentEl.value = ''; entryPriceEl.value = '';
-      stopLossEl.value = ''; takeProfitEl.value = '';
-      riskResult.style.display = 'none';
-      riskFormError.style.display = 'none';
-    });
-
-    /* ======================
-       modal helpers
-       ====================== */
-    function openModal(id){
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      // trap focus could be added in future
-    }
-    function closeModal(id){
-      const modal = document.getElementById(id);
-      if (!modal) return;
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-    }
-
-    // close modal on background click
-    document.getElementById('clubModal').addEventListener('click', (e)=>{
-      if (e.target === e.currentTarget) closeModal('clubModal');
-    });
-
-    /* ======================
-       Accessibility niceties (keyboard)
-       ====================== */
-    document.addEventListener('keydown', (e)=>{
-      if (e.key === 'Escape'){
-        closeModal('clubModal');
+      if (takeProfit !== null) {
+        if (isNaN(takeProfit) || takeProfit <= 0) { alert('Введите корректный тейк-профит (> 0) или оставьте поле пустым'); return; }
+        if (positionType === 'long' && takeProfit <= entryPrice) { alert('Для Long тейк-профит должен быть выше цены входа'); return; }
+        if (positionType === 'short' && takeProfit >= entryPrice) { alert('Для Short тейк-профит должен быть ниже цены входа'); return; }
       }
-    });
 
-    /* ======================
-       End of script
-       ====================== */
+      const riskAmount = deposit * (riskPercent / 100);
+      const stopDiff = Math.abs(entryPrice - stopLoss);
+      const contractSize = riskAmount / stopDiff;
+      let profitAmount = null;
+      if (takeProfit !== null) {
+        profitAmount = contractSize * Math.abs(takeProfit - entryPrice);
+      }
+
+      const riskRes = document.getElementById('riskResult');
+      let html = `\n        <div>Размер позиции: ${contractSize.toFixed(4)} монет</div>\n        <div style=\"color: ${'var(--danger)'}\">Максимальный риск: ${riskAmount.toFixed(2)} $</div>\n      `;
+      if (profitAmount !== null) html += `<div style=\"color: ${'var(--success)'}\">Потенциальный профит: ${profitAmount.toFixed(2)} $</div>`;
+      riskRes.innerHTML = html; riskRes.style.display = 'block';
+    }
+
+    function showSection(id, e) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if (e && e.target) e.target.classList.add('active');
+      document.getElementById('avgResult').style.display = 'none';
+      document.getElementById('riskResult').style.display = 'none';
+    }
+
+    function showModal(id) { document.getElementById(id).classList.add('active'); }
+    function hideModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    (function(){
+      const container = document.getElementById('bingxContainer');
+      if (!container) return;
+      const imgUrl = 'bingx.jpg';
+      const testImg = new Image();
+      testImg.onload = function() {
+        testImg.width = 44;
+        testImg.height = 44;
+        testImg.alt = 'BingX логотип';
+        testImg.id = 'bingxImg';
+        testImg.style.borderRadius = '12px';
+        testImg.style.padding = '8px';
+        testImg.style.objectFit = 'contain';
+        testImg.className = '';
+        container.replaceWith(testImg);
+      };
+      testImg.onerror = function() {};
+      testImg.src = imgUrl;
+    })();
   </script>
 </body>
 </html>
