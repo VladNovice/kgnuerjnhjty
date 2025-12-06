@@ -34,7 +34,7 @@
       font-family: 'Segoe UI', Tahoma, sans-serif;
       height: 100%;
       width: 100%;
-      overscroll-behavior-y: none; /* Блокирует пружинный эффект на iOS */
+      overscroll-behavior-y: none;
     }
     body {
       display: flex;
@@ -49,7 +49,6 @@
       max-width: 600px;
       margin: 0 auto;
       width: 100%;
-      /* Плавная прокрутка */
       -webkit-overflow-scrolling: touch;
     }
     
@@ -138,8 +137,8 @@
     .section { 
       display: none; 
       animation: fadeIn 0.3s ease;
-      /* Добавляем отступ снизу у секции, чтобы контент не прилипал к советам */
-      padding-bottom: 30px; 
+      /* Отступ снизу секции, чтобы советы не прилипали */
+      padding-bottom: 10px; 
     }
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -198,22 +197,24 @@
       color: #FFF;
     }
 
+    /* Блок для списка точек входа */
+    #entries {
+      /* Когда добавляются точки, этот отступ толкает советы вниз */
+      margin-bottom: 20px; 
+    }
+
     /* --- БЛОК СОВЕТОВ --- */
     .tips-container {
-      margin-top: auto; /* Прижимает блок к низу, если есть место */
+      /* margin-top: auto заставляет блок заполнять пустоту и быть внизу */
+      margin-top: auto; 
       margin-bottom: 20px;
       padding: 10px 14px; 
       background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(23, 26, 35, 0) 100%);
       border-left: 3px solid var(--color-gold);
       border-radius: 4px 12px 12px 4px;
       animation: fadeIn 0.8s ease;
-      
-      /* Гарантированный отступ сверху, чтобы не слипалось с контентом */
-      position: relative;
-      top: 0;
     }
     
-    /* Класс для скрытия блока советов */
     .tips-container.hidden {
       display: none;
     }
@@ -257,7 +258,6 @@
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s, border-color 0.2s; 
       text-decoration: none; 
-      /* Защита от случайного выделения при свайпе */
       user-select: none;
     }
     .btn-block:hover { 
@@ -353,6 +353,7 @@
             <button class="btn" onclick="addEntry()">+ Добавить</button>
             <button class="btn" onclick="calculateAvg()">Рассчитать</button>
           </div>
+          <!-- Контейнер для добавленных точек -->
           <div id="entries"></div>
         </div>
         <div id="avgResult" class="results" aria-live="polite"></div>
@@ -375,10 +376,10 @@
       </section>
     </main>
 
-    <!-- БЛОК С СОВЕТАМИ (Скрывается на вкладке Риск) -->
+    <!-- БЛОК СОВЕТОВ (Скрывается на вкладке Риск) -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
-        <span>💡</span> МЫСЛИ ТРЕЙДЕРА
+        <span>💡</span> СОВЕТЫ ТРЕЙДЕРА
       </div>
       <div id="tipText" class="tip-text">
         <!-- Сюда JS подставит текст -->
@@ -435,28 +436,20 @@
 
   <script>
     /* --- УПРАВЛЕНИЕ ВКЛАДКАМИ И СВАЙПАМИ --- */
-    let currentTab = 'avg'; // 'avg' или 'risk'
+    let currentTab = 'avg';
 
     function switchTab(id) {
       currentTab = id;
-      
-      // Переключаем секции
       document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
       document.getElementById(id).classList.add('active');
-
-      // Переключаем кнопки
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('btn-' + id).classList.add('active');
-
-      // Скрываем результаты предыдущих расчетов (опционально)
       document.getElementById('avgResult').style.display = 'none';
       document.getElementById('riskResult').style.display = 'none';
 
-      // Логика видимости советов
       const tipsBlock = document.getElementById('tipsBlock');
       if (id === 'avg') {
         tipsBlock.classList.remove('hidden');
-        // Обновляем цитату при возврате
         setRandomQuote();
       } else {
         tipsBlock.classList.add('hidden');
@@ -466,8 +459,7 @@
     /* --- ЛОГИКА СВАЙПОВ --- */
     let touchStartX = 0;
     let touchEndX = 0;
-    const minSwipeDistance = 50; // Мин. расстояние для свайпа
-
+    const minSwipeDistance = 50;
     const container = document.getElementById('mainContainer');
 
     container.addEventListener('touchstart', e => {
@@ -481,21 +473,12 @@
 
     function handleSwipe() {
       const distance = touchEndX - touchStartX;
-      
       if (Math.abs(distance) < minSwipeDistance) return;
-
-      // Свайп влево (палец движется влево) -> идем на Риск
-      if (distance < 0 && currentTab === 'avg') {
-        switchTab('risk');
-      }
-      
-      // Свайп вправо (палец движется вправо) -> идем на Среднюю
-      if (distance > 0 && currentTab === 'risk') {
-        switchTab('avg');
-      }
+      if (distance < 0 && currentTab === 'avg') switchTab('risk');
+      if (distance > 0 && currentTab === 'risk') switchTab('avg');
     }
 
-    /* --- Логика калькулятора --- */
+    /* --- Калькулятор --- */
     let entries = [];
 
     function addEntry() {
@@ -580,7 +563,6 @@
       riskRes.innerHTML = html; riskRes.style.display = 'block';
     }
 
-    // Логика подгрузки JPG логотипа BingX
     (function(){
       const container = document.getElementById('bingxContainer');
       if (!container) return;
@@ -598,7 +580,6 @@
       testImg.src = 'bingx.jpg';
     })();
 
-    /* --- ЛОГИКА СОВЕТОВ --- */
     const quotes = [
       "Лучше потерять возможность, чем потерять депозит.",
       "Торгуй то, что видишь, а не то, что думаешь.",
