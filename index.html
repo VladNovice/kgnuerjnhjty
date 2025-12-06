@@ -62,7 +62,8 @@
       margin-top: 10px; 
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Лого слева, текст справа */
+      /* Лого слева, текст занимает остальное */
+      justify-content: flex-start; 
       padding: 0 4px;
     }
     
@@ -70,28 +71,41 @@
     .logo-ic {
       color: #FFFFFF;
       font-weight: 900;
-      font-size: 2.8rem; /* Крупные буквы */
+      font-size: 2.8rem;
       font-family: 'Arial Black', sans-serif;
       letter-spacing: -2px;
       line-height: 1;
+      flex-shrink: 0; /* Чтобы лого не сжималось */
+      margin-right: 15px; /* Отступ от лого до текста */
     }
 
     .brand-text {
-      text-align: right; /* Текст прижат вправо */
+      flex: 1; /* Занимает ВСЁ оставшееся место */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end; /* Прижимает содержимое к правому краю */
+      overflow: hidden; /* На всякий случай */
     }
+
     .brand-text h1 { 
-      font-size: 1.6rem; 
+      font-size: clamp(1.4rem, 5vw, 2rem); /* Адаптивный размер шрифта */
       color: #FFFFFF; 
       font-weight: 800; 
       line-height: 1.1;
-      letter-spacing: 2px; /* Растягиваем слово */
+      letter-spacing: clamp(1px, 1.5vw, 6px); /* Адаптивное растягивание букв */
       text-transform: uppercase;
+      width: 100%;
+      text-align: right; /* Текст прижат вправо */
+      white-space: nowrap; /* Запрет переноса строк */
     }
+    
     .brand-text p { 
       font-size: 0.75rem; 
       color: var(--color-secondary-text); 
       margin-top: 2px;
       letter-spacing: 0.5px;
+      text-align: right;
+      width: 100%;
     }
 
     /* Навигация */
@@ -175,23 +189,26 @@
     /* ФУТЕР (компактный) */
     footer.footer { 
       text-align: center; 
-      padding: 10px 0; /* Меньше отступ */
-      color: #333; /* Темнее цвет */
-      font-size: 0.7rem; /* Меньше шрифт */
+      padding: 10px 0; 
+      color: #333; 
+      font-size: 0.7rem; 
       margin-top: auto; 
     }
     
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
       .btn-block img, .btn-block svg { width: 40px; height: 40px; }
+      /* На мобильном чуть уменьшаем лого и текст */
+      .logo-ic { font-size: 2.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <!-- Логотип IC слева (просто текст) -->
+      <!-- Логотип IC слева -->
       <div class="logo-ic">IC</div>
+      <!-- Текст занимает всё оставшееся место справа -->
       <div class="brand-text">
         <h1>INVESTCOIN</h1>
         <p>Professional Calculator</p>
