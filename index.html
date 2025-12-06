@@ -6,15 +6,17 @@
   <title>INVESTCOIN Calculator</title>
   <style>
     :root {
-      /* --- ЦВЕТОВАЯ ПАЛИТРА (Ваш запрос) --- */
-      --color-bg: #171a23; 
-      --color-secondary-bg: #20242e; 
-      --color-input-bg: #2b303b; 
+      /* --- ЦВЕТОВАЯ ПАЛИТРА (Navy + Gold) --- */
+      --color-bg: #0B1120; 
+      --color-secondary-bg: #151E32; 
+      --color-input-bg: #1C263E; 
       
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
-      --color-text: #EAECEF; 
-      --color-secondary-text: #8492a6; 
+      
+      --color-text: #F0F4F8; 
+      --color-secondary-text: #94A3B8; 
+      
       --color-risk: #FF453A;
       --color-profit: #32D74B;
 
@@ -30,8 +32,7 @@
     }
     html, body {
       background-color: var(--color-bg);
-      /* Мягкий градиент, подходящий под #171a23 */
-      background-image: radial-gradient(circle at 50% 0%, #252a35 0%, var(--color-bg) 80%);
+      background-image: radial-gradient(circle at 50% 0%, #1a2640 0%, var(--color-bg) 80%);
       color: var(--color-text);
       font-family: 'Segoe UI', Tahoma, sans-serif;
       height: 100%;
@@ -54,7 +55,7 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* --- ХЕДЕР (Огромный, одна строка) --- */
+    /* --- ХЕДЕР (ИСПРАВЛЕННЫЙ) --- */
     header.header { 
       margin-top: 60px; 
       margin-bottom: 30px; 
@@ -62,26 +63,27 @@
       flex-direction: column;
       align-items: center; 
       justify-content: center;
-      padding: 0; 
+      padding: 0 5px; 
       width: 100%;
       text-align: center;
-      overflow: hidden; 
+      /* Убрали overflow:hidden, чтобы текст не исчезал */
     }
 
     .main-title {
+      display: block;
       font-family: 'Arial Black', 'Impact', sans-serif;
-      /* Адаптивный огромный шрифт */
-      font-size: clamp(1.5rem, 8vw, 3.5rem); 
+      /* Используем clamp для адаптивности */
+      font-size: clamp(1.4rem, 7.5vw, 3.2rem); 
       font-weight: 900;
       color: #FFFFFF; 
-      /* Сжимаем буквы для компактности */
-      letter-spacing: -2px; 
+      letter-spacing: -1.5px; 
       margin: 0;
-      line-height: 1;
+      /* Увеличили высоту строки, чтобы текст не резался */
+      line-height: 1.2; 
       text-transform: uppercase;
-      /* Тень под цвет фона */
       text-shadow: 0 4px 15px rgba(0,0,0,0.3);
       
+      /* Запрещаем перенос, но безопасно */
       white-space: nowrap; 
       width: 100%;
     }
@@ -89,7 +91,7 @@
     .subtitle {
       font-size: 0.8rem; 
       color: var(--color-secondary-text); 
-      margin-top: 6px;
+      margin-top: 4px; /* Чуть уменьшил отступ */
       letter-spacing: 0.5px;
       font-weight: 600;
       text-transform: uppercase;
@@ -104,7 +106,7 @@
       background: var(--color-secondary-bg); 
       padding: 4px; 
       border-radius: 50px; 
-      border: 1px solid #2e3440; 
+      border: 1px solid #2A3450; 
     }
     .nav-btn { 
       flex: 1; 
@@ -121,7 +123,7 @@
     
     .nav-btn.active { 
       background: var(--color-gold); 
-      color: #171a23; 
+      color: #0B1120; 
       box-shadow: 0 2px 8px rgba(255, 196, 0, 0.3); 
     }
 
@@ -141,7 +143,7 @@
       width: 100%; 
       padding: 16px; 
       background: var(--color-input-bg); 
-      border: 1px solid #363c4a; 
+      border: 1px solid #2A3450; 
       border-radius: 12px; 
       color: var(--color-text); 
       font-size: 1rem; 
@@ -152,7 +154,7 @@
       border-color: var(--color-gold); 
       box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.1);
     }
-    input::placeholder { color: #5c667a; }
+    input::placeholder { color: #5B6B85; }
 
     /* Кнопки действий */
     .btn { 
@@ -160,7 +162,7 @@
       border-radius: 12px; 
       background: var(--color-gold); 
       border: none;
-      color: #171a23; 
+      color: #0B1120; 
       font-weight: 700; 
       font-size: 1rem; 
       cursor: pointer; 
@@ -196,7 +198,7 @@
       margin-top: 5px; 
       margin-bottom: 0;
       padding: 10px 14px; 
-      background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(23, 26, 35, 0) 100%);
+      background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(11, 17, 32, 0) 100%);
       border-left: 3px solid var(--color-gold);
       border-radius: 4px 12px 12px 4px;
       animation: fadeIn 0.8s ease;
@@ -241,7 +243,7 @@
       gap: 16px; 
       padding: 16px; 
       background: var(--color-secondary-bg); 
-      border: 1px solid #2e3440;
+      border: 1px solid #2A3450;
       border-radius: 16px; 
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s, border-color 0.2s; 
@@ -250,7 +252,7 @@
     }
     .btn-block:hover { 
       transform: translateY(-2px); 
-      background: #2b303b; 
+      background: #1C263E; 
       border-color: var(--color-gold); 
     }
     
@@ -273,7 +275,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #171a23; 
+      color: #0B1120; 
       font-family: 'Arial Black', sans-serif;
       font-weight: 900;
       font-size: 1.4rem;
@@ -300,7 +302,7 @@
     footer.footer { 
       text-align: center; 
       padding: 10px 0; 
-      color: #5c667a; 
+      color: #5B6B85; 
       font-size: 0.7rem; 
       margin-top: 0;
     }
