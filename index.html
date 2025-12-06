@@ -7,9 +7,9 @@
   <style>
     :root {
       /* --- ЦВЕТОВАЯ ПАЛИТРА --- */
-      --color-bg: #171a23; 
-      --color-secondary-bg: #20242e; 
-      --color-input-bg: #2b303b; 
+      --color-bg: #0f1221; /* НОВЫЙ ФОН */
+      --color-secondary-bg: #1c202b; /* Чуть темнее под новый фон */
+      --color-input-bg: #252a36; 
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
       --color-text: #EAECEF; 
@@ -29,7 +29,8 @@
     }
     html, body {
       background-color: var(--color-bg);
-      background-image: radial-gradient(circle at 50% 0%, #252a35 0%, var(--color-bg) 80%);
+      /* Градиент подстроен под новый фон */
+      background-image: radial-gradient(circle at 50% 0%, #1e2330 0%, var(--color-bg) 80%);
       color: var(--color-text);
       font-family: 'Segoe UI', Tahoma, sans-serif;
       height: 100%;
@@ -54,9 +55,7 @@
     
     /* ХЕДЕР */
     header.header { 
-      /* УВЕЛИЧЕНО: Расстояние от самого верха */
       margin-top: 60px; 
-      /* УВЕЛИЧЕНО: Расстояние от Лого до кнопок переключения */
       margin-bottom: 30px; 
       display: flex;
       align-items: center; 
@@ -66,7 +65,7 @@
     }
     
     .logo-ic {
-      color: var(--color-gold); 
+      color: #FFFFFF; /* ТЕПЕРЬ БЕЛЫЙ */
       font-weight: 900;
       font-size: 4rem; 
       font-family: 'Arial Black', sans-serif;
@@ -74,7 +73,7 @@
       line-height: 0.8; 
       flex-shrink: 0; 
       margin-right: 15px; 
-      text-shadow: 0 2px 15px rgba(255, 196, 0, 0.15); 
+      text-shadow: 0 2px 15px rgba(255, 255, 255, 0.15); /* Тень белая */
     }
 
     .brand-text {
@@ -91,7 +90,7 @@
       width: 100%;
       margin: 0;
       font-size: clamp(1.4rem, 7vw, 2.5rem); 
-      color: #FFFFFF; 
+      color: var(--color-gold); /* ТЕПЕРЬ ЖЕЛТЫЙ */
       font-weight: 800; 
       line-height: 1;
       text-transform: uppercase;
@@ -204,7 +203,6 @@
 
     /* --- СОВЕТЫ --- */
     .tips-container {
-      /* УМЕНЬШЕНО: Расстояние до верхних кнопок (Добавить/Рассчитать) */
       margin-top: 5px; 
       margin-bottom: 0;
       padding: 10px 14px; 
@@ -242,12 +240,8 @@
       display: flex; 
       flex-direction: column; 
       gap: 14px; 
-      /* Толкаем вниз */
       margin-top: auto;
-      
-      /* УМЕНЬШЕНО: Расстояние между Советами и первой ссылкой (Telegram) */
       padding-top: 10px; 
-      
       padding-bottom: 20px;
     }
     
@@ -266,7 +260,7 @@
     }
     .btn-block:hover { 
       transform: translateY(-2px); 
-      background: #2b303b; 
+      background: #252a36; 
       border-color: var(--color-gold); 
     }
     
