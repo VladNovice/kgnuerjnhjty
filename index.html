@@ -52,13 +52,13 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* --- ХЕДЕР (ОБНОВЛЕННЫЙ) --- */
+    /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 60px; 
       margin-bottom: 30px; 
       display: flex;
       flex-direction: column;
-      align-items: center; /* Центрируем всё */
+      align-items: center; 
       justify-content: center;
       padding: 0 4px;
       width: 100%;
@@ -67,18 +67,23 @@
 
     .main-title {
       font-family: 'Arial Black', sans-serif;
-      font-size: 3rem; /* Крупный размер */
+      /* Адаптивный размер: мин 1.1rem, макс 2.5rem, зависит от ширины экрана */
+      font-size: clamp(1.1rem, 5.5vw, 2.5rem); 
       font-weight: 900;
-      color: #FFFFFF; /* Белый цвет */
-      letter-spacing: -1px;
+      color: #FFFFFF; 
+      letter-spacing: -0.5px;
       margin: 0;
       line-height: 1;
       text-transform: uppercase;
       text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      
+      /* ГАРАНТИЯ ОДНОЙ СТРОКИ */
+      white-space: nowrap; 
+      width: 100%;
     }
     
     .subtitle {
-      font-size: 0.9rem; 
+      font-size: 0.85rem; 
       color: var(--color-secondary-text); 
       margin-top: 8px;
       letter-spacing: 0.5px;
@@ -215,7 +220,7 @@
       line-height: 1.3;
     }
 
-    /* --- ССЫЛКИ (БЛОК С КНОПКАМИ) --- */
+    /* --- ССЫЛКИ --- */
     .actions { 
       display: flex; 
       flex-direction: column; 
@@ -298,7 +303,6 @@
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
       .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
-      .main-title { font-size: 2.2rem; }
       .mini-ic-logo { font-size: 1.2rem; }
     }
   </style>
@@ -306,10 +310,10 @@
 <body>
   <div class="container" id="mainContainer">
     
-    <!-- ОБНОВЛЕННЫЙ ХЕДЕР -->
+    <!-- ХЕДЕР -->
     <header class="header">
       <h1 class="main-title">INVESTCOIN Calculator</h1>
-      <p class="subtitle">Сделано трейдерами для трейдеров</p>
+      <p class="subtitle">Сообщество реальных трейдеров</p>
     </header>
 
     <nav class="main-nav" aria-label="Главная навигация">
