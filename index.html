@@ -7,8 +7,8 @@
   <style>
     :root {
       /* --- ЦВЕТОВАЯ ПАЛИТРА --- */
-      --color-bg: #0b1121; /* НОВЫЙ ФОН */
-      --color-secondary-bg: #161b29; /* Адаптированный вторичный фон */
+      --color-bg: #0b1121; 
+      --color-secondary-bg: #161b29; 
       --color-input-bg: #1f2536; 
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
@@ -29,7 +29,6 @@
     }
     html, body {
       background-color: var(--color-bg);
-      /* Градиент подстроен под новый фон */
       background-image: radial-gradient(circle at 50% 0%, #1c2235 0%, var(--color-bg) 80%);
       color: var(--color-text);
       font-family: 'Segoe UI', Tahoma, sans-serif;
@@ -53,56 +52,37 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* ХЕДЕР */
+    /* --- ХЕДЕР (ОБНОВЛЕННЫЙ) --- */
     header.header { 
       margin-top: 60px; 
       margin-bottom: 30px; 
       display: flex;
-      align-items: center; 
-      justify-content: flex-start; 
+      flex-direction: column;
+      align-items: center; /* Центрируем всё */
+      justify-content: center;
       padding: 0 4px;
       width: 100%;
+      text-align: center;
     }
-    
-    .logo-ic {
-      color: #FFFFFF; /* Белый */
-      font-weight: 900;
-      font-size: 4rem; 
+
+    .main-title {
       font-family: 'Arial Black', sans-serif;
-      letter-spacing: -4px;
-      line-height: 0.8; 
-      flex-shrink: 0; 
-      margin-right: 15px; 
-      text-shadow: 0 2px 15px rgba(255, 255, 255, 0.1); 
-    }
-
-    .brand-text {
-      flex: 1; 
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .brand-text h1 { 
-      display: flex;
-      justify-content: space-between; 
-      width: 100%;
+      font-size: 3rem; /* Крупный размер */
+      font-weight: 900;
+      color: #FFFFFF; /* Белый цвет */
+      letter-spacing: -1px;
       margin: 0;
-      font-size: clamp(1.4rem, 7vw, 2.5rem); 
-      color: var(--color-gold); /* Желтый */
-      font-weight: 800; 
       line-height: 1;
       text-transform: uppercase;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.3);
     }
     
-    .brand-text p { 
-      font-size: 0.75rem; 
+    .subtitle {
+      font-size: 0.9rem; 
       color: var(--color-secondary-text); 
-      margin-top: 4px;
+      margin-top: 8px;
       letter-spacing: 0.5px;
-      text-align: left; 
-      width: 100%;
+      font-weight: 500;
     }
 
     /* Навигация */
@@ -318,21 +298,18 @@
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
       .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
-      .logo-ic { font-size: 4rem; }
+      .main-title { font-size: 2.2rem; }
       .mini-ic-logo { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="container" id="mainContainer">
+    
+    <!-- ОБНОВЛЕННЫЙ ХЕДЕР -->
     <header class="header">
-      <div class="logo-ic">IC</div>
-      <div class="brand-text">
-        <h1>
-          <span>I</span><span>N</span><span>V</span><span>E</span><span>S</span><span>T</span><span>C</span><span>O</span><span>I</span><span>N</span>
-        </h1>
-        <p>Сообщество реальных трейдеров</p>
-      </div>
+      <h1 class="main-title">INVESTCOIN</h1>
+      <p class="subtitle">Сообщество реальных трейдеров</p>
     </header>
 
     <nav class="main-nav" aria-label="Главная навигация">
