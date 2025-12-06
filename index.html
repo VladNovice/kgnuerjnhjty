@@ -56,48 +56,42 @@
       width: 100%;
     }
     
-    /* Хедер с логотипом IC */
+    /* ХЕДЕР */
     header.header { 
       margin-bottom: 24px; 
       margin-top: 10px; 
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 16px;
+      justify-content: space-between; /* Лого слева, текст справа */
+      padding: 0 4px;
     }
     
-    /* Логотип IC */
+    /* Логотип IC (только текст) */
     .logo-ic {
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, #FFFFFF, #B0B0B0);
-      color: #121212;
-      font-weight: 900; /* Жирный шрифт */
-      font-size: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 12px;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(255,255,255,0.1);
+      color: #FFFFFF;
+      font-weight: 900;
+      font-size: 2.8rem; /* Крупные буквы */
       font-family: 'Arial Black', sans-serif;
-      letter-spacing: -1px;
+      letter-spacing: -2px;
+      line-height: 1;
     }
 
     .brand-text {
-      text-align: left;
+      text-align: right; /* Текст прижат вправо */
     }
     .brand-text h1 { 
-      font-size: 1.8rem; 
+      font-size: 1.6rem; 
       color: #FFFFFF; 
-      font-weight: 700; 
+      font-weight: 800; 
       line-height: 1.1;
-      letter-spacing: 0.5px;
+      letter-spacing: 2px; /* Растягиваем слово */
+      text-transform: uppercase;
     }
     .brand-text p { 
-      font-size: 0.85rem; 
+      font-size: 0.75rem; 
       color: var(--color-secondary-text); 
-      margin-top: 4px;
+      margin-top: 2px;
+      letter-spacing: 0.5px;
     }
 
     /* Навигация */
@@ -178,7 +172,14 @@
     .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: center; margin-top: 8px; }
     .entry-item button { padding: 14px; background: #2a1a1a; border: 1px solid #3a1a1a; color: #ff5555; border-radius: 12px; cursor: pointer; }
     
-    footer.footer { text-align: center; padding: 20px 0; color: #444; font-size: 0.8rem; margin-top: auto; }
+    /* ФУТЕР (компактный) */
+    footer.footer { 
+      text-align: center; 
+      padding: 10px 0; /* Меньше отступ */
+      color: #333; /* Темнее цвет */
+      font-size: 0.7rem; /* Меньше шрифт */
+      margin-top: auto; 
+    }
     
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
@@ -189,11 +190,11 @@
 <body>
   <div class="container">
     <header class="header">
-      <!-- Логотип IC слева -->
+      <!-- Логотип IC слева (просто текст) -->
       <div class="logo-ic">IC</div>
       <div class="brand-text">
         <h1>INVESTCOIN</h1>
-        <p>Professional Trading Calculator</p>
+        <p>Professional Calculator</p>
       </div>
     </header>
 
