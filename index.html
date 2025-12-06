@@ -137,7 +137,7 @@
     .section { 
       display: none; 
       animation: fadeIn 0.3s ease;
-      padding-bottom: 10px; 
+      padding-bottom: 5px; /* Уменьшен нижний отступ секции */
     }
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -185,7 +185,7 @@
 
     .results { 
       display: none; 
-      margin-top: 20px; 
+      margin-top: 15px; 
       background: var(--color-secondary-bg); 
       padding: 20px; 
       border-radius: 12px; 
@@ -197,13 +197,13 @@
     }
 
     #entries {
-      margin-bottom: 20px; 
+      margin-bottom: 10px; /* Было 20px, уменьшили */
     }
 
     /* --- ИЗМЕНЕНИЯ ЗДЕСЬ (СОВЕТЫ) --- */
     .tips-container {
-      /* Было margin-top: auto. Ставим фиксированный отступ. */
-      margin-top: 30px; 
+      /* Было 30px, сделали 10px чтобы подтянуть к кнопкам */
+      margin-top: 10px; 
       margin-bottom: 20px;
       padding: 10px 14px; 
       background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(23, 26, 35, 0) 100%);
@@ -240,7 +240,6 @@
       display: flex; 
       flex-direction: column; 
       gap: 14px; 
-      /* Теперь ссылки толкают себя вниз, заполняя пустоту */
       margin-top: auto; 
       padding-bottom: 20px;
     }
@@ -373,7 +372,7 @@
       </section>
     </main>
 
-    <!-- БЛОК СОВЕТОВ -->
+    <!-- БЛОК СОВЕТОВ (Теперь ближе к кнопкам) -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
         <span>💡</span> СОВЕТЫ ТРЕЙДЕРА
