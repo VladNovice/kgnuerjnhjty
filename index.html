@@ -6,15 +6,15 @@
   <title>INVESTCOIN Calculator</title>
   <style>
     :root {
-      /* --- НОВАЯ ЦВЕТОВАЯ ПАЛИТРА (Deepest Dark Blue) --- */
-      --color-bg: #040710; /* Почти черный, глубокий синий */
-      --color-secondary-bg: #0f1420; /* Контрастный фон для блоков */
-      --color-input-bg: #1a2030; /* Фон для инпутов */
+      /* --- ЦВЕТОВАЯ ПАЛИТРА (Яркий Темно-Синий) --- */
+      --color-bg: #060d26; /* Насыщенный темно-синий, не черный */
+      --color-secondary-bg: #0f1c3d; /* Светлее для блоков */
+      --color-input-bg: #19264a; /* Еще светлее для инпутов, с синим отливом */
       
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
       --color-text: #EAECEF; 
-      --color-secondary-text: #78859e; 
+      --color-secondary-text: #8fa0c2; /* Текст с голубоватым оттенком */
       --color-risk: #FF453A;
       --color-profit: #32D74B;
 
@@ -30,8 +30,8 @@
     }
     html, body {
       background-color: var(--color-bg);
-      /* Еле заметный градиент для глубины */
-      background-image: radial-gradient(circle at 50% 0%, #151c2e 0%, var(--color-bg) 90%);
+      /* Яркое синее пятно по центру для объема */
+      background-image: radial-gradient(circle at 50% 10%, #15275e 0%, var(--color-bg) 90%);
       color: var(--color-text);
       font-family: 'Segoe UI', Tahoma, sans-serif;
       height: 100%;
@@ -62,42 +62,44 @@
       flex-direction: column;
       align-items: center; 
       justify-content: center;
-      padding: 0; /* Убираем отступы, чтобы текст влез */
+      padding: 0; 
       width: 100%;
       text-align: center;
+      /* Позволяем выходить за границы контейнера при необходимости, но скрываем скролл */
+      overflow: hidden; 
     }
 
     .main-title {
-      font-family: 'Arial Black', sans-serif;
+      font-family: 'Arial Black', 'Impact', sans-serif; /* Самый жирный шрифт */
       /* 
-         clamp(мин, адаптив, макс)
-         7.8vw - это очень крупно, занимает почти всю ширину.
-         Если слово не влезает, уменьшите число 7.8 до 7.0 
+         ХИТРОСТЬ: 
+         font-size: 13vw - это очень много. 
+         Чтобы влезло в одну строку, я использую clamp и vw.
+         На телефоне это займет всю ширину.
       */
-      font-size: clamp(1.2rem, 7.8vw, 3rem); 
+      font-size: clamp(1.5rem, 8vw, 3.5rem); 
       font-weight: 900;
       color: #FFFFFF; 
-      /* Отрицательный интервал сближает буквы, позволяя сделать шрифт больше */
-      letter-spacing: -1px; 
+      /* Сильно сжимаем буквы, чтобы шрифт мог быть крупнее */
+      letter-spacing: -2px; 
       margin: 0;
       line-height: 1;
       text-transform: uppercase;
-      text-shadow: 0 4px 25px rgba(0,0,0,0.5);
+      /* Добавляем мощную тень, чтобы буквы "горели" */
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
       
-      /* Жестко одна строка */
       white-space: nowrap; 
       width: 100%;
-      overflow: hidden; 
     }
     
     .subtitle {
       font-size: 0.8rem; 
       color: var(--color-secondary-text); 
       margin-top: 6px;
-      letter-spacing: 0.5px;
-      font-weight: 500;
+      letter-spacing: 1px;
+      font-weight: 600;
       text-transform: uppercase;
-      opacity: 0.8;
+      opacity: 0.9;
     }
 
     /* Навигация */
@@ -109,7 +111,7 @@
       background: var(--color-secondary-bg); 
       padding: 4px; 
       border-radius: 50px; 
-      border: 1px solid #1e263d; 
+      border: 1px solid #23345c; 
     }
     .nav-btn { 
       flex: 1; 
@@ -126,8 +128,8 @@
     
     .nav-btn.active { 
       background: var(--color-gold); 
-      color: #040710; 
-      box-shadow: 0 2px 10px rgba(255, 196, 0, 0.25); 
+      color: #060d26; 
+      box-shadow: 0 2px 12px rgba(255, 196, 0, 0.3); 
     }
 
     .section { 
@@ -146,7 +148,7 @@
       width: 100%; 
       padding: 16px; 
       background: var(--color-input-bg); 
-      border: 1px solid #2a344d; 
+      border: 1px solid #2e406b; 
       border-radius: 12px; 
       color: var(--color-text); 
       font-size: 1rem; 
@@ -155,9 +157,9 @@
     input:focus, select:focus { 
       outline: none; 
       border-color: var(--color-gold); 
-      box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.1);
+      box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.15);
     }
-    input::placeholder { color: #5a667a; }
+    input::placeholder { color: #6a82ad; }
 
     /* Кнопки действий */
     .btn { 
@@ -165,7 +167,7 @@
       border-radius: 12px; 
       background: var(--color-gold); 
       border: none;
-      color: #040710; 
+      color: #060d26; 
       font-weight: 800; 
       font-size: 1rem; 
       cursor: pointer; 
@@ -175,7 +177,7 @@
     .btn:hover { 
       background: var(--color-gold-hover); 
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 196, 0, 0.25);
+      box-shadow: 0 6px 20px rgba(255, 196, 0, 0.3);
     }
     .btn:active { transform: scale(0.96); }
 
@@ -201,7 +203,7 @@
       margin-top: 5px; 
       margin-bottom: 0;
       padding: 10px 14px; 
-      background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(4, 7, 16, 0) 100%);
+      background: linear-gradient(90deg, rgba(255, 196, 0, 0.1) 0%, rgba(6, 13, 38, 0) 100%);
       border-left: 3px solid var(--color-gold);
       border-radius: 4px 12px 12px 4px;
       animation: fadeIn 0.8s ease;
@@ -246,7 +248,7 @@
       gap: 16px; 
       padding: 16px; 
       background: var(--color-secondary-bg); 
-      border: 1px solid #2a344d;
+      border: 1px solid #2e406b;
       border-radius: 16px; 
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s, border-color 0.2s; 
@@ -255,7 +257,7 @@
     }
     .btn-block:hover { 
       transform: translateY(-2px); 
-      background: #1a2030; 
+      background: #19264a; 
       border-color: var(--color-gold); 
     }
     
@@ -278,7 +280,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #040710; 
+      color: #060d26; 
       font-family: 'Arial Black', sans-serif;
       font-weight: 900;
       font-size: 1.4rem;
@@ -305,7 +307,7 @@
     footer.footer { 
       text-align: center; 
       padding: 10px 0; 
-      color: #5a667a; 
+      color: #6a82ad; 
       font-size: 0.7rem; 
       margin-top: 0;
     }
