@@ -59,52 +59,57 @@
     /* ХЕДЕР */
     header.header { 
       margin-bottom: 24px; 
-      margin-top: 10px; 
+      margin-top: 12px; 
       display: flex;
-      align-items: center;
-      /* Лого слева, текст занимает остальное */
+      align-items: center; /* Центрируем лого и текст по вертикали */
       justify-content: flex-start; 
       padding: 0 4px;
+      width: 100%;
     }
     
-    /* Логотип IC (только текст) */
+    /* Логотип IC */
     .logo-ic {
       color: #FFFFFF;
       font-weight: 900;
-      font-size: 2.8rem;
+      font-size: 5rem; /* Еще больше */
       font-family: 'Arial Black', sans-serif;
-      letter-spacing: -2px;
-      line-height: 1;
-      flex-shrink: 0; /* Чтобы лого не сжималось */
-      margin-right: 15px; /* Отступ от лого до текста */
+      letter-spacing: -4px;
+      line-height: 0.8; 
+      flex-shrink: 0; 
+      margin-right: 15px; /* Небольшой отступ до текста */
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
+    /* Блок с текстом */
     .brand-text {
       flex: 1; /* Занимает ВСЁ оставшееся место */
       display: flex;
       flex-direction: column;
-      align-items: flex-end; /* Прижимает содержимое к правому краю */
-      overflow: hidden; /* На всякий случай */
+      justify-content: center;
+      overflow: hidden;
     }
 
+    /* Заголовок INVESTCOIN */
     .brand-text h1 { 
-      font-size: clamp(1.4rem, 5vw, 2rem); /* Адаптивный размер шрифта */
+      display: flex;
+      justify-content: space-between; /* Растягивает буквы от края до края */
+      width: 100%;
+      margin: 0;
+      
+      font-size: clamp(1.4rem, 7vw, 2.8rem); /* Адаптивный размер */
       color: #FFFFFF; 
       font-weight: 800; 
-      line-height: 1.1;
-      letter-spacing: clamp(1px, 1.5vw, 6px); /* Адаптивное растягивание букв */
+      line-height: 1;
       text-transform: uppercase;
-      width: 100%;
-      text-align: right; /* Текст прижат вправо */
-      white-space: nowrap; /* Запрет переноса строк */
     }
     
+    /* Подпись */
     .brand-text p { 
       font-size: 0.75rem; 
       color: var(--color-secondary-text); 
-      margin-top: 2px;
+      margin-top: 4px;
       letter-spacing: 0.5px;
-      text-align: right;
+      text-align: right; /* Подпись прижата вправо */
       width: 100%;
     }
 
@@ -198,8 +203,8 @@
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
       .btn-block img, .btn-block svg { width: 40px; height: 40px; }
-      /* На мобильном чуть уменьшаем лого и текст */
-      .logo-ic { font-size: 2.2rem; }
+      /* На мобильном чуть подстраиваем шрифт */
+      .logo-ic { font-size: 4rem; }
     }
   </style>
 </head>
@@ -208,9 +213,12 @@
     <header class="header">
       <!-- Логотип IC слева -->
       <div class="logo-ic">IC</div>
-      <!-- Текст занимает всё оставшееся место справа -->
+      <!-- Текст занимает всё оставшееся место -->
       <div class="brand-text">
-        <h1>INVESTCOIN</h1>
+        <!-- Буквы разделены span для идеального растягивания (Flexbox) -->
+        <h1>
+          <span>I</span><span>N</span><span>V</span><span>E</span><span>S</span><span>T</span><span>C</span><span>O</span><span>I</span><span>N</span>
+        </h1>
         <p>Professional Calculator</p>
       </div>
     </header>
