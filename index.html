@@ -60,26 +60,33 @@
       flex-direction: column;
       align-items: center; 
       justify-content: center;
-      padding: 0 4px;
+      /* Уменьшаем боковые отступы, чтобы дать тексту больше места */
+      padding: 0 2px; 
       width: 100%;
       text-align: center;
     }
 
     .main-title {
       font-family: 'Arial Black', sans-serif;
-      /* Адаптивный размер: мин 1.1rem, макс 2.5rem, зависит от ширины экрана */
-      font-size: clamp(1.1rem, 5.5vw, 2.5rem); 
+      /* 
+         6.5vw означает "6.5% от ширины экрана". 
+         Это позволяет тексту всегда заполнять экран от края до края.
+         min(36px...) ограничивает размер на больших экранах, чтобы не было гигантским.
+      */
+      font-size: min(36px, 6.5vw);
       font-weight: 900;
       color: #FFFFFF; 
-      letter-spacing: -0.5px;
+      /* Отрицательный интервал позволяет сделать шрифт крупнее при той же ширине */
+      letter-spacing: -1.5px; 
       margin: 0;
       line-height: 1;
       text-transform: uppercase;
       text-shadow: 0 4px 20px rgba(0,0,0,0.3);
       
-      /* ГАРАНТИЯ ОДНОЙ СТРОКИ */
+      /* Запрещаем перенос строки */
       white-space: nowrap; 
       width: 100%;
+      overflow: hidden; /* На всякий случай, чтобы не появлялся скролл */
     }
     
     .subtitle {
