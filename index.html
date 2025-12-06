@@ -13,11 +13,10 @@
       --color-text: #E0E0E0;
       --color-secondary-text: #A0A0A0;
       
-      /* Градиенты */
+      /* Градиенты для активных вкладок */
       --gradient-start: #333333;
       --gradient-end: #222222;
       --gradient-angle: 135deg;
-      --gradient-hover: #404040;
 
       --color-risk: #FF453A;
       --color-profit: #32D74B;
@@ -61,7 +60,7 @@
       margin-bottom: 24px; 
       margin-top: 12px; 
       display: flex;
-      align-items: center; /* Центрируем лого и текст по вертикали */
+      align-items: center; 
       justify-content: flex-start; 
       padding: 0 4px;
       width: 100%;
@@ -71,45 +70,42 @@
     .logo-ic {
       color: #FFFFFF;
       font-weight: 900;
-      font-size: 5rem; /* Еще больше */
+      font-size: 5rem; 
       font-family: 'Arial Black', sans-serif;
       letter-spacing: -4px;
       line-height: 0.8; 
       flex-shrink: 0; 
-      margin-right: 15px; /* Небольшой отступ до текста */
+      margin-right: 15px; 
       text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     /* Блок с текстом */
     .brand-text {
-      flex: 1; /* Занимает ВСЁ оставшееся место */
+      flex: 1; 
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
     }
 
-    /* Заголовок INVESTCOIN */
     .brand-text h1 { 
       display: flex;
-      justify-content: space-between; /* Растягивает буквы от края до края */
+      justify-content: space-between; 
       width: 100%;
       margin: 0;
-      
-      font-size: clamp(1.4rem, 7vw, 2.8rem); /* Адаптивный размер */
+      font-size: clamp(1.4rem, 7vw, 2.8rem); 
       color: #FFFFFF; 
       font-weight: 800; 
       line-height: 1;
       text-transform: uppercase;
     }
     
-    /* Подпись */
     .brand-text p { 
       font-size: 0.75rem; 
       color: var(--color-secondary-text); 
       margin-top: 4px;
       letter-spacing: 0.5px;
-      text-align: left; /* Подпись прижата вправо */
+      text-align: left; 
       width: 100%;
     }
 
@@ -140,20 +136,27 @@
     input:focus, select:focus { outline: none; border-color: #555; background: #2a2a2a; }
     input::placeholder { color: #666; }
 
-    /* Кнопки действий */
+    /* --- ОБНОВЛЕННЫЕ БЕЛЫЕ КНОПКИ --- */
     .btn { 
       padding: 14px 20px; 
       border-radius: 12px; 
-      background: linear-gradient(var(--gradient-angle), var(--gradient-start), var(--gradient-end)); 
-      border: 1px solid #333; 
-      color: #FFF; 
-      font-weight: 600; 
+      background: #FFFFFF; /* Белый фон */
+      border: none;
+      color: #000000; /* Черный текст */
+      font-weight: 700; 
       font-size: 1rem; 
       cursor: pointer; 
-      transition: transform 0.2s, box-shadow 0.2s; 
+      transition: all 0.2s ease; 
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1); /* Легкое свечение */
     }
-    .btn:hover { background: var(--gradient-hover); }
-    .btn:active { transform: scale(0.98); }
+    .btn:hover { 
+      background: #E0E0E0; /* Чуть темнее при наведении */
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    }
+    .btn:active { 
+      transform: scale(0.96); 
+    }
 
     .results { display: none; margin-top: 20px; background: var(--color-secondary-bg); padding: 20px; border-radius: 12px; text-align: center; font-size: 1.05rem; line-height: 1.6; border: 1px solid #333; }
 
@@ -169,7 +172,7 @@
       border-radius: 16px; 
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s; 
-      text-decoration: none; /* Для ссылок */
+      text-decoration: none; 
     }
     .btn-block:hover { transform: translateY(-2px); background: #252525; }
     
@@ -185,13 +188,41 @@
     }
     .brand-logo { background: none; padding: 0; border-radius: 12px; }
 
+    /* --- МИНИ ЛОГО IC ДЛЯ КНОПКИ --- */
+    .mini-ic-logo {
+      width: 44px; 
+      height: 44px; 
+      background: #FFFFFF; 
+      border-radius: 12px; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-family: 'Arial Black', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -2px;
+      line-height: 1;
+      padding-right: 2px; /* Визуальная компенсация кернинга */
+    }
+
     .btn-content span { font-size: 1.1rem; font-weight: 700; color: #FFF; display: block; margin-bottom: 2px; }
     .btn-desc { font-size: 0.85rem; color: var(--color-secondary-text); }
 
+    /* Кнопка удаления (крестик) */
     .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: center; margin-top: 8px; }
-    .entry-item button { padding: 14px; background: #2a1a1a; border: 1px solid #3a1a1a; color: #ff5555; border-radius: 12px; cursor: pointer; }
+    .entry-item button { 
+      padding: 14px; 
+      background: #2a1a1a; 
+      border: 1px solid #3a1a1a; 
+      color: #ff5555; 
+      border-radius: 12px; 
+      cursor: pointer; 
+      transition: background 0.2s;
+    }
+    .entry-item button:hover { background: #3a1a1a; }
     
-    /* ФУТЕР (компактный) */
+    /* ФУТЕР */
     footer.footer { 
       text-align: center; 
       padding: 10px 0; 
@@ -202,20 +233,17 @@
     
     @media (max-width: 500px) {
       .btn-block { padding: 14px; gap: 12px; }
-      .btn-block img, .btn-block svg { width: 40px; height: 40px; }
-      /* На мобильном чуть подстраиваем шрифт */
+      .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
       .logo-ic { font-size: 4rem; }
+      .mini-ic-logo { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <header class="header">
-      <!-- Логотип IC слева -->
       <div class="logo-ic">IC</div>
-      <!-- Текст занимает всё оставшееся место -->
       <div class="brand-text">
-        <!-- Буквы разделены span для идеального растягивания (Flexbox) -->
         <h1>
           <span>I</span><span>N</span><span>V</span><span>E</span><span>S</span><span>T</span><span>C</span><span>O</span><span>I</span><span>N</span>
         </h1>
@@ -298,9 +326,10 @@
         </div>
       </div>
 
-      <!-- Торговый клуб (бот) -->
+      <!-- Торговый клуб (с логотипом IC) -->
       <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
-        <img src="https://unpkg.com/heroicons@2.0.13/24/outline/users.svg" alt="Club" />
+        <!-- Мини логотип IC -->
+        <div class="mini-ic-logo">IC</div>
         <div class="btn-content"><span>Торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
       </div>
     </div>
