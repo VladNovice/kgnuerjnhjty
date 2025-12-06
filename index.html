@@ -6,24 +6,24 @@
   <title>INVESTCOIN Calculator</title>
   <style>
     :root {
-      /* --- ЦВЕТОВАЯ ПАЛИТРА (Navy + Gold) --- */
+      /* --- ОБНОВЛЕННАЯ ЦВЕТОВАЯ ПАЛИТРА --- */
       
-      /* Темно-синий фон */
-      --color-bg: #0B1120; 
+      /* Новый основной фон (по запросу) */
+      --color-bg: #171a23; 
       
-      /* Вторичный фон */
-      --color-secondary-bg: #151E32; 
+      /* Вторичный фон (для карточек/кнопок) - адаптирован под новый bg */
+      --color-secondary-bg: #20242e; 
       
       /* Фон инпутов */
-      --color-input-bg: #1C263E; 
+      --color-input-bg: #2b303b; 
       
       /* ЗОЛОТОЙ АКЦЕНТ */
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
       
       /* Текст */
-      --color-text: #F0F4F8; 
-      --color-secondary-text: #94A3B8; 
+      --color-text: #EAECEF; 
+      --color-secondary-text: #8492a6; 
       
       /* Логические цвета */
       --color-risk: #FF453A;
@@ -41,7 +41,9 @@
       box-sizing: border-box;
     }
     html, body {
-      background: var(--color-bg);
+      background-color: var(--color-bg);
+      /* Легкий градиент, чтобы фон не был "плоским" */
+      background-image: radial-gradient(circle at 50% 0%, #252a35 0%, var(--color-bg) 80%);
       color: var(--color-text);
       font-family: 'Segoe UI', Tahoma, sans-serif;
       height: 100%;
@@ -56,8 +58,7 @@
       display: flex;
       flex-direction: column;
       padding: 16px;
-      overflow-y: auto;
-      background: var(--color-bg);
+      overflow-y: auto; /* Скролл если контент не влезает */
       max-width: 600px;
       margin: 0 auto;
       width: 100%;
@@ -66,8 +67,7 @@
     /* ХЕДЕР */
     header.header { 
       margin-bottom: 24px; 
-      /* --- ИЗМЕНЕНИЕ ЗДЕСЬ: УВЕЛИЧЕН ОТСТУП СВЕРХУ --- */
-      margin-top: 60px; 
+      margin-top: 60px; /* Большой отступ сверху */
       display: flex;
       align-items: center; 
       justify-content: flex-start; 
@@ -85,7 +85,7 @@
       line-height: 0.8; 
       flex-shrink: 0; 
       margin-right: 15px; 
-      text-shadow: 0 2px 15px rgba(255, 196, 0, 0.2); 
+      text-shadow: 0 2px 15px rgba(255, 196, 0, 0.15); 
     }
 
     /* Блок с текстом */
@@ -127,7 +127,7 @@
       background: var(--color-secondary-bg); 
       padding: 4px; 
       border-radius: 50px; 
-      border: 1px solid #2A3650; 
+      border: 1px solid #2e3440; 
     }
     .nav-btn { 
       flex: 1; 
@@ -145,7 +145,7 @@
     /* Активная кнопка навигации */
     .nav-btn.active { 
       background: var(--color-gold); 
-      color: #0B1120; 
+      color: #171a23; /* Темный текст под цвет фона */
       box-shadow: 0 2px 8px rgba(255, 196, 0, 0.3); 
     }
 
@@ -161,7 +161,7 @@
       width: 100%; 
       padding: 16px; 
       background: var(--color-input-bg); 
-      border: 1px solid #2A3650; 
+      border: 1px solid #363c4a; 
       border-radius: 12px; 
       color: var(--color-text); 
       font-size: 1rem; 
@@ -172,7 +172,7 @@
       border-color: var(--color-gold); 
       box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.1);
     }
-    input::placeholder { color: #5A6B8C; }
+    input::placeholder { color: #5c667a; }
 
     /* Кнопки действий */
     .btn { 
@@ -180,7 +180,7 @@
       border-radius: 12px; 
       background: var(--color-gold); 
       border: none;
-      color: #0B1120; 
+      color: #171a23; 
       font-weight: 700; 
       font-size: 1rem; 
       cursor: pointer; 
@@ -209,15 +209,24 @@
       color: #FFF;
     }
 
-    /* Блок ссылок */
-    .actions { display: flex; flex-direction: column; gap: 14px; margin-top: 30px; }
+    /* Блок ссылок - ЗАПОЛНЯЕТ ПУСТОТУ ДО НИЗА */
+    .actions { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 14px; 
+      /* Этот параметр толкает блок в самый низ контейнера */
+      margin-top: auto; 
+      padding-top: 40px; /* Отступ от калькулятора, чтобы не слипалось */
+      padding-bottom: 20px;
+    }
+    
     .btn-block { 
       display: flex; 
       align-items: center; 
       gap: 16px; 
       padding: 16px; 
       background: var(--color-secondary-bg); 
-      border: 1px solid #2A3650;
+      border: 1px solid #2e3440;
       border-radius: 16px; 
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s, border-color 0.2s; 
@@ -225,7 +234,7 @@
     }
     .btn-block:hover { 
       transform: translateY(-2px); 
-      background: #1C263E; 
+      background: #2b303b; 
       border-color: var(--color-gold); 
     }
     
@@ -249,7 +258,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #0B1120; 
+      color: #171a23; 
       font-family: 'Arial Black', sans-serif;
       font-weight: 900;
       font-size: 1.4rem;
@@ -276,9 +285,9 @@
     footer.footer { 
       text-align: center; 
       padding: 10px 0; 
-      color: #5A6B8C; 
+      color: #5c667a; 
       font-size: 0.7rem; 
-      margin-top: auto; 
+      margin-top: 0; /* Отступ регулируется контейнером */
     }
     
     @media (max-width: 500px) {
@@ -339,6 +348,7 @@
       </section>
     </main>
 
+    <!-- Этот блок теперь прижат к низу контейнера -->
     <div class="actions">
       <!-- Канал -->
       <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link">
