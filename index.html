@@ -20,13 +20,9 @@
       --color-risk: #FF453A;
       --color-profit: #32D74B;
 
-      /* Градиенты для логотипов */
       --bingx-grad-1: #00A6FF;
       --bingx-grad-2: #00D4FF;
       --bingx-grad-3: #5B3BFF;
-
-      --blofin-grad-1: #1e60f0;
-      --blofin-grad-2: #0099ff;
     }
 
     *, *::before, *::after {
@@ -415,20 +411,8 @@
 
       <!-- 5. Blofin -->
       <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
-        <svg class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
-            <defs>
-              <linearGradient id="blofinGrad" x1="0" x2="1" y1="0" y2="1">
-                <stop offset="0" stop-color="var(--blofin-grad-1)"/>
-                <stop offset="1" stop-color="var(--blofin-grad-2)"/>
-              </linearGradient>
-            </defs>
-            <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#blofinGrad)"></rect>
-            <!-- Стилизованная буква B или логотип -->
-            <g transform="translate(25, 20) scale(0.5)" fill="#FFFFFF">
-                 <path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 15C30.7 15 15 30.7 15 50s15.7 35 35 35 35-15.7 35-35-15.7-35-35-35z" fill-opacity="0.2"/>
-                 <path d="M35 25h20c8.3 0 15 6.7 15 15 0 6.6-4.3 12.2-10.2 14.2 5.9 2 10.2 7.6 10.2 14.2 0 8.3-6.7 15-15 15H35V25zm12 10v12h8c3.3 0 6-2.7 6-6s-2.7-6-6-6h-8zm0 22v14h10c3.3 0 6-2.7 6-6s-2.7-6-6-6H47z" fill="#FFF"/>
-            </g>
-          </svg>
+        <!-- Заменили SVG на IMG с blofin.jpg -->
+        <img src="blofin.jpg" alt="Blofin" />
         <div class="btn-content">
           <span>Blofin</span>
           <div class="btn-desc">Регистрация по реферальной ссылке</div>
@@ -570,8 +554,7 @@
     }
 
     (function(){
-      // Этот скрипт заменит SVG на картинку, если она есть локально.
-      // Оставляем для совместимости с вашим текущим проектом.
+      // Скрипт для замены BingX лого, если есть картинка
       const container = document.getElementById('bingxContainer');
       if (!container) return;
       const testImg = new Image();
