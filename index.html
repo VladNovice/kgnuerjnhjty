@@ -580,6 +580,14 @@
       document.getElementById('tipText').textContent = quotes[randomIndex];
     }
     
+    setRandomQuote();:
+    if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      if (window.Telegram.WebApp.requestFullscreen && window.Telegram.WebApp.requestFullscreen.isAvailable()) {
+        window.Telegram.WebApp.requestFullscreen();
+      }
+    }
+
     setRandomQuote();
   </script>
 </body>
