@@ -63,9 +63,9 @@
     
     /* --- ХЕДЕР --- */
     header.header { 
-  margin-top: 0 !important; 
+  margin-top: 0 !important;
   margin-bottom: 30px; 
-  padding-top: env(safe-area-inset-top, 20px);
+  padding-top: calc(env(safe-area-inset-top) + 20px); /* 20px отступ - МЕНЯЙТЕ ЗДЕСЬ */
   display: flex;
   flex-direction: column;
   align-items: center; 
@@ -74,6 +74,7 @@
   width: 100%;
   text-align: center;
 }
+
 
     .main-title {
       display: block;
