@@ -20,9 +20,13 @@
       --color-risk: #FF453A;
       --color-profit: #32D74B;
 
+      /* Градиенты для логотипов */
       --bingx-grad-1: #00A6FF;
       --bingx-grad-2: #00D4FF;
       --bingx-grad-3: #5B3BFF;
+
+      --blofin-grad-1: #1e60f0;
+      --blofin-grad-2: #0099ff;
     }
 
     *, *::before, *::after {
@@ -55,7 +59,7 @@
       -webkit-overflow-scrolling: touch;
     }
     
-    /* --- ХЕДЕР (ИСПРАВЛЕННЫЙ) --- */
+    /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 60px; 
       margin-bottom: 30px; 
@@ -66,24 +70,19 @@
       padding: 0 5px; 
       width: 100%;
       text-align: center;
-      /* Убрали overflow:hidden, чтобы текст не исчезал */
     }
 
     .main-title {
       display: block;
       font-family: 'Arial Black', 'Impact', sans-serif;
-      /* Используем clamp для адаптивности */
       font-size: clamp(1.4rem, 7.5vw, 3.2rem); 
       font-weight: 900;
       color: #FFFFFF; 
       letter-spacing: -1.5px; 
       margin: 0;
-      /* Увеличили высоту строки, чтобы текст не резался */
       line-height: 1.2; 
       text-transform: uppercase;
       text-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      
-      /* Запрещаем перенос, но безопасно */
       white-space: nowrap; 
       width: 100%;
     }
@@ -91,7 +90,7 @@
     .subtitle {
       font-size: 0.8rem; 
       color: var(--color-secondary-text); 
-      margin-top: 4px; /* Чуть уменьшил отступ */
+      margin-top: 4px;
       letter-spacing: 0.5px;
       font-weight: 600;
       text-transform: uppercase;
@@ -371,19 +370,26 @@
 
     <!-- КНОПКИ ССЫЛОК -->
     <div class="actions">
-      <!-- Канал -->
+      
+      <!-- 1. Бесплатный Торговый клуб -->
+      <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
+        <div class="mini-ic-logo">IC</div>
+        <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
+      </div>
+
+      <!-- 2. Основной Канал -->
       <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="Telegram" />
-        <div class="btn-content"><span>INVESTCOIN Channel</span><div class="btn-desc">Канал о заработке на криптовалютах</div></div>
+        <div class="btn-content"><span>Основной канал</span><div class="btn-desc">Канал о заработке на криптовалютах</div></div>
       </div>
 
-      <!-- Bybit -->
+      <!-- 3. Bybit -->
       <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit" />
-        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Регистрация по реферальной ссылке</div></div>
+        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Бонус до 30 000 долларов</div></div>
       </div>
 
-      <!-- BingX -->
+      <!-- 4. BingX -->
       <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link">
         <div id="bingxContainer">
           <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
@@ -403,15 +409,32 @@
         </div>
         <div class="btn-content">
           <span>BingX</span>
+          <div class="btn-desc">20% скидка на комиссии</div>
+        </div>
+      </div>
+
+      <!-- 5. Blofin -->
+      <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
+        <svg class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
+            <defs>
+              <linearGradient id="blofinGrad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="var(--blofin-grad-1)"/>
+                <stop offset="1" stop-color="var(--blofin-grad-2)"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#blofinGrad)"></rect>
+            <!-- Стилизованная буква B или логотип -->
+            <g transform="translate(25, 20) scale(0.5)" fill="#FFFFFF">
+                 <path d="M50 0c27.6 0 50 22.4 50 50s-22.4 50-50 50S0 77.6 0 50 22.4 0 50 0zm0 15C30.7 15 15 30.7 15 50s15.7 35 35 35 35-15.7 35-35-15.7-35-35-35z" fill-opacity="0.2"/>
+                 <path d="M35 25h20c8.3 0 15 6.7 15 15 0 6.6-4.3 12.2-10.2 14.2 5.9 2 10.2 7.6 10.2 14.2 0 8.3-6.7 15-15 15H35V25zm12 10v12h8c3.3 0 6-2.7 6-6s-2.7-6-6-6h-8zm0 22v14h10c3.3 0 6-2.7 6-6s-2.7-6-6-6H47z" fill="#FFF"/>
+            </g>
+          </svg>
+        <div class="btn-content">
+          <span>Blofin</span>
           <div class="btn-desc">Регистрация по реферальной ссылке</div>
         </div>
       </div>
 
-      <!-- Торговый клуб -->
-      <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
-        <div class="mini-ic-logo">IC</div>
-        <div class="btn-content"><span>Торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
-      </div>
     </div>
   </div>
 
@@ -547,6 +570,8 @@
     }
 
     (function(){
+      // Этот скрипт заменит SVG на картинку, если она есть локально.
+      // Оставляем для совместимости с вашим текущим проектом.
       const container = document.getElementById('bingxContainer');
       if (!container) return;
       const testImg = new Image();
