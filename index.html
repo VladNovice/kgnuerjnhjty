@@ -11,7 +11,6 @@
       --color-secondary-bg: #151E32; 
       --color-input-bg: #1C263E; 
       
-      /* --- ИЗМЕНЕНО: ОТСТУП СВЕРХУ (было 20px) --- */
       --top-padding: 33px; 
       
       --color-gold: #FFC400; 
@@ -55,7 +54,6 @@
       display: flex;
       flex-direction: column;
       padding: 16px;
-      /* Убрали padding-top отсюда, чтобы управлять им через header */
       padding-top: 0; 
       overflow-y: auto;
       max-width: 600px;
@@ -64,12 +62,10 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    
     /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 0 !important;
       margin-bottom: 30px; 
-      /* ИЗМЕНЕНО: Добавлена точка с запятой и корректный расчет отступа */
       padding-top: calc(env(safe-area-inset-top) + var(--top-padding)) !important;
       display: flex;
       flex-direction: column;
@@ -80,7 +76,6 @@
       width: 100%;
       text-align: center;
     }
-
 
     .main-title {
       display: block;
@@ -202,40 +197,6 @@
       margin-bottom: 10px; 
     }
 
-    /* --- СОВЕТЫ --- */
-    .tips-container {
-      margin-top: 5px; 
-      margin-bottom: 0;
-      padding: 10px 14px; 
-      background: linear-gradient(90deg, rgba(255, 196, 0, 0.08) 0%, rgba(11, 17, 32, 0) 100%);
-      border-left: 3px solid var(--color-gold);
-      border-radius: 4px 12px 12px 4px;
-      animation: fadeIn 0.8s ease;
-    }
-    
-    .tips-container.hidden {
-      display: none;
-    }
-    
-    .tip-header {
-      font-size: 0.65rem; 
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--color-gold);
-      font-weight: 800;
-      margin-bottom: 4px; 
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    
-    .tip-text {
-      font-size: 0.85rem; 
-      color: #cbd5e1;
-      font-style: italic;
-      line-height: 1.3;
-    }
-
     /* --- ССЫЛКИ --- */
     .actions { 
       display: flex; 
@@ -250,7 +211,7 @@
       display: flex; 
       align-items: center; 
       gap: 16px; 
-      padding: 16px; 
+      padding: 12px 16px; 
       background: var(--color-secondary-bg); 
       border: 1px solid #2A3450;
       border-radius: 16px; 
@@ -276,21 +237,47 @@
     }
     .brand-logo { background: none; padding: 0; border-radius: 12px; }
 
+    /* --- НОВЫЙ ЛОГОТИП IC (КРАСИВЫЙ) --- */
     .mini-ic-logo {
       width: 44px; 
       height: 44px; 
-      background: var(--color-gold); 
+      /* Градиент "Золотой слиток" */
+      background: linear-gradient(135deg, #FFD700 0%, #FDB931 25%, #d99a06 50%, #FDB931 75%, #FFD700 100%);
       border-radius: 12px; 
       display: flex;
       align-items: center;
       justify-content: center;
       color: #0B1120; 
-      font-family: 'Arial Black', sans-serif;
+      font-family: 'Arial Black', 'Verdana', sans-serif;
       font-weight: 900;
       font-size: 1.4rem;
       letter-spacing: -2px;
       line-height: 1;
       padding-right: 2px;
+      
+      /* Тени и блики для объема */
+      box-shadow: 
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 4px 10px rgba(255, 196, 0, 0.2);
+      border: 1px solid #bf8803;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Блик на логотипе */
+    .mini-ic-logo::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 12px 12px 0 0;
+      pointer-events: none;
+    }
+    
+    /* Тень текста внутри лого */
+    .mini-ic-logo span {
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+      z-index: 1;
     }
 
     .btn-content span { font-size: 1.1rem; font-weight: 700; color: #FFF; display: block; margin-bottom: 2px; }
@@ -307,7 +294,78 @@
       transition: background 0.2s;
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
+
+    /* --- НОВЫЙ ДИЗАЙН СОВЕТОВ --- */
+    .tips-container {
+      margin-top: 15px; 
+      margin-bottom: 5px;
+      padding: 16px 20px; 
+      
+      /* Темный фон с легким золотым оттенком */
+      background: rgba(21, 30, 50, 0.8);
+      /* Эффект матового стекла */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      
+      border: 1px solid rgba(255, 196, 0, 0.15);
+      border-left: 4px solid var(--color-gold);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      
+      animation: fadeIn 0.8s ease;
+      position: relative;
+      overflow: hidden;
+    }
     
+    /* Декоративная кавычка на фоне */
+    .tips-container::before {
+      content: '”';
+      position: absolute;
+      right: 10px;
+      bottom: -30px;
+      font-size: 6rem;
+      color: rgba(255, 196, 0, 0.05);
+      font-family: serif;
+      pointer-events: none;
+    }
+    
+    .tips-container.hidden {
+      display: none;
+    }
+    
+    .tip-header {
+      font-size: 0.75rem; 
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--color-gold);
+      font-weight: 800;
+      margin-bottom: 8px; 
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* Пульсирующая иконка лампочки */
+    .tip-icon {
+      font-size: 1.1rem;
+      animation: pulseGold 2s infinite ease-in-out;
+    }
+    @keyframes pulseGold {
+      0% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
+      50% { text-shadow: 0 0 10px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
+      100% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
+    }
+    
+    .tip-text {
+      font-size: 0.95rem; 
+      color: #e2e8f0;
+      font-style: italic;
+      line-height: 1.45;
+      font-family: 'Georgia', serif;
+      position: relative;
+      z-index: 1;
+    }
+
     footer.footer { 
       text-align: center; 
       padding: 10px 0; 
@@ -317,7 +375,7 @@
     }
     
     @media (max-width: 500px) {
-      .btn-block { padding: 14px; gap: 12px; }
+      .btn-block { padding: 12px 14px; gap: 12px; }
       .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
       .mini-ic-logo { font-size: 1.2rem; }
     }
@@ -373,7 +431,7 @@
     <!-- БЛОК СОВЕТОВ -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
-        <span>💡</span> СОВЕТЫ ТРЕЙДЕРА
+        <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
       </div>
       <div id="tipText" class="tip-text"></div>
     </div>
@@ -383,7 +441,8 @@
       
       <!-- 1. Бесплатный Торговый клуб -->
       <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
-        <div class="mini-ic-logo">IC</div>
+        <!-- Обновленный логотип IC -->
+        <div class="mini-ic-logo"><span>IC</span></div>
         <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
       </div>
 
@@ -425,7 +484,6 @@
 
       <!-- 5. Blofin -->
       <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
-        <!-- Заменили SVG на IMG с blofin.jpg -->
         <img src="blofin.jpg" alt="Blofin" />
         <div class="btn-content">
           <span>Blofin</span>
@@ -568,7 +626,6 @@
     }
 
     (function(){
-      // Скрипт для замены BingX лого, если есть картинка
       const container = document.getElementById('bingxContainer');
       if (!container) return;
       const testImg = new Image();
@@ -586,7 +643,12 @@
     })();
 
     const quotes = [
-      "«Успех в торговле приходит от хорошего знания рынков и еще лучшего знания самих себя». Ларри Вильямс (Larry Williams)"
+      "«Успех в торговле приходит от хорошего знания рынков и еще лучшего знания самих себя». Ларри Вильямс",
+      "«Не важно, прав ты или нет. Важно лишь то, сколько денег ты зарабатываешь, когда прав, и сколько теряешь, когда ошибаешься». Джордж Сорос",
+      "«Рынки никогда не ошибаются, мнения часто». Джесси Ливермор",
+      "«План вашей торговли должен быть настолько простым, чтобы вы могли объяснить его ребенку».",
+      "«Сокращайте убытки быстро, позволяйте прибыли течь».",
+      "«Лучший способ предсказать будущее — создать его»."
     ];
 
     function setRandomQuote() {
@@ -598,9 +660,7 @@
 
     if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
-      window.Telegram.WebApp.expand(); // Сначала расширяем
-      
-      // Затем fullscreen (после небольшой задержки)
+      window.Telegram.WebApp.expand();
       setTimeout(() => {
         if (window.Telegram.WebApp.requestFullscreen && 
             window.Telegram.WebApp.requestFullscreen.isAvailable()) {
