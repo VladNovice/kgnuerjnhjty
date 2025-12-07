@@ -10,7 +10,10 @@
       --color-bg: #0B1120; 
       --color-secondary-bg: #151E32; 
       --color-input-bg: #1C263E; 
-      --top-padding: 20px;
+      
+      /* --- ИЗМЕНЕНО: ОТСТУП СВЕРХУ (было 20px) --- */
+      --top-padding: 50px; 
+      
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
       
@@ -31,49 +34,52 @@
       box-sizing: border-box;
     }
     html, body {
-  background-color: var(--color-bg);
-  background-image: radial-gradient(circle at 50% 0%, #1a2640 0%, var(--color-bg) 80%);
-  color: var(--color-text);
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  height: 100vh !important;
-  width: 100vw !important;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding-top: env(safe-area-inset-top);
-  overscroll-behavior-y: none;
-}
+      background-color: var(--color-bg);
+      background-image: radial-gradient(circle at 50% 0%, #1a2640 0%, var(--color-bg) 80%);
+      color: var(--color-text);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      height: 100vh !important;
+      width: 100vw !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: env(safe-area-inset-top);
+      overscroll-behavior-y: none;
+    }
     body {
       display: flex;
       flex-direction: column;
     }
     .container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  padding-top: env(safe-area-inset-top, 16px);
-  overflow-y: auto;
-  max-width: 600px;
-  margin: 0 auto;
-  width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 16px;
+      /* Убрали padding-top отсюда, чтобы управлять им через header */
+      padding-top: 0; 
+      overflow-y: auto;
+      max-width: 600px;
+      margin: 0 auto;
+      width: 100%;
+      -webkit-overflow-scrolling: touch;
+    }
 
     
     /* --- ХЕДЕР --- */
     header.header { 
-  margin-top: 0 !important;
-  margin-bottom: 30px; 
-  padding-top: calc(env(safe-area-inset-top) + var(--top-padding)) !important /* 20px отступ - МЕНЯЙТЕ ЗДЕСЬ */
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  justify-content: center;
-  padding: 0 5px; 
-  width: 100%;
-  text-align: center;
-}
+      margin-top: 0 !important;
+      margin-bottom: 30px; 
+      /* ИЗМЕНЕНО: Добавлена точка с запятой и корректный расчет отступа */
+      padding-top: calc(env(safe-area-inset-top) + var(--top-padding)) !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      padding-left: 5px;
+      padding-right: 5px; 
+      width: 100%;
+      text-align: center;
+    }
 
 
     .main-title {
@@ -588,19 +594,20 @@
       document.getElementById('tipText').textContent = quotes[randomIndex];
     }
     
-    setRandomQuote();:
+    setRandomQuote();
+
     if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
-  window.Telegram.WebApp.ready();
-  window.Telegram.WebApp.expand(); // Сначала расширяем
-  
-  // Затем fullscreen (после небольшой задержки)
-  setTimeout(() => {
-    if (window.Telegram.WebApp.requestFullscreen && 
-        window.Telegram.WebApp.requestFullscreen.isAvailable()) {
-      window.Telegram.WebApp.requestFullscreen();
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand(); // Сначала расширяем
+      
+      // Затем fullscreen (после небольшой задержки)
+      setTimeout(() => {
+        if (window.Telegram.WebApp.requestFullscreen && 
+            window.Telegram.WebApp.requestFullscreen.isAvailable()) {
+          window.Telegram.WebApp.requestFullscreen();
+        }
+      }, 100);
     }
-  }, 100);
-}
   </script>
 </body>
 </html>
