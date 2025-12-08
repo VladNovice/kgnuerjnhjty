@@ -65,7 +65,7 @@
     /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 0 !important;
-      margin-bottom: 20px; /* Уменьшен отступ */
+      margin-bottom: 30px; 
       padding-top: calc(env(safe-area-inset-top) + var(--top-padding)) !important;
       display: flex;
       flex-direction: column;
@@ -75,7 +75,7 @@
       padding-right: 5px; 
       width: 100%;
       text-align: center;
-      flex-shrink: 0;
+      flex-shrink: 0; /* Хедер не сжимается */
     }
 
     .main-title {
@@ -142,17 +142,17 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     /* Сетка и инпуты */
-    .grid { display: grid; gap: 10px; } /* Чуть компактнее */
+    .grid { display: grid; gap: 12px; }
     .grid-2 { grid-template-columns: 1fr 1fr; }
     
     input, select { 
       width: 100%; 
-      padding: 14px; /* Чуть меньше паддинг */
+      padding: 16px; 
       background: var(--color-input-bg); 
       border: 1px solid #2A3450; 
       border-radius: 12px; 
       color: var(--color-text); 
-      font-size: 0.95rem; 
+      font-size: 1rem; 
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     input:focus, select:focus { 
@@ -164,13 +164,13 @@
 
     /* Кнопки действий */
     .btn { 
-      padding: 12px 18px; /* Компактнее */
+      padding: 14px 20px; 
       border-radius: 12px; 
       background: var(--color-gold); 
       border: none;
       color: #0B1120; 
       font-weight: 700; 
-      font-size: 0.95rem; 
+      font-size: 1rem; 
       cursor: pointer; 
       transition: all 0.2s ease; 
       box-shadow: 0 4px 15px rgba(255, 196, 0, 0.15); 
@@ -184,40 +184,40 @@
 
     .results { 
       display: none; 
-      margin-top: 10px; 
+      margin-top: 15px; 
       background: var(--color-secondary-bg); 
-      padding: 15px; 
+      padding: 20px; 
       border-radius: 12px; 
       text-align: center; 
-      font-size: 1rem; 
-      line-height: 1.5; 
+      font-size: 1.05rem; 
+      line-height: 1.6; 
       border: 1px solid var(--color-gold);
       color: #FFF;
     }
 
     #entries {
-      margin-bottom: 5px; 
+      margin-bottom: 10px; 
     }
 
     /* --- ССЫЛКИ --- */
     .actions { 
       display: flex; 
       flex-direction: column; 
-      gap: 10px; /* Уменьшен отступ */
+      gap: 14px; 
       margin-top: auto;
       padding-top: 10px; 
-      padding-bottom: 15px;
+      padding-bottom: 20px;
       flex-shrink: 0;
     }
     
     .btn-block { 
       display: flex; 
       align-items: center; 
-      gap: 12px; 
-      padding: 10px 14px; /* Компактнее */
+      gap: 16px; 
+      padding: 12px 16px; 
       background: var(--color-secondary-bg); 
       border: 1px solid #2A3450;
-      border-radius: 14px; 
+      border-radius: 16px; 
       cursor: pointer; 
       transition: transform 0.2s, background 0.2s, border-color 0.2s; 
       text-decoration: none; 
@@ -230,32 +230,32 @@
     }
     
     .btn-block img, .btn-block svg { 
-      width: 36px; /* Чуть меньше иконки */
-      height: 36px; 
+      width: 44px; 
+      height: 44px; 
       background: #FFFFFF; 
-      border-radius: 10px; 
+      border-radius: 12px; 
       padding: 4px; 
       object-fit: contain; 
       display: block; 
     }
-    .brand-logo { background: none; padding: 0; border-radius: 10px; }
+    .brand-logo { background: none; padding: 0; border-radius: 12px; }
 
     /* --- ЛОГОТИП IC --- */
     .mini-ic-logo {
-      width: 36px; /* Чуть меньше */
-      height: 36px; 
+      width: 44px; 
+      height: 44px; 
       background: linear-gradient(135deg, #FFD700 0%, #FDB931 25%, #d99a06 50%, #FDB931 75%, #FFD700 100%);
-      border-radius: 10px; 
+      border-radius: 12px; 
       display: flex;
       align-items: center;
       justify-content: center;
       color: #0B1120; 
       font-family: 'Arial Black', 'Verdana', sans-serif;
       font-weight: 900;
-      font-size: 1.1rem;
-      letter-spacing: -1px;
+      font-size: 1.4rem;
+      letter-spacing: -2px;
       line-height: 1;
-      padding-right: 1px;
+      padding-right: 2px;
       box-shadow: 
         inset 0 1px 0 rgba(255,255,255,0.6),
         0 4px 10px rgba(255, 196, 0, 0.2);
@@ -268,7 +268,7 @@
       position: absolute;
       top: 0; left: 0; right: 0; height: 50%;
       background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
-      border-radius: 10px 10px 0 0;
+      border-radius: 12px 12px 0 0;
       pointer-events: none;
     }
     .mini-ic-logo span {
@@ -276,53 +276,54 @@
       z-index: 1;
     }
 
-    .btn-content span { font-size: 0.95rem; font-weight: 700; color: #FFF; display: block; margin-bottom: 1px; }
-    .btn-desc { font-size: 0.75rem; color: var(--color-secondary-text); }
+    .btn-content span { font-size: 1.1rem; font-weight: 700; color: #FFF; display: block; margin-bottom: 2px; }
+    .btn-desc { font-size: 0.85rem; color: var(--color-secondary-text); }
 
     .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: center; margin-top: 8px; }
     .entry-item button { 
-      padding: 12px; 
+      padding: 14px; 
       background: rgba(255, 69, 58, 0.1); 
       border: 1px solid rgba(255, 69, 58, 0.3); 
       color: #ff5555; 
-      border-radius: 10px; 
+      border-radius: 12px; 
       cursor: pointer; 
       transition: background 0.2s;
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
 
-    /* --- КОМПАКТНЫЙ БЛОК СОВЕТОВ (ИЗМЕНЕНИЯ ЗДЕСЬ) --- */
+    /* --- БЛОК СОВЕТОВ (ИСПРАВЛЕННЫЙ) --- */
     .tips-container {
-      margin-top: 10px; 
+      margin-top: 15px; 
       margin-bottom: 5px;
-      /* Уменьшили внутренние отступы */
-      padding: 10px 14px; 
+      
+      /* Немного уменьшили отступы, чтобы был аккуратнее */
+      padding: 12px 16px; 
       
       background: rgba(21, 30, 50, 0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       
       border: 1px solid rgba(255, 196, 0, 0.15);
-      border-left: 3px solid var(--color-gold); /* Тоньше линия */
-      border-radius: 10px; /* Меньше радиус */
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      border-left: 4px solid var(--color-gold);
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       
       position: relative;
       overflow: hidden;
       
-      flex-shrink: 0;
+      /* ГЛАВНОЕ: Запрет на сжатие (чтобы всегда был виден) */
+      flex-shrink: 0; 
       z-index: 10;
       display: block;
-      /* Убрали min-height, чтобы блок сжимался под контент */
     }
     
     .tips-container::before {
       content: '”';
       position: absolute;
-      right: 5px;
-      bottom: -15px;
-      /* Сильно уменьшили декоративную кавычку */
-      font-size: 3.5rem; 
+      right: 10px;
+      bottom: -25px;
+      /* Уменьшили кавычку, чтобы не перекрывала текст */
+      font-size: 5rem; 
       color: rgba(255, 196, 0, 0.05);
       font-family: serif;
       pointer-events: none;
@@ -333,34 +334,32 @@
     }
     
     .tip-header {
-      /* Уменьшили шрифт заголовка */
-      font-size: 0.65rem; 
+      font-size: 0.7rem; /* Чуть аккуратнее заголовок */
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
       color: var(--color-gold);
       font-weight: 800;
-      margin-bottom: 4px; /* Меньше отступ */
+      margin-bottom: 6px; 
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
     
     .tip-icon {
-      font-size: 0.9rem; /* Меньше лампочка */
+      font-size: 1rem;
       animation: pulseGold 2s infinite ease-in-out;
     }
     @keyframes pulseGold {
       0% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
-      50% { text-shadow: 0 0 8px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
+      50% { text-shadow: 0 0 10px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
       100% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
     }
     
     .tip-text {
-      /* Уменьшили основной текст */
-      font-size: 0.8rem; 
+      font-size: 0.9rem; /* Оптимальный размер текста */
       color: #e2e8f0;
       font-style: italic;
-      line-height: 1.35;
+      line-height: 1.4;
       font-family: 'Georgia', serif;
       position: relative;
       z-index: 2;
@@ -368,17 +367,17 @@
 
     footer.footer { 
       text-align: center; 
-      padding: 8px 0; 
+      padding: 10px 0; 
       color: #5B6B85; 
-      font-size: 0.65rem; 
+      font-size: 0.7rem; 
       margin-top: 0;
       flex-shrink: 0;
     }
     
     @media (max-width: 500px) {
-      .btn-block { padding: 8px 10px; gap: 10px; }
-      .btn-block img, .btn-block svg, .mini-ic-logo { width: 32px; height: 32px; }
-      .mini-ic-logo { font-size: 1rem; }
+      .btn-block { padding: 12px 14px; gap: 12px; }
+      .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
+      .mini-ic-logo { font-size: 1.2rem; }
     }
   </style>
 </head>
@@ -429,7 +428,7 @@
       </section>
     </main>
 
-    <!-- КОМПАКТНЫЙ БЛОК СОВЕТОВ -->
+    <!-- БЛОК СОВЕТОВ -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
         <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
@@ -461,7 +460,7 @@
       <!-- 4. BingX -->
       <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link">
         <div id="bingxContainer">
-          <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="36" height="36">
+          <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
             <defs>
               <linearGradient id="bingxGrad" x1="0" x2="1" y1="0" y2="1">
                 <stop offset="0" stop-color="var(--bingx-grad-1)"/>
@@ -630,10 +629,10 @@
       if (!container) return;
       const testImg = new Image();
       testImg.onload = function() {
-        testImg.width = 36;
-        testImg.height = 36;
+        testImg.width = 44;
+        testImg.height = 44;
         testImg.alt = 'BingX';
-        testImg.style.borderRadius = '10px';
+        testImg.style.borderRadius = '12px';
         testImg.style.padding = '4px';
         testImg.style.objectFit = 'contain';
         testImg.style.background = '#FFF'; 
@@ -643,11 +642,7 @@
     })();
 
     const quotes = [
-      "«Успех в торговле — это знание рынков и самого себя». Л. Вильямс",
-      "«Сокращайте убытки быстро, позволяйте прибыли течь».",
-      "«Рынки никогда не ошибаются, мнения часто». Дж. Ливермор",
-      "«Торгуйте то, что видите, а не то, что думаете».",
-      "«Планируйте сделку и торгуйте по плану»."
+      "«Успех в торговле приходит от хорошего знания рынков и еще лучшего знания самих себя». Ларри Вильямс",
     ];
 
     function setRandomQuote() {
