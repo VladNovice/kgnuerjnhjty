@@ -75,6 +75,7 @@
       padding-right: 5px; 
       width: 100%;
       text-align: center;
+      flex-shrink: 0; /* Не сжимать хедер */
     }
 
     .main-title {
@@ -111,6 +112,7 @@
       padding: 4px; 
       border-radius: 50px; 
       border: 1px solid #2A3450; 
+      flex-shrink: 0; /* Не сжимать навигацию */
     }
     .nav-btn { 
       flex: 1; 
@@ -205,6 +207,7 @@
       margin-top: auto;
       padding-top: 10px; 
       padding-bottom: 20px;
+      flex-shrink: 0; /* Не сжимать кнопки ссылок */
     }
     
     .btn-block { 
@@ -237,11 +240,10 @@
     }
     .brand-logo { background: none; padding: 0; border-radius: 12px; }
 
-    /* --- НОВЫЙ ЛОГОТИП IC (КРАСИВЫЙ) --- */
+    /* --- НОВЫЙ ЛОГОТИП IC --- */
     .mini-ic-logo {
       width: 44px; 
       height: 44px; 
-      /* Градиент "Золотой слиток" */
       background: linear-gradient(135deg, #FFD700 0%, #FDB931 25%, #d99a06 50%, #FDB931 75%, #FFD700 100%);
       border-radius: 12px; 
       display: flex;
@@ -254,8 +256,6 @@
       letter-spacing: -2px;
       line-height: 1;
       padding-right: 2px;
-      
-      /* Тени и блики для объема */
       box-shadow: 
         inset 0 1px 0 rgba(255,255,255,0.6),
         0 4px 10px rgba(255, 196, 0, 0.2);
@@ -263,8 +263,6 @@
       position: relative;
       overflow: hidden;
     }
-    
-    /* Блик на логотипе */
     .mini-ic-logo::after {
       content: '';
       position: absolute;
@@ -273,8 +271,6 @@
       border-radius: 12px 12px 0 0;
       pointer-events: none;
     }
-    
-    /* Тень текста внутри лого */
     .mini-ic-logo span {
       text-shadow: 0 1px 0 rgba(255,255,255,0.4);
       z-index: 1;
@@ -295,15 +291,13 @@
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
 
-    /* --- НОВЫЙ ДИЗАЙН СОВЕТОВ --- */
+    /* --- ИСПРАВЛЕННЫЙ БЛОК СОВЕТОВ --- */
     .tips-container {
       margin-top: 15px; 
       margin-bottom: 5px;
       padding: 16px 20px; 
       
-      /* Темный фон с легким золотым оттенком */
-      background: rgba(21, 30, 50, 0.8);
-      /* Эффект матового стекла */
+      background: rgba(21, 30, 50, 0.95); /* Чуть менее прозрачный для надежности */
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       
@@ -312,12 +306,16 @@
       border-radius: 12px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       
-      animation: fadeIn 0.8s ease;
       position: relative;
       overflow: hidden;
+      
+      /* !!! ВАЖНОЕ ИСПРАВЛЕНИЕ !!! */
+      flex-shrink: 0; /* Запрещает блоку сжиматься */
+      z-index: 10;    /* Поднимает блок над фоном */
+      display: block; /* Гарантирует блочный показ */
+      min-height: 80px; /* Минимальная высота на всякий случай */
     }
     
-    /* Декоративная кавычка на фоне */
     .tips-container::before {
       content: '”';
       position: absolute;
@@ -329,8 +327,9 @@
       pointer-events: none;
     }
     
+    /* display: none !important гарантирует скрытие */
     .tips-container.hidden {
-      display: none;
+      display: none !important;
     }
     
     .tip-header {
@@ -345,7 +344,6 @@
       gap: 8px;
     }
     
-    /* Пульсирующая иконка лампочки */
     .tip-icon {
       font-size: 1.1rem;
       animation: pulseGold 2s infinite ease-in-out;
@@ -363,7 +361,7 @@
       line-height: 1.45;
       font-family: 'Georgia', serif;
       position: relative;
-      z-index: 1;
+      z-index: 2; /* Текст выше декораций */
     }
 
     footer.footer { 
@@ -372,6 +370,7 @@
       color: #5B6B85; 
       font-size: 0.7rem; 
       margin-top: 0;
+      flex-shrink: 0;
     }
     
     @media (max-width: 500px) {
@@ -433,7 +432,7 @@
       <div class="tip-header">
         <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
       </div>
-      <div id="tipText" class="tip-text"></div>
+      <div id="tipText" class="tip-text">Загрузка совета...</div>
     </div>
 
     <!-- КНОПКИ ССЫЛОК -->
@@ -441,7 +440,6 @@
       
       <!-- 1. Бесплатный Торговый клуб -->
       <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
-        <!-- Обновленный логотип IC -->
         <div class="mini-ic-logo"><span>IC</span></div>
         <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
       </div>
@@ -644,20 +642,18 @@
 
     const quotes = [
       "«Успех в торговле приходит от хорошего знания рынков и еще лучшего знания самих себя». Ларри Вильямс",
-      "«Не важно, прав ты или нет. Важно лишь то, сколько денег ты зарабатываешь, когда прав, и сколько теряешь, когда ошибаешься». Джордж Сорос",
-      "«Рынки никогда не ошибаются, мнения часто». Джесси Ливермор",
-      "«План вашей торговли должен быть настолько простым, чтобы вы могли объяснить его ребенку».",
-      "«Сокращайте убытки быстро, позволяйте прибыли течь».",
-      "«Лучший способ предсказать будущее — создать его»."
     ];
 
     function setRandomQuote() {
       const randomIndex = Math.floor(Math.random() * quotes.length);
-      document.getElementById('tipText').textContent = quotes[randomIndex];
+      const tipsBlock = document.getElementById('tipsBlock');
+      // Гарантируем видимость перед вставкой текста
+      if (tipsBlock && !tipsBlock.classList.contains('hidden')) {
+        document.getElementById('tipText').textContent = quotes[randomIndex];
+      }
     }
     
-    setRandomQuote();
-
+    // Инициализация Telegram WebApp
     if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
       window.Telegram.WebApp.ready();
       window.Telegram.WebApp.expand();
@@ -668,6 +664,15 @@
         }
       }, 100);
     }
+    
+    // ВАЖНО: Принудительный запуск при загрузке страницы, чтобы выставить правильное состояние
+    // Это исправляет баг, когда советы не видно при старте
+    document.addEventListener('DOMContentLoaded', () => {
+        switchTab('avg');
+    });
+    
+    // Также запускаем сразу, на случай если DOMContentLoaded уже прошел
+    setRandomQuote();
   </script>
 </body>
 </html>
