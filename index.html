@@ -75,7 +75,7 @@
       padding-right: 5px; 
       width: 100%;
       text-align: center;
-      flex-shrink: 0; /* Хедер не сжимается */
+      flex-shrink: 0; 
     }
 
     .main-title {
@@ -291,42 +291,35 @@
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
 
-    /* --- БЛОК СОВЕТОВ (ИСПРАВЛЕННЫЙ) --- */
+    /* --- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ --- */
     .tips-container {
-      margin-top: 15px; 
+      margin-top: 10px; 
       margin-bottom: 5px;
       
-      /* Немного уменьшили отступы, чтобы был аккуратнее */
-      padding: 12px 16px; 
+      /* Минимальные отступы */
+      padding: 8px 12px; 
       
       background: rgba(21, 30, 50, 0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       
       border: 1px solid rgba(255, 196, 0, 0.15);
-      border-left: 4px solid var(--color-gold);
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-left: 3px solid var(--color-gold);
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
       
       position: relative;
       overflow: hidden;
       
-      /* ГЛАВНОЕ: Запрет на сжатие (чтобы всегда был виден) */
+      /* Важно для видимости */
       flex-shrink: 0; 
       z-index: 10;
       display: block;
     }
     
+    /* Убираем гигантскую кавычку для экономии места */
     .tips-container::before {
-      content: '”';
-      position: absolute;
-      right: 10px;
-      bottom: -25px;
-      /* Уменьшили кавычку, чтобы не перекрывала текст */
-      font-size: 5rem; 
-      color: rgba(255, 196, 0, 0.05);
-      font-family: serif;
-      pointer-events: none;
+      display: none;
     }
     
     .tips-container.hidden {
@@ -334,32 +327,33 @@
     }
     
     .tip-header {
-      font-size: 0.7rem; /* Чуть аккуратнее заголовок */
+      font-size: 0.6rem; /* Очень маленький заголовок */
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
       color: var(--color-gold);
       font-weight: 800;
-      margin-bottom: 6px; 
+      margin-bottom: 2px; /* Почти без отступа вниз */
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      opacity: 0.9;
     }
     
     .tip-icon {
-      font-size: 1rem;
+      font-size: 0.85rem;
       animation: pulseGold 2s infinite ease-in-out;
     }
     @keyframes pulseGold {
       0% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
-      50% { text-shadow: 0 0 10px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
+      50% { text-shadow: 0 0 8px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
       100% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
     }
     
     .tip-text {
-      font-size: 0.9rem; /* Оптимальный размер текста */
+      font-size: 0.8rem; /* Мелкий, но читаемый текст */
       color: #e2e8f0;
       font-style: italic;
-      line-height: 1.4;
+      line-height: 1.25; /* Плотный интерлиньяж */
       font-family: 'Georgia', serif;
       position: relative;
       z-index: 2;
@@ -428,10 +422,10 @@
       </section>
     </main>
 
-    <!-- БЛОК СОВЕТОВ -->
+    <!-- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
-        <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
+        <span class="tip-icon">💡</span> СОВЕТЫ
       </div>
       <div id="tipText" class="tip-text">Загрузка совета...</div>
     </div>
@@ -642,7 +636,7 @@
     })();
 
     const quotes = [
-      "«Успех в торговле приходит от хорошего знания рынков и еще лучшего знания самих себя». Ларри Вильямс",
+      "«Успех в торговле — это знание рынков и себя». Ларри Вильямс",
     ];
 
     function setRandomQuote() {
