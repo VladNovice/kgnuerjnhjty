@@ -6,16 +6,25 @@
   <title>INVESTCOIN Calculator</title>
   <style>
     :root {
-      --bg-color: #0B1120;
-      --bg-secondary: #151E32;
-      --input-bg: #1C263E;
-      --gold: #FFC400;
-      --gold-hover: #E6B000;
-      --text-main: #F0F4F8;
-      --text-muted: #94A3B8;
-      --danger: #FF453A;
-      --success: #32D74B;
-      --safe-top: env(safe-area-inset-top);
+      /* --- ЦВЕТОВАЯ ПАЛИТРА (Navy + Gold) --- */
+      --color-bg: #0B1120; 
+      --color-secondary-bg: #151E32; 
+      --color-input-bg: #1C263E; 
+      
+      --top-padding: 33px; 
+      
+      --color-gold: #FFC400; 
+      --color-gold-hover: #E6B000;
+      
+      --color-text: #F0F4F8; 
+      --color-secondary-text: #94A3B8; 
+      
+      --color-risk: #FF453A;
+      --color-profit: #32D74B;
+
+      --bingx-grad-1: #00A6FF;
+      --bingx-grad-2: #00D4FF;
+      --bingx-grad-3: #5B3BFF;
     }
 
     *, *::before, *::after {
@@ -23,540 +32,637 @@
       padding: 0;
       box-sizing: border-box;
     }
-
-    body {
-      background-color: var(--bg-color);
-      background-image: radial-gradient(circle at 50% 0%, #1a2640 0%, var(--bg-color) 80%);
-      color: var(--text-main);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      min-height: 100vh;
-      min-height: 100dvh;
-      width: 100vw;
-      overflow-x: hidden;
-      display: flex;
-      flex-direction: column;
+    html, body {
+      background-color: var(--color-bg);
+      background-image: radial-gradient(circle at 50% 0%, #1a2640 0%, var(--color-bg) 80%);
+      color: var(--color-text);
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      height: 100vh !important;
+      width: 100vw !important;
+      position: fixed;
+      top: 0;
+      left: 0;
+      padding-top: env(safe-area-inset-top);
       overscroll-behavior-y: none;
     }
-
+    body {
+      display: flex;
+      flex-direction: column;
+    }
     .container {
       flex: 1;
       display: flex;
       flex-direction: column;
-      padding: 0 16px 16px;
+      padding: 16px;
+      padding-top: 0; 
+      overflow-y: auto;
       max-width: 600px;
       margin: 0 auto;
       width: 100%;
+      -webkit-overflow-scrolling: touch;
     }
 
-    header {
-      padding-top: calc(var(--safe-top) + 30px);
-      margin-bottom: 25px;
+    /* --- ХЕДЕР --- */
+    header.header { 
+      margin-top: 0 !important;
+      margin-bottom: 30px; 
+      padding-top: calc(env(safe-area-inset-top) + var(--top-padding)) !important;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center;
+      padding-left: 5px;
+      padding-right: 5px; 
+      width: 100%;
       text-align: center;
-      flex-shrink: 0;
+      flex-shrink: 0; 
     }
 
     .main-title {
-      font-family: 'Arial Black', sans-serif;
-      font-size: clamp(1.5rem, 6vw, 2.5rem);
+      display: block;
+      font-family: 'Arial Black', 'Impact', sans-serif;
+      font-size: clamp(1.4rem, 7.5vw, 3.2rem); 
       font-weight: 900;
-      letter-spacing: -1px;
+      color: #FFFFFF; 
+      letter-spacing: -1.5px; 
+      margin: 0;
+      line-height: 1.2; 
       text-transform: uppercase;
       text-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      line-height: 1.1;
-    }
-
-    .subtitle {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .nav-wrapper {
-      background: var(--bg-secondary);
-      padding: 4px;
-      border-radius: 50px;
-      border: 1px solid #2A3450;
-      display: flex;
-      gap: 5px;
-      margin-bottom: 20px;
-      flex-shrink: 0;
-    }
-
-    .nav-btn {
-      flex: 1;
-      padding: 10px;
-      background: transparent;
-      border: none;
-      border-radius: 40px;
-      color: var(--text-muted);
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .nav-btn.active {
-      background: var(--gold);
-      color: var(--bg-color);
-      box-shadow: 0 2px 8px rgba(255, 196, 0, 0.2);
-    }
-
-    .section {
-      display: none;
-      animation: slideUp 0.3s ease-out;
-    }
-
-    .section.active {
-      display: block;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .grid {
-      display: grid;
-      gap: 12px;
-    }
-
-    .grid-2 {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    input, select {
+      white-space: nowrap; 
       width: 100%;
-      padding: 14px 16px;
-      background: var(--input-bg);
-      border: 1px solid #2A3450;
-      border-radius: 12px;
-      color: var(--text-main);
-      font-size: 16px; 
-      appearance: none;
-      transition: border-color 0.2s;
     }
-
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--gold);
-    }
-
-    .btn {
-      padding: 14px;
-      border-radius: 12px;
-      background: var(--gold);
-      border: none;
-      color: var(--bg-color);
-      font-weight: 700;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .results {
-      display: none;
-      margin-top: 15px;
-      background: var(--bg-secondary);
-      padding: 16px;
-      border-radius: 12px;
-      text-align: center;
-      border: 1px solid var(--gold);
-      line-height: 1.5;
-    }
-
-    .entry-list {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .entry-item {
-      display: grid;
-      grid-template-columns: 1fr 1fr auto;
-      gap: 8px;
-    }
-
-    .entry-item button {
-      width: 44px;
-      background: rgba(255, 69, 58, 0.15);
-      border: 1px solid rgba(255, 69, 58, 0.3);
-      color: var(--danger);
-      border-radius: 12px;
-      cursor: pointer;
-    }
-
-    .tips-box {
-      margin: 15px 0;
-      padding: 10px 14px;
-      background: rgba(21, 30, 50, 0.8);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 196, 0, 0.15);
-      border-left: 3px solid var(--gold);
-      border-radius: 8px;
-      display: none;
-    }
-
-    .tips-box.visible {
-      display: block;
-    }
-
-    .tip-head {
-      font-size: 0.7rem;
-      color: var(--gold);
-      font-weight: 800;
+    
+    .subtitle {
+      font-size: 0.8rem; 
+      color: var(--color-secondary-text); 
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+      font-weight: 600;
       text-transform: uppercase;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
     }
 
-    .tip-content {
-      font-size: 0.85rem;
-      font-style: italic;
-      color: #e2e8f0;
-      line-height: 1.3;
-    }
-
-    .links-area {
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      padding-bottom: 20px;
-    }
-
-    .link-card {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px;
-      background: var(--bg-secondary);
-      border: 1px solid #2A3450;
-      border-radius: 14px;
-      text-decoration: none;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .link-card:active {
-      transform: scale(0.98);
-      background: #1C263E;
-    }
-
-    .link-icon {
-      width: 42px;
-      height: 42px;
-      background: #FFF;
-      border-radius: 10px;
-      padding: 4px;
-      object-fit: contain;
+    /* Навигация */
+    .main-nav { 
+      display: flex; 
+      gap: 10px; 
+      justify-content: center; 
+      margin-bottom: 15px; 
+      background: var(--color-secondary-bg); 
+      padding: 4px; 
+      border-radius: 50px; 
+      border: 1px solid #2A3450; 
       flex-shrink: 0;
     }
+    .nav-btn { 
+      flex: 1; 
+      padding: 10px 14px; 
+      background: transparent; 
+      border: none; 
+      border-radius: 50px; 
+      color: var(--color-secondary-text); 
+      cursor: pointer; 
+      font-weight: 600; 
+      transition: all 0.3s ease; 
+    }
+    .nav-btn:hover { color: var(--color-gold); }
+    
+    .nav-btn.active { 
+      background: var(--color-gold); 
+      color: #0B1120; 
+      box-shadow: 0 2px 8px rgba(255, 196, 0, 0.3); 
+    }
 
-    .ic-logo {
-      width: 42px;
-      height: 42px;
-      background: linear-gradient(135deg, #FFD700, #FDB931);
-      border-radius: 10px;
+    .section { 
+      display: none; 
+      animation: fadeIn 0.3s ease;
+      padding-bottom: 0; 
+    }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Сетка и инпуты */
+    .grid { display: grid; gap: 12px; }
+    .grid-2 { grid-template-columns: 1fr 1fr; }
+    
+    input, select { 
+      width: 100%; 
+      padding: 16px; 
+      background: var(--color-input-bg); 
+      border: 1px solid #2A3450; 
+      border-radius: 12px; 
+      color: var(--color-text); 
+      font-size: 1rem; 
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus { 
+      outline: none; 
+      border-color: var(--color-gold); 
+      box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.1);
+    }
+    input::placeholder { color: #5B6B85; }
+
+    /* Кнопки действий */
+    .btn { 
+      padding: 14px 20px; 
+      border-radius: 12px; 
+      background: var(--color-gold); 
+      border: none;
+      color: #0B1120; 
+      font-weight: 700; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      transition: all 0.2s ease; 
+      box-shadow: 0 4px 15px rgba(255, 196, 0, 0.15); 
+    }
+    .btn:hover { 
+      background: var(--color-gold-hover); 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 196, 0, 0.25);
+    }
+    .btn:active { transform: scale(0.96); }
+
+    .results { 
+      display: none; 
+      margin-top: 15px; 
+      background: var(--color-secondary-bg); 
+      padding: 20px; 
+      border-radius: 12px; 
+      text-align: center; 
+      font-size: 1.05rem; 
+      line-height: 1.6; 
+      border: 1px solid var(--color-gold);
+      color: #FFF;
+    }
+
+    #entries {
+      margin-bottom: 10px; 
+    }
+
+    /* --- ССЫЛКИ --- */
+    .actions { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 14px; 
+      margin-top: auto;
+      padding-top: 10px; 
+      padding-bottom: 20px;
+      flex-shrink: 0;
+    }
+    
+    .btn-block { 
+      display: flex; 
+      align-items: center; 
+      gap: 16px; 
+      padding: 12px 16px; 
+      background: var(--color-secondary-bg); 
+      border: 1px solid #2A3450;
+      border-radius: 16px; 
+      cursor: pointer; 
+      transition: transform 0.2s, background 0.2s, border-color 0.2s; 
+      text-decoration: none; 
+      user-select: none;
+    }
+    .btn-block:hover { 
+      transform: translateY(-2px); 
+      background: #1C263E; 
+      border-color: var(--color-gold); 
+    }
+    
+    .btn-block img, .btn-block svg { 
+      width: 44px; 
+      height: 44px; 
+      background: #FFFFFF; 
+      border-radius: 12px; 
+      padding: 4px; 
+      object-fit: contain; 
+      display: block; 
+    }
+    .brand-logo { background: none; padding: 0; border-radius: 12px; }
+
+    /* --- ЛОГОТИП IC --- */
+    .mini-ic-logo {
+      width: 44px; 
+      height: 44px; 
+      background: linear-gradient(135deg, #FFD700 0%, #FDB931 25%, #d99a06 50%, #FDB931 75%, #FFD700 100%);
+      border-radius: 12px; 
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #000;
+      color: #0B1120; 
+      font-family: 'Arial Black', 'Verdana', sans-serif;
       font-weight: 900;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      letter-spacing: -2px;
+      line-height: 1;
+      padding-right: 2px;
+      box-shadow: 
+        inset 0 1px 0 rgba(255,255,255,0.6),
+        0 4px 10px rgba(255, 196, 0, 0.2);
       border: 1px solid #bf8803;
+      position: relative;
+      overflow: hidden;
+    }
+    .mini-ic-logo::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+      border-radius: 12px 12px 0 0;
+      pointer-events: none;
+    }
+    .mini-ic-logo span {
+      text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+      z-index: 1;
     }
 
-    .link-info span {
+    .btn-content span { font-size: 1.1rem; font-weight: 700; color: #FFF; display: block; margin-bottom: 2px; }
+    .btn-desc { font-size: 0.85rem; color: var(--color-secondary-text); }
+
+    .entry-item { display: grid; grid-template-columns: 1fr 1fr auto; gap: 8px; align-items: center; margin-top: 8px; }
+    .entry-item button { 
+      padding: 14px; 
+      background: rgba(255, 69, 58, 0.1); 
+      border: 1px solid rgba(255, 69, 58, 0.3); 
+      color: #ff5555; 
+      border-radius: 12px; 
+      cursor: pointer; 
+      transition: background 0.2s;
+    }
+    .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
+
+    /* --- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ --- */
+    .tips-container {
+      margin-top: 10px; 
+      margin-bottom: 5px;
+      
+      /* Минимальные отступы */
+      padding: 8px 12px; 
+      
+      background: rgba(21, 30, 50, 0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      
+      border: 1px solid rgba(255, 196, 0, 0.15);
+      border-left: 3px solid var(--color-gold);
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      
+      position: relative;
+      overflow: hidden;
+      
+      /* Важно для видимости */
+      flex-shrink: 0; 
+      z-index: 10;
       display: block;
-      font-weight: 700;
-      color: #FFF;
-      font-size: 1rem;
+    }
+    
+    /* Убираем гигантскую кавычку для экономии места */
+    .tips-container::before {
+      display: none;
+    }
+    
+    .tips-container.hidden {
+      display: none !important;
+    }
+    
+    .tip-header {
+      font-size: 0.6rem; /* Очень маленький заголовок */
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--color-gold);
+      font-weight: 800;
+      margin-bottom: 2px; /* Почти без отступа вниз */
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.9;
+    }
+    
+    .tip-icon {
+      font-size: 0.85rem;
+      animation: pulseGold 2s infinite ease-in-out;
+    }
+    @keyframes pulseGold {
+      0% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
+      50% { text-shadow: 0 0 8px rgba(255, 196, 0, 0.6); transform: scale(1.1); }
+      100% { text-shadow: 0 0 0 rgba(255, 196, 0, 0); transform: scale(1); }
+    }
+    
+    .tip-text {
+      font-size: 0.8rem; /* Мелкий, но читаемый текст */
+      color: #e2e8f0;
+      font-style: italic;
+      line-height: 1.25; /* Плотный интерлиньяж */
+      font-family: 'Georgia', serif;
+      position: relative;
+      z-index: 2;
     }
 
-    .link-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
+    footer.footer { 
+      text-align: center; 
+      padding: 10px 0; 
+      color: #5B6B85; 
+      font-size: 0.7rem; 
+      margin-top: 0;
+      flex-shrink: 0;
     }
-
-    footer {
-      text-align: center;
-      padding: 15px 0;
-      color: #475569;
-      font-size: 0.75rem;
+    
+    @media (max-width: 500px) {
+      .btn-block { padding: 12px 14px; gap: 12px; }
+      .btn-block img, .btn-block svg, .mini-ic-logo { width: 40px; height: 40px; }
+      .mini-ic-logo { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="app">
-    <header>
-      <h1 class="main-title">INVESTCOIN</h1>
-      <p class="subtitle">Calculator Tool</p>
+  <div class="container" id="mainContainer">
+    
+    <!-- ХЕДЕР -->
+    <header class="header">
+      <h1 class="main-title">INVESTCOIN CALCULATOR</h1>
+      <p class="subtitle">Сделано трейдерами для трейдеров</p>
     </header>
 
-    <nav class="nav-wrapper">
-      <button class="nav-btn active" data-tab="avg">Средняя</button>
-      <button class="nav-btn" data-tab="risk">Риск менеджмент</button>
+    <nav class="main-nav" aria-label="Главная навигация">
+      <button class="nav-btn active" id="btn-avg" onclick="switchTab('avg')">Средняя точка</button>
+      <button class="nav-btn" id="btn-risk" onclick="switchTab('risk')">Риск/Объём</button>
     </nav>
 
-    <main>
-      <section id="avg" class="section active">
+    <main class="main-content">
+      <section id="avg" class="section active" aria-labelledby="avg-heading">
         <div class="grid">
           <div class="grid grid-2">
-            <input type="number" id="avgPrice" placeholder="Цена" step="any" inputmode="decimal" />
-            <input type="number" id="avgAmount" placeholder="Количество" step="any" inputmode="decimal" />
+            <input type="number" id="newEntryPrice" placeholder="Цена входа" step="0.0001" min="0.0001" />
+            <input type="number" id="newEntryAmount" placeholder="Объём" step="0.0001" min="0.0001" />
           </div>
           <div class="grid grid-2">
-            <button class="btn" id="btnAddEntry">+ Добавить</button>
-            <button class="btn" id="btnCalcAvg">Рассчитать</button>
+            <button class="btn" onclick="addEntry()">+ Добавить</button>
+            <button class="btn" onclick="calculateAvg()">Рассчитать</button>
           </div>
-          <div id="entriesList" class="entry-list"></div>
+          <div id="entries"></div>
         </div>
-        <div id="resAvg" class="results"></div>
+        <div id="avgResult" class="results" aria-live="polite"></div>
       </section>
 
-      <section id="risk" class="section">
+      <section id="risk" class="section" aria-labelledby="risk-heading">
         <div class="grid">
-          <select id="posType">
-            <option value="long">Long (Покупка)</option>
-            <option value="short">Short (Продажа)</option>
+          <select id="positionType">
+            <option value="long">Long</option>
+            <option value="short">Short</option>
           </select>
-          <input type="number" id="depo" placeholder="Депозит ($)" inputmode="decimal" />
-          <input type="number" id="riskPct" placeholder="Риск на сделку (%)" inputmode="decimal" />
-          <input type="number" id="entPrice" placeholder="Точка входа" step="any" inputmode="decimal" />
-          <input type="number" id="slPrice" placeholder="Стоп-лосс" step="any" inputmode="decimal" />
-          <input type="number" id="tpPrice" placeholder="Тейк-профит (опционально)" step="any" inputmode="decimal" />
-          <button class="btn" id="btnCalcRisk">Рассчитать позицию</button>
+          <input type="number" id="deposit" placeholder="Депозит ($)" min="0.01" step="0.01" />
+          <input type="number" id="riskPercent" placeholder="Риск на сделку (%)" step="0.1" min="0.1" max="100" />
+          <input type="number" id="entryPrice" placeholder="Цена входа" step="0.0001" min="0.0001" />
+          <input type="number" id="stopLoss" placeholder="Стоп-лосс" step="0.0001" min="0.0001" />
+          <input type="number" id="takeProfit" placeholder="Тейк-профит (необязательно)" step="0.0001" min="0.0001" />
+          <button class="btn" onclick="calculateRisk()">Рассчитать риск</button>
         </div>
-        <div id="resRisk" class="results"></div>
+        <div id="riskResult" class="results" aria-live="polite"></div>
       </section>
     </main>
 
-    <div class="tips-box visible" id="tipBox">
-      <div class="tip-head">💡 Мудрость рынка</div>
-      <div id="tipText" class="tip-content"></div>
+    <!-- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ -->
+    <div class="tips-container" id="tipsBlock">
+      <div class="tip-header">
+        <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
+      </div>
+      <div id="tipText" class="tip-text">Загрузка совета...</div>
     </div>
 
-    <div class="links-area">
-      <a href="https://t.me/csklad_bot" target="_blank" class="link-card">
-        <div class="ic-logo">IC</div>
-        <div class="link-info">
-          <span>Торговый клуб</span>
-          <div class="link-desc">Бесплатный вход через бота</div>
-        </div>
-      </a>
+    <!-- КНОПКИ ССЫЛОК -->
+    <div class="actions">
+      
+      <!-- 1. Бесплатный Торговый клуб -->
+      <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
+        <div class="mini-ic-logo"><span>IC</span></div>
+        <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
+      </div>
 
-      <a href="https://t.me/investcoin_free" target="_blank" class="link-card">
-        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" class="link-icon" alt="TG">
-        <div class="link-info">
-          <span>Основной канал</span>
-          <div class="link-desc">Новости и аналитика</div>
-        </div>
-      </a>
+      <!-- 2. Основной Канал -->
+      <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link">
+        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="Telegram" />
+        <div class="btn-content"><span>Основной канал</span><div class="btn-desc">Канал о заработке на криптовалютах</div></div>
+      </div>
 
-      <a href="https://partner.bybit.com/b/23588" target="_blank" class="link-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" class="link-icon" alt="Bybit">
-        <div class="link-info">
-          <span>Bybit</span>
-          <div class="link-desc">Бонусы при регистрации</div>
-        </div>
-      </a>
+      <!-- 3. Bybit -->
+      <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit" />
+        <div class="btn-content"><span>Bybit</span><div class="btn-desc">Бонус до 30 000 долларов</div></div>
+      </div>
 
-      <a href="https://bingx.com/invite/INVESTCOIN/" target="_blank" class="link-card">
-        <svg class="link-icon" viewBox="0 0 100 100" style="background: #FFF; padding: 0;">
-           <rect width="100" height="100" rx="10" fill="#0055FF"/>
-           <path d="M25 75 L45 25 L65 75 L45 95 Z" fill="white"/>
-           <path d="M70 40 L80 40 L80 60 L70 60 Z" fill="white"/>
-        </svg>
-        <div class="link-info">
+      <!-- 4. BingX -->
+      <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link">
+        <div id="bingxContainer">
+          <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
+            <defs>
+              <linearGradient id="bingxGrad" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="var(--bingx-grad-1)"/>
+                <stop offset="0.55" stop-color="var(--bingx-grad-2)"/>
+                <stop offset="1" stop-color="var(--bingx-grad-3)"/>
+              </linearGradient>
+            </defs>
+            <rect x="0" y="0" width="100" height="100" rx="20" fill="url(#bingxGrad)"></rect>
+            <g transform="translate(18,12) scale(0.7)" fill="#FFFFFF" fill-opacity="0.98">
+              <path d="M12 36 L32 12 L54 36 L32 60 Z"></path>
+              <path d="M64 24 L76 24 L76 40 L64 40 Z"></path>
+            </g>
+          </svg>
+        </div>
+        <div class="btn-content">
           <span>BingX</span>
-          <div class="link-desc">Скидка 20% на комиссии</div>
+          <div class="btn-desc">20% скидка на комиссии</div>
         </div>
-      </a>
+      </div>
+
+      <!-- 5. Blofin -->
+      <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
+        <img src="blofin.jpg" alt="Blofin" />
+        <div class="btn-content">
+          <span>Blofin</span>
+          <div class="btn-desc">Регистрация по реферальной ссылке</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <footer>© 2025 INVESTCOIN Tools</footer>
+  <footer class="footer">© INVESTCOIN Calculator, 2025</footer>
 
   <script>
-    const $ = id => document.getElementById(id);
-    const entries = [];
-    
-    const quotes = [
-      "«Успех в торговле — это знание рынков и себя». Ларри Вильямс"
-    ];
+    /* --- УПРАВЛЕНИЕ ВКЛАДКАМИ И СВАЙПАМИ --- */
+    let currentTab = 'avg';
 
-    function init() {
-      if (window.Telegram?.WebApp) {
-        const tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-        try { tg.requestFullscreen(); } catch(e){}
+    function switchTab(id) {
+      currentTab = id;
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('btn-' + id).classList.add('active');
+      document.getElementById('avgResult').style.display = 'none';
+      document.getElementById('riskResult').style.display = 'none';
+
+      const tipsBlock = document.getElementById('tipsBlock');
+      if (id === 'avg') {
+        tipsBlock.classList.remove('hidden');
+        setRandomQuote();
+      } else {
+        tipsBlock.classList.add('hidden');
       }
-
-      setupTabs();
-      setupSwipe();
-      showRandomQuote();
-      
-      $('btnAddEntry').onclick = addEntry;
-      $('btnCalcAvg').onclick = calcAvg;
-      $('btnCalcRisk').onclick = calcRisk;
     }
 
-    function setupTabs() {
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tab = btn.dataset.tab;
-          document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-          $(tab).classList.add('active');
-          
-          $('resAvg').style.display = 'none';
-          $('resRisk').style.display = 'none';
-          
-          const tipBox = $('tipBox');
-          if(tab === 'avg') {
-            tipBox.classList.add('visible');
-            showRandomQuote();
-          } else {
-            tipBox.classList.remove('visible');
-          }
-        });
-      });
+    /* --- ЛОГИКА СВАЙПОВ --- */
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const minSwipeDistance = 50;
+    const container = document.getElementById('mainContainer');
+
+    container.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    container.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+      const distance = touchEndX - touchStartX;
+      if (Math.abs(distance) < minSwipeDistance) return;
+      if (distance < 0 && currentTab === 'avg') switchTab('risk');
+      if (distance > 0 && currentTab === 'risk') switchTab('avg');
     }
 
-    function showRandomQuote() {
-      const txt = quotes[Math.floor(Math.random() * quotes.length)];
-      $('tipText').textContent = txt;
-    }
+    /* --- Калькулятор --- */
+    let entries = [];
 
     function addEntry() {
-      const p = parseFloat($('avgPrice').value);
-      const a = parseFloat($('avgAmount').value);
-      
-      if (!p || !a || p <= 0 || a <= 0) return alert('Введите корректные данные');
-      if (entries.length >= 10) return alert('Лимит точек исчерпан');
-
-      entries.push({ p, a });
-      $('avgPrice').value = '';
-      $('avgAmount').value = '';
+      const price = parseFloat(document.getElementById('newEntryPrice').value);
+      const amount = parseFloat(document.getElementById('newEntryAmount').value);
+      if (isNaN(price) || price <= 0 || isNaN(amount) || amount <= 0) {
+        alert('Введите корректные положительные значения');
+        return;
+      }
+      if (entries.length >= 10) { alert('Максимум 10 точек входа'); return; }
+      entries.push({ price, amount });
+      document.getElementById('newEntryPrice').value = '';
+      document.getElementById('newEntryAmount').value = '';
       renderEntries();
     }
 
     function renderEntries() {
-      const list = $('entriesList');
-      list.innerHTML = '';
+      const container = document.getElementById('entries'); container.innerHTML = '';
       entries.forEach((e, i) => {
-        const div = document.createElement('div');
-        div.className = 'entry-item';
+        const div = document.createElement('div'); div.className = 'entry-item';
         div.innerHTML = `
-          <input type="text" value="${e.p}" readonly tabindex="-1">
-          <input type="text" value="${e.a}" readonly tabindex="-1">
-          <button onclick="delEntry(${i})">✕</button>
+          <input type="number" value="${e.price}" readonly />
+          <input type="number" value="${e.amount}" readonly />
+          <button onclick="removeEntry(${i})">✕</button>
         `;
-        list.appendChild(div);
+        container.appendChild(div);
       });
     }
 
-    window.delEntry = (i) => {
-      entries.splice(i, 1);
-      renderEntries();
-    };
+    function removeEntry(idx) { entries.splice(idx, 1); renderEntries(); }
 
-    function calcAvg() {
-      if (!entries.length) return;
-      const totalCost = entries.reduce((acc, cur) => acc + (cur.p * cur.a), 0);
-      const totalAmt = entries.reduce((acc, cur) => acc + cur.a, 0);
-      const avg = totalCost / totalAmt;
-      
-      const res = $('resAvg');
-      res.style.display = 'block';
-      res.innerHTML = `
-        <div style="color:var(--text-muted); font-size:0.9rem">Средняя цена входа</div>
-        <div style="font-size:1.8rem; font-weight:bold; color:var(--gold)">${avg.toFixed(4)}</div>
-        <div style="font-size:0.8rem; margin-top:5px">Всего монет: ${totalAmt.toFixed(4)}</div>
-      `;
+    function calculateAvg() {
+      if (entries.length === 0) { alert('Добавьте точки входа'); return; }
+      const totalValue = entries.reduce((sum, e) => sum + e.price * e.amount, 0);
+      const totalAmount = entries.reduce((sum, e) => sum + e.amount, 0);
+      const avg = totalValue / totalAmount;
+      const avgRes = document.getElementById('avgResult');
+      avgRes.textContent = `Средняя цена: ${avg.toFixed(4)}`;
+      avgRes.style.display = 'block';
     }
 
-    function calcRisk() {
-      const type = $('posType').value;
-      const bal = parseFloat($('depo').value);
-      const risk = parseFloat($('riskPct').value);
-      const entry = parseFloat($('entPrice').value);
-      const sl = parseFloat($('slPrice').value);
-      const tp = parseFloat($('tpPrice').value);
+    function calculateRisk() {
+      const positionType = document.getElementById('positionType').value;
+      let deposit = parseFloat(document.getElementById('deposit').value);
+      let riskPercent = parseFloat(document.getElementById('riskPercent').value);
+      let entryPrice = parseFloat(document.getElementById('entryPrice').value);
+      let stopLoss = parseFloat(document.getElementById('stopLoss').value);
+      const tpInput = document.getElementById('takeProfit').value;
+      let takeProfit = tpInput ? parseFloat(tpInput) : null;
 
-      if (!bal || !risk || !entry || !sl) return alert('Заполните основные поля');
-      
-      if (type === 'long' && sl >= entry) return alert('Для Long стоп должен быть ниже входа');
-      if (type === 'short' && sl <= entry) return alert('Для Short стоп должен быть выше входа');
+      if (isNaN(deposit) || deposit <= 0) { alert('Проверьте депозит'); return; }
+      if (isNaN(riskPercent) || riskPercent <= 0 || riskPercent > 100) { alert('Проверьте риск %'); return; }
+      if (isNaN(entryPrice) || entryPrice <= 0) { alert('Проверьте цену входа'); return; }
+      if (isNaN(stopLoss) || stopLoss <= 0) { alert('Проверьте стоп-лосс'); return; }
 
-      const riskMoney = bal * (risk / 100);
-      const priceDiff = Math.abs(entry - sl);
-      const posSize = riskMoney / priceDiff;
-      const posUsdt = posSize * entry;
-
-      let html = `
-        <div style="margin-bottom:10px">
-          <div style="font-size:0.9rem; color:var(--text-muted)">Объем позиции</div>
-          <div style="font-size:1.4rem; font-weight:bold">${posSize.toFixed(4)} монет</div>
-          <div style="font-size:0.85rem">Margin: ~${(posUsdt/10).toFixed(2)}$ (при 10x)</div>
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; border-top:1px solid #2A3450; padding-top:10px">
-          <div style="color:var(--danger)">
-            <div>Риск</div>
-            <b>-${riskMoney.toFixed(2)}$</b>
-          </div>
-      `;
-
-      if (tp) {
-        const tpDiff = Math.abs(tp - entry);
-        const profit = posSize * tpDiff;
-        const rr = profit / riskMoney;
-        html += `
-          <div style="color:var(--success)">
-            <div>Профит</div>
-            <b>+${profit.toFixed(2)}$</b>
-            <div style="font-size:0.75rem">R:R 1:${rr.toFixed(1)}</div>
-          </div>
-        `;
-      } else {
-        html += `<div></div>`;
+      if (takeProfit !== null) {
+        if (positionType === 'long' && stopLoss > entryPrice && takeProfit < entryPrice) {
+          [stopLoss, takeProfit] = [takeProfit, stopLoss];
+        }
+        if (positionType === 'short' && stopLoss < entryPrice && takeProfit > entryPrice) {
+          [stopLoss, takeProfit] = [takeProfit, stopLoss];
+        }
       }
-      
-      html += `</div>`;
-      
-      const res = $('resRisk');
-      res.innerHTML = html;
-      res.style.display = 'block';
+
+      if (positionType === 'long' && stopLoss >= entryPrice) { alert('Long: Стоп должен быть ниже входа'); return; }
+      if (positionType === 'short' && stopLoss <= entryPrice) { alert('Short: Стоп должен быть выше входа'); return; }
+
+      const riskAmount = deposit * (riskPercent / 100);
+      const stopDiff = Math.abs(entryPrice - stopLoss);
+      const contractSize = riskAmount / stopDiff;
+      let profitAmount = null;
+      if (takeProfit !== null) {
+        profitAmount = contractSize * Math.abs(takeProfit - entryPrice);
+      }
+
+      const riskRes = document.getElementById('riskResult');
+      let html = `
+        <div style="font-size: 1.2em; font-weight: bold; margin-bottom: 8px;">Размер позиции: ${contractSize.toFixed(4)} монет</div>
+        <div style="color: var(--color-risk)">Риск: -${riskAmount.toFixed(2)} $</div>
+      `;
+      if (profitAmount !== null) html += `<div style="color: var(--color-profit)">Профит: +${profitAmount.toFixed(2)} $ (R:R ${(profitAmount/riskAmount).toFixed(1)})</div>`;
+      riskRes.innerHTML = html; riskRes.style.display = 'block';
     }
 
-    function setupSwipe() {
-      let xStart = 0;
-      const app = $('app');
-      
-      app.addEventListener('touchstart', e => xStart = e.changedTouches[0].screenX, {passive: true});
-      app.addEventListener('touchend', e => {
-        const xEnd = e.changedTouches[0].screenX;
-        if (Math.abs(xEnd - xStart) < 60) return;
-        
-        const active = document.querySelector('.nav-btn.active').dataset.tab;
-        if (xEnd < xStart && active === 'avg') $('app').querySelector('[data-tab="risk"]').click();
-        if (xEnd > xStart && active === 'risk') $('app').querySelector('[data-tab="avg"]').click();
-      }, {passive: true});
-    }
+    (function(){
+      const container = document.getElementById('bingxContainer');
+      if (!container) return;
+      const testImg = new Image();
+      testImg.onload = function() {
+        testImg.width = 44;
+        testImg.height = 44;
+        testImg.alt = 'BingX';
+        testImg.style.borderRadius = '12px';
+        testImg.style.padding = '4px';
+        testImg.style.objectFit = 'contain';
+        testImg.style.background = '#FFF'; 
+        container.replaceWith(testImg);
+      };
+      testImg.src = 'bingx.jpg';
+    })();
 
-    document.addEventListener('DOMContentLoaded', init);
+    const quotes = [
+      "«Успех в торговле — это знание рынков и себя». Ларри Вильямс",
+    ];
+
+    function setRandomQuote() {
+      const randomIndex = Math.floor(Math.random() * quotes.length);
+      const tipsBlock = document.getElementById('tipsBlock');
+      if (tipsBlock && !tipsBlock.classList.contains('hidden')) {
+        document.getElementById('tipText').textContent = quotes[randomIndex];
+      }
+    }
+    
+    if (typeof window.Telegram !== 'undefined' && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+      setTimeout(() => {
+        if (window.Telegram.WebApp.requestFullscreen && 
+            window.Telegram.WebApp.requestFullscreen.isAvailable()) {
+          window.Telegram.WebApp.requestFullscreen();
+        }
+      }, 100);
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        switchTab('avg');
+    });
+    
+    setRandomQuote();
   </script>
 </body>
 </html>
