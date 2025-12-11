@@ -9,13 +9,18 @@
       --color-bg: #0B1120; 
       --color-secondary-bg: #151E32; 
       --color-input-bg: #1C263E; 
+      
       --top-padding: 33px; 
+      
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
+      
       --color-text: #F0F4F8; 
       --color-secondary-text: #94A3B8; 
+      
       --color-risk: #FF453A;
       --color-profit: #32D74B;
+
       --bingx-grad-1: #00A6FF;
       --bingx-grad-2: #00D4FF;
       --bingx-grad-3: #5B3BFF;
@@ -56,6 +61,7 @@
       -webkit-overflow-scrolling: touch;
     }
 
+    /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 0 !important;
       margin-bottom: 30px; 
@@ -95,6 +101,7 @@
       text-transform: uppercase;
     }
 
+    /* Навигация */
     .main-nav { 
       display: flex; 
       gap: 10px; 
@@ -133,6 +140,7 @@
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
+
     .grid { display: grid; gap: 12px; }
     .grid-2 { grid-template-columns: 1fr 1fr; }
     
@@ -152,6 +160,7 @@
       box-shadow: 0 0 0 2px rgba(255, 196, 0, 0.1);
     }
     input::placeholder { color: #5B6B85; }
+
 
     .btn { 
       padding: 14px 20px; 
@@ -189,6 +198,7 @@
       margin-bottom: 10px; 
     }
 
+ 
     .actions { 
       display: flex; 
       flex-direction: column; 
@@ -228,6 +238,7 @@
       display: block; 
     }
     .brand-logo { background: none; padding: 0; border-radius: 12px; }
+
 
     .mini-ic-logo {
       width: 44px; 
@@ -279,24 +290,32 @@
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
 
+ 
     .tips-container {
       margin-top: 10px; 
       margin-bottom: 5px;
+      
+
       padding: 8px 12px; 
+      
       background: rgba(21, 30, 50, 0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
+      
       border: 1px solid rgba(255, 196, 0, 0.15);
       border-left: 3px solid var(--color-gold);
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      
       position: relative;
       overflow: hidden;
+      
+
       flex-shrink: 0; 
       z-index: 10;
       display: block;
     }
-    
+
     .tips-container::before {
       display: none;
     }
@@ -357,6 +376,7 @@
 <body>
   <div class="container" id="mainContainer">
     
+    
     <header class="header">
       <h1 class="main-title">INVESTCOIN CALCULATOR</h1>
       <p class="subtitle">Сделано трейдерами для трейдеров</p>
@@ -400,6 +420,7 @@
       </section>
     </main>
 
+  
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
         <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
@@ -407,17 +428,21 @@
       <div id="tipText" class="tip-text">Загрузка совета...</div>
     </div>
 
+   
     <div class="actions">
       
+
       <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
         <div class="mini-ic-logo"><span>IC</span></div>
         <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
       </div>
 
+
       <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="Telegram" />
         <div class="btn-content"><span>Основной канал</span><div class="btn-desc">Канал о заработке на криптовалютах</div></div>
       </div>
+
 
       <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit" />
@@ -447,6 +472,7 @@
         </div>
       </div>
 
+      
       <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
         <img src="blofin.jpg" alt="Blofin" />
         <div class="btn-content">
@@ -461,6 +487,7 @@
   <footer class="footer">© INVESTCOIN Calculator, 2025</footer>
 
   <script>
+
     let currentTab = 'avg';
 
     function switchTab(id) {
@@ -470,7 +497,7 @@
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('btn-' + id).classList.add('active');
       document.getElementById('avgResult').style.display = 'none';
-      document.getElementById('riskResult').style.display = 'none');
+      document.getElementById('riskResult').style.display = 'none';
 
       const tipsBlock = document.getElementById('tipsBlock');
       if (id === 'avg') {
@@ -480,6 +507,7 @@
         tipsBlock.classList.add('hidden');
       }
     }
+
 
     let touchStartX = 0;
     let touchEndX = 0;
@@ -501,6 +529,7 @@
       if (distance < 0 && currentTab === 'avg') switchTab('risk');
       if (distance > 0 && currentTab === 'risk') switchTab('avg');
     }
+
 
     let entries = [];
 
