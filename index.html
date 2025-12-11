@@ -6,22 +6,16 @@
   <title>INVESTCOIN Calculator</title>
   <style>
     :root {
-      /* --- ЦВЕТОВАЯ ПАЛИТРА (Navy + Gold) --- */
       --color-bg: #0B1120; 
       --color-secondary-bg: #151E32; 
       --color-input-bg: #1C263E; 
-      
       --top-padding: 33px; 
-      
       --color-gold: #FFC400; 
       --color-gold-hover: #E6B000;
-      
       --color-text: #F0F4F8; 
       --color-secondary-text: #94A3B8; 
-      
       --color-risk: #FF453A;
       --color-profit: #32D74B;
-
       --bingx-grad-1: #00A6FF;
       --bingx-grad-2: #00D4FF;
       --bingx-grad-3: #5B3BFF;
@@ -62,7 +56,6 @@
       -webkit-overflow-scrolling: touch;
     }
 
-    /* --- ХЕДЕР --- */
     header.header { 
       margin-top: 0 !important;
       margin-bottom: 30px; 
@@ -102,7 +95,6 @@
       text-transform: uppercase;
     }
 
-    /* Навигация */
     .main-nav { 
       display: flex; 
       gap: 10px; 
@@ -141,7 +133,6 @@
     .section.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Сетка и инпуты */
     .grid { display: grid; gap: 12px; }
     .grid-2 { grid-template-columns: 1fr 1fr; }
     
@@ -162,7 +153,6 @@
     }
     input::placeholder { color: #5B6B85; }
 
-    /* Кнопки действий */
     .btn { 
       padding: 14px 20px; 
       border-radius: 12px; 
@@ -199,7 +189,6 @@
       margin-bottom: 10px; 
     }
 
-    /* --- ССЫЛКИ --- */
     .actions { 
       display: flex; 
       flex-direction: column; 
@@ -240,7 +229,6 @@
     }
     .brand-logo { background: none; padding: 0; border-radius: 12px; }
 
-    /* --- ЛОГОТИП IC --- */
     .mini-ic-logo {
       width: 44px; 
       height: 44px; 
@@ -291,33 +279,24 @@
     }
     .entry-item button:hover { background: rgba(255, 69, 58, 0.2); }
 
-    /* --- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ --- */
     .tips-container {
       margin-top: 10px; 
       margin-bottom: 5px;
-      
-      /* Минимальные отступы */
       padding: 8px 12px; 
-      
       background: rgba(21, 30, 50, 0.95);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      
       border: 1px solid rgba(255, 196, 0, 0.15);
       border-left: 3px solid var(--color-gold);
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      
       position: relative;
       overflow: hidden;
-      
-      /* Важно для видимости */
       flex-shrink: 0; 
       z-index: 10;
       display: block;
     }
     
-    /* Убираем гигантскую кавычку для экономии места */
     .tips-container::before {
       display: none;
     }
@@ -327,12 +306,12 @@
     }
     
     .tip-header {
-      font-size: 0.6rem; /* Очень маленький заголовок */
+      font-size: 0.6rem; 
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--color-gold);
       font-weight: 800;
-      margin-bottom: 2px; /* Почти без отступа вниз */
+      margin-bottom: 2px; 
       display: flex;
       align-items: center;
       gap: 6px;
@@ -350,10 +329,10 @@
     }
     
     .tip-text {
-      font-size: 0.8rem; /* Мелкий, но читаемый текст */
+      font-size: 0.8rem; 
       color: #e2e8f0;
       font-style: italic;
-      line-height: 1.25; /* Плотный интерлиньяж */
+      line-height: 1.25; 
       font-family: 'Georgia', serif;
       position: relative;
       z-index: 2;
@@ -378,7 +357,6 @@
 <body>
   <div class="container" id="mainContainer">
     
-    <!-- ХЕДЕР -->
     <header class="header">
       <h1 class="main-title">INVESTCOIN CALCULATOR</h1>
       <p class="subtitle">Сделано трейдерами для трейдеров</p>
@@ -422,7 +400,6 @@
       </section>
     </main>
 
-    <!-- СУПЕР-КОМПАКТНЫЙ БЛОК СОВЕТОВ -->
     <div class="tips-container" id="tipsBlock">
       <div class="tip-header">
         <span class="tip-icon">💡</span> СОВЕТЫ ТРЕЙДЕРА
@@ -430,28 +407,23 @@
       <div id="tipText" class="tip-text">Загрузка совета...</div>
     </div>
 
-    <!-- КНОПКИ ССЫЛОК -->
     <div class="actions">
       
-      <!-- 1. Бесплатный Торговый клуб -->
       <div class="btn-block" onclick="window.open('https://t.me/csklad_bot','_blank')" role="link">
         <div class="mini-ic-logo"><span>IC</span></div>
         <div class="btn-content"><span>Бесплатный торговый клуб</span><div class="btn-desc">Вход через бота @csklad_bot</div></div>
       </div>
 
-      <!-- 2. Основной Канал -->
       <div class="btn-block" onclick="window.open('https://t.me/investcoin_free','_blank')" role="link">
         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v6/icons/telegram.svg" alt="Telegram" />
         <div class="btn-content"><span>Основной канал</span><div class="btn-desc">Канал о заработке на криптовалютах</div></div>
       </div>
 
-      <!-- 3. Bybit -->
       <div class="btn-block" onclick="window.open('https://partner.bybit.com/b/23588','_blank')" role="link">
         <img src="https://upload.wikimedia.org/wikipedia/commons/1/14/Bybit_Logo.svg" alt="Bybit" />
         <div class="btn-content"><span>Bybit</span><div class="btn-desc">Бонус до 30 000 долларов</div></div>
       </div>
 
-      <!-- 4. BingX -->
       <div class="btn-block" onclick="window.open('https://bingx.com/invite/INVESTCOIN/','_blank')" role="link">
         <div id="bingxContainer">
           <svg id="bingxLogo" class="brand-logo" viewBox="0 0 100 100" width="44" height="44">
@@ -475,7 +447,6 @@
         </div>
       </div>
 
-      <!-- 5. Blofin -->
       <div class="btn-block" onclick="window.open('https://blofin.com/activity/ru/regular/2348?referral_code=investcoin','_blank')" role="link">
         <img src="blofin.jpg" alt="Blofin" />
         <div class="btn-content">
@@ -490,7 +461,6 @@
   <footer class="footer">© INVESTCOIN Calculator, 2025</footer>
 
   <script>
-    /* --- УПРАВЛЕНИЕ ВКЛАДКАМИ И СВАЙПАМИ --- */
     let currentTab = 'avg';
 
     function switchTab(id) {
@@ -500,7 +470,7 @@
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('btn-' + id).classList.add('active');
       document.getElementById('avgResult').style.display = 'none';
-      document.getElementById('riskResult').style.display = 'none';
+      document.getElementById('riskResult').style.display = 'none');
 
       const tipsBlock = document.getElementById('tipsBlock');
       if (id === 'avg') {
@@ -511,7 +481,6 @@
       }
     }
 
-    /* --- ЛОГИКА СВАЙПОВ --- */
     let touchStartX = 0;
     let touchEndX = 0;
     const minSwipeDistance = 50;
@@ -533,7 +502,6 @@
       if (distance > 0 && currentTab === 'risk') switchTab('avg');
     }
 
-    /* --- Калькулятор --- */
     let entries = [];
 
     function addEntry() {
